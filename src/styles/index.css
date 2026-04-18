@@ -32,6 +32,176 @@
  * - semantic, not arbitrary
  * - stable and reusable across features
  */
+
+ @theme {
+  /* Fonts */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Text scale tokens */
+  --text-display-xl: 4rem;
+  --text-display-xl--line-height: 1.02;
+
+  --text-display-lg: 3.25rem;
+  --text-display-lg--line-height: 1.05;
+
+  --text-heading-1: 2.5rem;
+  --text-heading-1--line-height: 1.1;
+
+  --text-heading-2: 2rem;
+  --text-heading-2--line-height: 1.15;
+
+  --text-heading-3: 1.5rem;
+  --text-heading-3--line-height: 1.2;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75rem;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.75rem;
+
+  --text-caption: 0.875rem;
+  --text-caption--line-height: 1.5rem;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1rem;
+}
+
+/**
+ * Base browser/document normalization.
+ */
+:root {
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, rgba(61, 220, 255, 0.08), transparent 30%),
+    var(--color-bg-900);
+}
+
+/**
+ * Canonical typography utilities.
+ *
+ * Rules:
+ * - These are the only permanent typography utility classes for the shared system
+ * - They must be token-driven
+ * - They must not contain hard-coded colors or font sizes
+ * - They are intended for use through the Text primitive first
+ */
+@utility type-display {
+  font-family: var(--font-sans);
+  font-size: var(--text-display-lg);
+  line-height: var(--text-display-lg--line-height);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+}
+
+@utility type-h1 {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading-1);
+  line-height: var(--text-heading-1--line-height);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary);
+}
+
+@utility type-h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading-2);
+  line-height: var(--text-heading-2--line-height);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+@utility type-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading-3);
+  line-height: var(--text-heading-3--line-height);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--color-text-primary);
+}
+
+@utility type-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+@utility type-body-muted {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+@utility type-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+@utility type-mono-output {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: var(--text-caption--line-height);
+  font-weight: 500;
+  color: var(--color-accent-green);
+}
+
+/**
+ * Responsive typography refinement.
+ *
+ * Keeps headings readable and expressive on larger screens
+ * without introducing uncontrolled fluid typography.
+ */
+@media (min-width: 768px) {
+  .type-display {
+    font-size: var(--text-display-xl);
+    line-height: var(--text-display-xl--line-height);
+  }
+}
+
 @theme {
   /* ------------------------------ */
   /* Fonts                          */

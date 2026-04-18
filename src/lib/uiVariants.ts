@@ -55,16 +55,30 @@ export const badgeVariants = {
   },
 } as const;
 
+/**
+ * Canonical typography variant map.
+ *
+ * Rules:
+ * - Keys here must match TypographyVariant exactly
+ * - Typography styling should be token-driven and centralized
+ */
 export const textVariants = {
   variant: {
-    display: "font-sans text-5xl md:text-7xl font-bold tracking-tight text-text-primary",
-    h1: "font-sans text-4xl md:text-5xl font-bold tracking-tight text-text-primary",
-    h2: "font-sans text-3xl md:text-4xl font-semibold tracking-tight text-text-primary",
-    h3: "font-sans text-2xl font-semibold tracking-tight text-text-primary",
-    body: "font-sans text-base leading-7 text-text-primary",
-    bodyMuted: "font-sans text-base leading-7 text-text-secondary",
-    caption: "font-sans text-sm leading-6 text-text-muted",
-    label:
-      "font-mono text-xs uppercase tracking-[0.08em] text-text-secondary",
+    display: "type-display",
+    h1: "type-h1",
+    h2: "type-h2",
+    h3: "type-h3",
+    body: "type-body",
+    "body-muted": "type-body-muted",
+    caption: "type-caption",
+    label: "type-label",
+    "mono-output": "type-mono-output",
   },
 } as const;
+
+export type ButtonVariant = keyof typeof buttonVariants.variant;
+export type ButtonSize = keyof typeof buttonVariants.size;
+export type CardVariant = keyof typeof cardVariants.variant;
+export type PanelVariant = keyof typeof panelVariants.variant;
+export type BadgeVariant = keyof typeof badgeVariants.variant;
+export type TextVariant = keyof typeof textVariants.variant;

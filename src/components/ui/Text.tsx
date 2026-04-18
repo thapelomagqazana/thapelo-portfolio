@@ -1,48 +1,45 @@
 import type { ElementType, HTMLAttributes, ReactNode, JSX } from "react";
 
 import { classNames } from "../../lib/classNames";
+import { isHeadingTag, type TypographyVariant } from "../../lib/typography";
 import { textVariants } from "../../lib/uiVariants";
 
 /**
- * Supported text style variants.
- */
-export type TextVariant = keyof typeof textVariants.variant;
-
-/**
- * Polymorphic Text props.
+ * Props for the canonical Text primitive.
  *
  * Responsibilities:
- * - Apply canonical typography styles consistently
- * - Preserve semantic rendering through the `as` prop
- * - Provide bounded typography variants
+ * - Apply typography variants consistently
+ * - Preserve semantic HTML through the `as` prop
+ * - Keep text rendering reusable across all features
  *
- * Notes:
- * - This primitive is intentionally small.
- * - It is not a full rich-text system.
+ * Accessibility notes:
+ * - Callers are responsible for correct heading order in page composition
+ * - This primitive does not auto-correct semantic misuse
+ * - It supports semantic rendering and bounded visual variants only
  */
 export interface TextProps extends HTMLAttributes<HTMLElement> {
   /**
-   * Underlying HTML element to render.
+   * Underlying element to render.
    *
    * Examples:
-   * - h1
-   * - h2
-   * - p
-   * - span
+   * - "h1"
+   * - "h2"
+   * - "p"
+   * - "span"
    *
    * Defaults to "p".
    */
   as?: ElementType;
 
   /**
-   * Canonical typography style variant.
+   * Canonical typography variant.
    *
    * Defaults to "body".
    */
-  variant?: TextVariant;
+  variant?: TypographyVariant;
 
   /**
-   * Child content to render.
+   * Rendered content.
    */
   children: ReactNode;
 }
@@ -50,18 +47,49 @@ export interface TextProps extends HTMLAttributes<HTMLElement> {
 /**
  * Canonical Text primitive.
  *
- * Accessibility notes:
- * - Semantic correctness is controlled by the `as` prop
- * - Visual style and semantic tag are intentionally separable
- * - Callers must still preserve proper heading hierarchy
+ * Design goals:
+ * - One reusable typography entry point for the app
+ * - Bounded, explicit variant system
+ * - Semantic flexibility without feature coupling
  */
 export function Text({
   as: Component = "p",
-  className,
   variant = "body",
+  className,
   children,
   ...props
 }: TextProps): JSX.Element {
+  /**
+   * Helpful development warning for obvious semantic mismatches.
+   *
+   * This avoids silently encouraging patterns like:
+   * - as="p" with variant="h1"
+   * - as="h1" with variant="caption"
+   *
+   * The warning is non-blocking because some rare compositions can still be valid.
+   */
+  if (import.meta.env.DEV) {
+    const componentName =
+      typeof Component === "string" ? Component : "custom-component";
+
+    const headingVariant = variant === "h1" || variant === "h2" || variant === "h3";
+    const headingElement = typeof Component === "string" && isHeadingTag(Component);
+
+    if (headingVariant && typeof Component === "string" && !headingElement) {
+      console.warn(
+        `[Text] Heading variant "${variant}" is being rendered as "${componentName}". ` +
+          `Prefer semantic heading tags for heading variants.`,
+      );
+    }
+
+    if (!headingVariant && typeof Component === "string" && headingElement) {
+      console.warn(
+        `[Text] Semantic heading "${componentName}" is using non-heading variant "${variant}". ` +
+          `Confirm this is intentional.`,
+      );
+    }
+  }
+
   return (
     <Component
       className={classNames(textVariants.variant[variant], className)}

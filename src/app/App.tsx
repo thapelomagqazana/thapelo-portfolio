@@ -3,33 +3,33 @@ import { Container, Grid, Section } from "../components/layout";
 import type { JSX } from "react";
 
 /**
- * Layout primitive smoke-validation surface.
+ * Typography system validation surface.
  *
  * Purpose:
- * - Prove that Container, Grid, and Section render correctly
- * - Demonstrate clear structural role boundaries
- * - Validate that the layout system composes cleanly with the UI primitive layer
+ * - Prove that the canonical typography hierarchy is working
+ * - Verify semantic rendering with the Text primitive
+ * - Demonstrate heading, body, caption, label, and mono-output usage
  *
  * Important:
  * - This is not the final homepage
- * - It is a temporary validation harness for WBS 1.2.1 only
+ * - It is a bounded validation harness for WBS 1.3.1
  */
 export default function App(): JSX.Element {
   return (
     <main className="min-h-screen bg-bg-900 text-text-primary">
-      <Section space="hero" surface="transparent">
+      <Section space="hero">
         <Container width="wide">
           <Panel variant="focus">
-            <Badge variant="info">layout system</Badge>
+            <Badge variant="info">typography system</Badge>
 
             <Text as="h1" variant="display" className="mt-4">
-              Canonical layout primitives are operational
+              Software should earn the right to ship
             </Text>
 
-            <Text variant="bodyMuted" className="mt-4 max-w-3xl">
-              This validation screen confirms that the layout layer provides
-              reusable width constraints, grid composition, and section rhythm
-              without feature-specific layout duplication.
+            <Text variant="body-muted" className="mt-4 max-w-3xl">
+              This validation surface confirms that the typography system is
+              token-driven, semantically correct, and reusable across the
+              Control Room / Mission Control portfolio.
             </Text>
           </Panel>
         </Container>
@@ -37,60 +37,56 @@ export default function App(): JSX.Element {
 
       <Section space="standard" surface="subtle">
         <Container>
-          <Grid columns={3} gap="lg">
+          <Grid columns={2} gap="xl">
             <Card>
-              <Text variant="label">container</Text>
-              <Text as="h2" variant="h2" className="mt-3">
-                Width control
+              <Text variant="label">heading hierarchy</Text>
+              <Text as="h1" variant="h1" className="mt-4">
+                H1 — Page title
               </Text>
-              <Text variant="bodyMuted" className="mt-3">
-                Constrains horizontal content width and centers page content.
+              <Text as="h2" variant="h2" className="mt-6">
+                H2 — Section title
+              </Text>
+              <Text as="h3" variant="h3" className="mt-6">
+                H3 — Subsection title
               </Text>
             </Card>
 
             <Card>
-              <Text variant="label">grid</Text>
-              <Text as="h2" variant="h2" className="mt-3">
-                Composition
+              <Text variant="label">body hierarchy</Text>
+              <Text variant="body" className="mt-4">
+                Body text is used for primary readable content and explanatory
+                interface copy.
               </Text>
-              <Text variant="bodyMuted" className="mt-3">
-                Arranges child content using bounded responsive column presets.
+              <Text variant="body-muted" className="mt-4">
+                Muted body text is used for supporting content, secondary
+                explanation, and lower-emphasis messaging.
               </Text>
-            </Card>
-
-            <Card>
-              <Text variant="label">section</Text>
-              <Text as="h2" variant="h2" className="mt-3">
-                Vertical rhythm
-              </Text>
-              <Text variant="bodyMuted" className="mt-3">
-                Defines canonical spacing for major content blocks.
+              <Text variant="caption" className="mt-4">
+                Caption text is reserved for compact supporting information.
               </Text>
             </Card>
-          </Grid>
-        </Container>
-      </Section>
 
-      <Section space="compact" surface="transparent" as="section" aria-labelledby="layout-checks">
-        <Container width="narrow">
-          <Text as="h2" variant="h2" id="layout-checks">
-            Layout composition checks
-          </Text>
-
-          <Grid columns={2} gap="xl" className="mt-6">
             <Panel>
-              <Text variant="label">pairing rule</Text>
-              <Text variant="body" className="mt-3">
-                Section controls vertical rhythm. Container controls width.
+              <Text variant="label">system labels</Text>
+              <Text variant="mono-output" className="mt-4">
+                RUN_ID=TYPOGRAPHY-SYSTEM-READY
+              </Text>
+              <Text variant="caption" className="mt-4">
+                Mono output is intentionally limited to system-like text,
+                technical indicators, and terminal-style readouts.
               </Text>
             </Panel>
 
-            <Panel>
-              <Text variant="label">reuse rule</Text>
-              <Text variant="body" className="mt-3">
-                Grid handles arrangement without introducing page-specific layout logic.
+            <Card variant="elevated">
+              <Text variant="label">semantic composition</Text>
+              <Text as="h2" variant="h2" className="mt-4">
+                Mission Profile
               </Text>
-            </Panel>
+              <Text variant="body-muted" className="mt-4">
+                The Text primitive separates semantics from visual styling while
+                still encouraging correct heading usage.
+              </Text>
+            </Card>
           </Grid>
         </Container>
       </Section>
