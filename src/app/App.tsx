@@ -1,107 +1,141 @@
 /**
- * Root application shell for dependency validation.
+ * Root application shell for WBS 0.3.1 token validation.
  *
- * Purpose:
- * - Confirms that Tailwind utilities render
- * - Confirms Motion resolves in the React runtime
- * - Confirms Lucide React icons render
- * - Confirms React Router primitives resolve
- * - Confirms Zustand resolves and can update local validation state
+ * Responsibilities:
+ * - Provide a temporary surface that proves the token layer is working
+ * - Validate custom colors, typography, shadows, borders, and semantic states
+ * - Keep token verification isolated from future product features
  *
- * This is intentionally NOT product UI.
- * It is a bounded validation shell for WBS 0.2.1 only.
+ * Important:
+ * - This is not the final homepage.
+ * - It should be replaced or absorbed once real feature modules exist.
+ * - No production content or navigation flows belong here yet.
  */
 
-import { useEffect } from "react";
-import { Link } from "react-router";
-import { motion } from "motion/react";
-import { Activity, Route, ShieldCheck } from "lucide-react";
+import { Palette, ShieldCheck, Type, ScanSearch } from "lucide-react";
 
-import { useDependencySmokeStore } from "./smoke/dependencySmokeStore";
+import {
+  TOKEN_ACCENT_PREVIEWS,
+  TOKEN_PREVIEW_ITEMS,
+} from "./smoke/tokenSmokeData";
 
 /**
- * Root application shell.
+ * Maps semantic preview status to a text utility class.
  */
-export default function App() {
-  const validated = useDependencySmokeStore((state) => state.validated);
-  const markValidated = useDependencySmokeStore((state) => state.markValidated);
+function getStatusClass(status?: "pass" | "warn" | "fail"): string {
+  switch (status) {
+    case "pass":
+      return "token-smoke-status-pass";
+    case "warn":
+      return "token-smoke-status-warn";
+    case "fail":
+      return "token-smoke-status-fail";
+    default:
+      return "text-text-primary";
+  }
+}
 
-  /**
-   * Mark the smoke store as validated on first render.
-   *
-   * This proves Zustand is operational without introducing real application state.
-   */
-  useEffect(() => {
-    markValidated();
-  }, [markValidated]);
-
+/**
+ * Root token validation screen.
+ */
+export default function App(): JSX.Element {
   return (
-    <main className="smoke-shell">
-      <div className="smoke-grid">
-        <motion.section
-          className="smoke-panel"
-          aria-labelledby="dependency-smoke-title"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <p className="smoke-eyebrow">DEPENDENCY VALIDATION</p>
+    <main className="token-smoke-shell" aria-labelledby="token-smoke-title">
+      <div className="token-smoke-grid">
+        <section className="token-smoke-panel">
+          <p className="token-smoke-kicker">DESIGN TOKEN VALIDATION</p>
 
-          <h1 id="dependency-smoke-title" className="smoke-title">
-            Core frontend dependencies are wired and ready
+          <h1 id="token-smoke-title" className="token-smoke-title">
+            Canonical portfolio tokens are registered and ready
           </h1>
 
-          <p className="smoke-copy">
-            This temporary validation screen confirms the repository baseline for
-            Tailwind CSS, Motion, Zustand, React Router, and Lucide React before
-            feature implementation begins.
+          <p className="token-smoke-copy">
+            This temporary validation surface confirms that the Control Room /
+            Mission Control token vocabulary is working through Tailwind theme
+            variables and can be consumed consistently across the codebase.
           </p>
 
-          <div className="smoke-status-list" role="list" aria-label="Dependency smoke checks">
-            <article className="smoke-status-card" role="listitem">
+          <div className="token-smoke-grid-cards" role="list" aria-label="Token validation summary">
+            <article className="token-smoke-card" role="listitem">
               <div className="flex items-center gap-3">
-                <ShieldCheck aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+                <Palette aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
                 <div>
-                  <p className="smoke-status-label">Tailwind CSS</p>
-                  <p className="smoke-status-value">Compiled via Vite plugin</p>
+                  <p className="token-smoke-label">Color system</p>
+                  <p className="token-smoke-value">Semantic utilities generated</p>
                 </div>
               </div>
             </article>
 
-            <article className="smoke-status-card" role="listitem">
+            <article className="token-smoke-card" role="listitem">
               <div className="flex items-center gap-3">
-                <Activity aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+                <Type aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
                 <div>
-                  <p className="smoke-status-label">Motion</p>
-                  <p className="smoke-status-value">Animated shell rendered</p>
+                  <p className="token-smoke-label">Typography</p>
+                  <p className="token-smoke-value">Sans + mono families mapped</p>
                 </div>
               </div>
             </article>
 
-            <article className="smoke-status-card" role="listitem">
+            <article className="token-smoke-card" role="listitem">
               <div className="flex items-center gap-3">
-                <Route aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+                <ShieldCheck aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
                 <div>
-                  <p className="smoke-status-label">React Router</p>
-                  <p className="smoke-status-value">BrowserRouter + Link resolved</p>
+                  <p className="token-smoke-label">Consistency</p>
+                  <p className="token-smoke-value">Single styling vocabulary active</p>
                 </div>
               </div>
             </article>
+          </div>
 
-            <article className="smoke-status-card" role="listitem">
-              <p className="smoke-status-label">Zustand</p>
-              <p className="smoke-status-value">
-                {validated ? "Smoke store updated successfully" : "Pending validation"}
+          <div className="mt-10 grid gap-4 lg:grid-cols-2">
+            {TOKEN_PREVIEW_ITEMS.map((item) => (
+              <article key={item.label} className="token-smoke-card">
+                <p className="token-smoke-label">{item.label}</p>
+                <p className={`token-smoke-value ${getStatusClass(item.status)}`}>
+                  {item.value}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <div className="token-smoke-accent-bar" aria-label="Accent token previews">
+            {TOKEN_ACCENT_PREVIEWS.map((item) => (
+              <div
+                key={item.label}
+                className={`token-chip border-border-strong ${item.className}`}
+              >
+                {item.label}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid gap-4 lg:grid-cols-2">
+            <article className="token-smoke-card">
+              <p className="token-smoke-label">Primary UI sample</p>
+              <p className="token-smoke-value">
+                The interface uses <span className="font-sans">Inter</span> through{" "}
+                <code className="token-smoke-mono">font-sans</code>.
+              </p>
+            </article>
+
+            <article className="token-smoke-card">
+              <p className="token-smoke-label">System text sample</p>
+              <p className="token-smoke-value">
+                <span className="font-mono text-accent-green">
+                  RUN_ID=TOKEN-BASELINE-READY
+                </span>
               </p>
             </article>
           </div>
 
-          <div className="mt-8">
-            <Link to="/" className="smoke-link">
-              Re-run dependency validation
-            </Link>
+          <div className="mt-10 flex items-center gap-3 text-text-secondary">
+            <ScanSearch aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
+            <p className="m-0">
+              Next phase: consume these tokens through reusable primitives instead
+              of introducing one-off styles.
+            </p>
           </div>
-        </motion.section>
+        </section>
       </div>
     </main>
   );
