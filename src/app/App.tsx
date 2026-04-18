@@ -1,141 +1,87 @@
+import { Badge, Button, Card, Panel, Text } from "../components/ui";
+import type { JSX } from "react";
+
 /**
- * Root application shell for WBS 0.3.1 token validation.
+ * Primitive smoke-validation surface.
  *
- * Responsibilities:
- * - Provide a temporary surface that proves the token layer is working
- * - Validate custom colors, typography, shadows, borders, and semantic states
- * - Keep token verification isolated from future product features
+ * Purpose:
+ * - Prove that canonical primitives compile and render correctly
+ * - Provide a bounded validation harness for WBS 1.1.1
+ * - Demonstrate role boundaries between Card, Panel, Badge, Button, and Text
  *
  * Important:
  * - This is not the final homepage.
- * - It should be replaced or absorbed once real feature modules exist.
- * - No production content or navigation flows belong here yet.
- */
-
-import { Palette, ShieldCheck, Type, ScanSearch } from "lucide-react";
-
-import {
-  TOKEN_ACCENT_PREVIEWS,
-  TOKEN_PREVIEW_ITEMS,
-} from "./smoke/tokenSmokeData";
-
-/**
- * Maps semantic preview status to a text utility class.
- */
-function getStatusClass(status?: "pass" | "warn" | "fail"): string {
-  switch (status) {
-    case "pass":
-      return "token-smoke-status-pass";
-    case "warn":
-      return "token-smoke-status-warn";
-    case "fail":
-      return "token-smoke-status-fail";
-    default:
-      return "text-text-primary";
-  }
-}
-
-/**
- * Root token validation screen.
+ * - It should be replaced or absorbed by real feature screens later.
  */
 export default function App(): JSX.Element {
   return (
-    <main className="token-smoke-shell" aria-labelledby="token-smoke-title">
-      <div className="token-smoke-grid">
-        <section className="token-smoke-panel">
-          <p className="token-smoke-kicker">DESIGN TOKEN VALIDATION</p>
+    <main className="min-h-screen bg-bg-900 px-6 py-12 text-text-primary">
+      <div className="mx-auto max-w-6xl">
+        <Panel variant="focus" className="mb-10">
+          <Badge variant="info">primitive layer</Badge>
 
-          <h1 id="token-smoke-title" className="token-smoke-title">
-            Canonical portfolio tokens are registered and ready
-          </h1>
+          <Text as="h1" variant="display" className="mt-4">
+            Canonical UI primitives are operational
+          </Text>
 
-          <p className="token-smoke-copy">
-            This temporary validation surface confirms that the Control Room /
-            Mission Control token vocabulary is working through Tailwind theme
-            variables and can be consumed consistently across the codebase.
-          </p>
+          <Text variant="bodyMuted" className="mt-4 max-w-3xl">
+            This validation surface confirms that the base primitive layer is
+            token-driven, accessible by default, and ready for reuse across the
+            Control Room / Mission Control portfolio.
+          </Text>
 
-          <div className="token-smoke-grid-cards" role="list" aria-label="Token validation summary">
-            <article className="token-smoke-card" role="listitem">
-              <div className="flex items-center gap-3">
-                <Palette aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
-                <div>
-                  <p className="token-smoke-label">Color system</p>
-                  <p className="token-smoke-value">Semantic utilities generated</p>
-                </div>
-              </div>
-            </article>
-
-            <article className="token-smoke-card" role="listitem">
-              <div className="flex items-center gap-3">
-                <Type aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
-                <div>
-                  <p className="token-smoke-label">Typography</p>
-                  <p className="token-smoke-value">Sans + mono families mapped</p>
-                </div>
-              </div>
-            </article>
-
-            <article className="token-smoke-card" role="listitem">
-              <div className="flex items-center gap-3">
-                <ShieldCheck aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
-                <div>
-                  <p className="token-smoke-label">Consistency</p>
-                  <p className="token-smoke-value">Single styling vocabulary active</p>
-                </div>
-              </div>
-            </article>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button variant="primary">Run Inspection</Button>
+            <Button variant="secondary">Open Module</Button>
+            <Button variant="ghost">View History</Button>
+            <Button variant="status">Approved</Button>
           </div>
+        </Panel>
 
-          <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            {TOKEN_PREVIEW_ITEMS.map((item) => (
-              <article key={item.label} className="token-smoke-card">
-                <p className="token-smoke-label">{item.label}</p>
-                <p className={`token-smoke-value ${getStatusClass(item.status)}`}>
-                  {item.value}
-                </p>
-              </article>
-            ))}
-          </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card>
+            <Badge variant="success">active</Badge>
+            <Text as="h2" variant="h2" className="mt-4">
+              Card primitive
+            </Text>
+            <Text variant="bodyMuted" className="mt-3">
+              Structured content container for grouped information and lighter
+              surface hierarchy.
+            </Text>
+          </Card>
 
-          <div className="token-smoke-accent-bar" aria-label="Accent token previews">
-            {TOKEN_ACCENT_PREVIEWS.map((item) => (
-              <div
-                key={item.label}
-                className={`token-chip border-border-strong ${item.className}`}
-              >
-                {item.label}
-              </div>
-            ))}
-          </div>
+          <Card variant="elevated">
+            <Badge variant="warning">warning</Badge>
+            <Text as="h2" variant="h2" className="mt-4">
+              Elevated card
+            </Text>
+            <Text variant="bodyMuted" className="mt-3">
+              Stronger grouping for content that needs more surface separation.
+            </Text>
+          </Card>
 
-          <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            <article className="token-smoke-card">
-              <p className="token-smoke-label">Primary UI sample</p>
-              <p className="token-smoke-value">
-                The interface uses <span className="font-sans">Inter</span> through{" "}
-                <code className="token-smoke-mono">font-sans</code>.
-              </p>
-            </article>
+          <Panel>
+            <Badge variant="neutral">system panel</Badge>
+            <Text as="h3" variant="h3" className="mt-4">
+              Panel primitive
+            </Text>
+            <Text variant="bodyMuted" className="mt-3">
+              Higher-emphasis surface intended for hero zones, overlays, and key
+              command areas.
+            </Text>
+          </Panel>
 
-            <article className="token-smoke-card">
-              <p className="token-smoke-label">System text sample</p>
-              <p className="token-smoke-value">
-                <span className="font-mono text-accent-green">
-                  RUN_ID=TOKEN-BASELINE-READY
-                </span>
-              </p>
-            </article>
-          </div>
-
-          <div className="mt-10 flex items-center gap-3 text-text-secondary">
-            <ScanSearch aria-hidden="true" className="h-5 w-5 text-accent-cyan" />
-            <p className="m-0">
-              Next phase: consume these tokens through reusable primitives instead
-              of introducing one-off styles.
-            </p>
-          </div>
-        </section>
+          <Card>
+            <Text variant="label">run_id</Text>
+            <Text as="p" variant="body" className="mt-3">
+              TOKEN-LAYER-READY
+            </Text>
+            <Text variant="caption" className="mt-3">
+              Text primitive supports semantic rendering with consistent
+              token-driven styling.
+            </Text>
+          </Card>
+        </div>
       </div>
     </main>
   );
