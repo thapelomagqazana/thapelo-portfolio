@@ -1,52 +1,108 @@
 /**
- * Root application shell.
+ * Root application shell for dependency validation.
  *
  * Purpose:
- * - Provide the minimal initial render required by WBS 0.1.1
- * - Confirm the scaffold is healthy without introducing feature logic
- * - Establish a stable top-level component boundary for future phases
+ * - Confirms that Tailwind utilities render
+ * - Confirms Motion resolves in the React runtime
+ * - Confirms Lucide React icons render
+ * - Confirms React Router primitives resolve
+ * - Confirms Zustand resolves and can update local validation state
  *
- * This component intentionally does not include:
- * - routing
- * - state management
- * - feature modules
- * - design system primitives
- * - animations
- *
- * Those concerns belong to later WBS tasks.
+ * This is intentionally NOT product UI.
+ * It is a bounded validation shell for WBS 0.2.1 only.
  */
-export default function App(): JSX.Element {
+
+import { useEffect } from "react";
+import { Link } from "react-router";
+import { motion } from "motion/react";
+import { Activity, Route, ShieldCheck } from "lucide-react";
+
+import { useDependencySmokeStore } from "./smoke/dependencySmokeStore";
+
+/**
+ * Root application shell.
+ */
+export default function App() {
+  const validated = useDependencySmokeStore((state) => state.validated);
+  const markValidated = useDependencySmokeStore((state) => state.markValidated);
+
+  /**
+   * Mark the smoke store as validated on first render.
+   *
+   * This proves Zustand is operational without introducing real application state.
+   */
+  useEffect(() => {
+    markValidated();
+  }, [markValidated]);
+
   return (
-    <main className="app-shell" aria-labelledby="app-title">
-      <section className="app-shell__panel" aria-label="Portfolio scaffold status">
-        <p className="app-shell__eyebrow">SYSTEM BOOTSTRAP</p>
+    <main className="smoke-shell">
+      <div className="smoke-grid">
+        <motion.section
+          className="smoke-panel"
+          aria-labelledby="dependency-smoke-title"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p className="smoke-eyebrow">DEPENDENCY VALIDATION</p>
 
-        <h1 id="app-title" className="app-shell__title">
-          Control Room Portfolio Scaffold Ready
-        </h1>
+          <h1 id="dependency-smoke-title" className="smoke-title">
+            Core frontend dependencies are wired and ready
+          </h1>
 
-        <p className="app-shell__description">
-          The React + Vite + TypeScript baseline is initialized successfully and ready
-          for the next implementation phase.
-        </p>
+          <p className="smoke-copy">
+            This temporary validation screen confirms the repository baseline for
+            Tailwind CSS, Motion, Zustand, React Router, and Lucide React before
+            feature implementation begins.
+          </p>
 
-        <dl className="app-shell__status-list">
-          <div className="app-shell__status-item">
-            <dt>Status</dt>
-            <dd>Operational</dd>
+          <div className="smoke-status-list" role="list" aria-label="Dependency smoke checks">
+            <article className="smoke-status-card" role="listitem">
+              <div className="flex items-center gap-3">
+                <ShieldCheck aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+                <div>
+                  <p className="smoke-status-label">Tailwind CSS</p>
+                  <p className="smoke-status-value">Compiled via Vite plugin</p>
+                </div>
+              </div>
+            </article>
+
+            <article className="smoke-status-card" role="listitem">
+              <div className="flex items-center gap-3">
+                <Activity aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+                <div>
+                  <p className="smoke-status-label">Motion</p>
+                  <p className="smoke-status-value">Animated shell rendered</p>
+                </div>
+              </div>
+            </article>
+
+            <article className="smoke-status-card" role="listitem">
+              <div className="flex items-center gap-3">
+                <Route aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+                <div>
+                  <p className="smoke-status-label">React Router</p>
+                  <p className="smoke-status-value">BrowserRouter + Link resolved</p>
+                </div>
+              </div>
+            </article>
+
+            <article className="smoke-status-card" role="listitem">
+              <p className="smoke-status-label">Zustand</p>
+              <p className="smoke-status-value">
+                {validated ? "Smoke store updated successfully" : "Pending validation"}
+              </p>
+            </article>
           </div>
 
-          <div className="app-shell__status-item">
-            <dt>Scope</dt>
-            <dd>WBS 0.1.1</dd>
+          <div className="mt-8">
+            <Link to="/" className="smoke-link">
+              Re-run dependency validation
+            </Link>
           </div>
-
-          <div className="app-shell__status-item">
-            <dt>Baseline</dt>
-            <dd>Initialized</dd>
-          </div>
-        </dl>
-      </section>
+        </motion.section>
+      </div>
     </main>
   );
 }

@@ -2,42 +2,38 @@
  * Application entry point.
  *
  * Responsibilities:
- * - Bootstraps React into the root DOM node
- * - Loads the global stylesheet
- * - Mounts the top-level application shell
+ * - Bootstraps the React application
+ * - Loads the canonical stylesheet entry point
+ * - Mounts the app inside BrowserRouter for dependency smoke validation
  *
- * Notes:
- * - This file should stay intentionally small.
- * - Cross-cutting providers can be added here later
- *   (e.g. router, state, theme, error boundaries).
+ * Why BrowserRouter now?
+ * - WBS 0.2.1 requires React Router import validation
+ * - We validate router compatibility without creating actual route definitions
+ *
+ * Out of scope:
+ * - route trees
+ * - data routers
+ * - navigation flows
+ * - state providers beyond smoke validation
  */
 
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router";
 
 import App from "./app/App";
 import "./styles/index.css";
 
-/**
- * Defensive root lookup.
- *
- * Vite's default entry HTML provides a root element with id="root".
- * This explicit check fails early with a clear message if the HTML
- * contract is broken in the future.
- */
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
   throw new Error('Application bootstrap failed: missing DOM node with id "root".');
 }
 
-/**
- * Create and render the React application root.
- *
- * StrictMode is enabled for development-time checks and safer React code.
- */
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
 );
