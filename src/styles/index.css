@@ -1,0 +1,152 @@
+/**
+ * Global baseline stylesheet.
+ *
+ * Purpose:
+ * - Provide a clean, minimal, framework-agnostic visual baseline
+ * - Replace the default Vite demo styling
+ * - Keep styling intentionally lightweight until the design-token
+ *   and Tailwind phases are implemented
+ *
+ * Important:
+ * - This file is temporary infrastructure styling, not the final design system.
+ * - Do not hard-code a large visual language here.
+ * - Keep it stable and easy to replace in WBS 0.3+.
+ */
+
+/* ------------------------------ */
+/* Root reset and base variables  */
+/* ------------------------------ */
+
+:root {
+  color-scheme: dark;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --bg: #081018;
+  --surface: #0d1722;
+  --surface-border: rgba(125, 170, 210, 0.18);
+  --text-primary: #eaf4ff;
+  --text-secondary: #a9bdd3;
+  --accent: #3ddcff;
+  --shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(61, 220, 255, 0.06);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ------------------------------ */
+/* Universal box sizing           */
+/* ------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ------------------------------ */
+/* Document baseline              */
+/* ------------------------------ */
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, rgba(61, 220, 255, 0.08), transparent 30%),
+    var(--bg);
+  color: var(--text-primary);
+}
+
+/* ------------------------------ */
+/* App shell                      */
+/* ------------------------------ */
+
+.app-shell {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.app-shell__panel {
+  width: min(100%, 720px);
+  padding: 2rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 20px;
+  background: rgba(13, 23, 34, 0.88);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.app-shell__eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.app-shell__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.app-shell__description {
+  margin: 1rem 0 0;
+  max-width: 60ch;
+  color: var(--text-secondary);
+}
+
+.app-shell__status-list {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  margin: 2rem 0 0;
+  padding: 0;
+}
+
+.app-shell__status-item {
+  padding: 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.app-shell__status-item dt {
+  margin: 0 0 0.35rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.app-shell__status-item dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+}
