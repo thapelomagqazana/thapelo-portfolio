@@ -1,4 +1,11 @@
-import { forwardRef } from "react";
+import {
+  forwardRef,
+  type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+  type JSX,
+  type ReactNode,
+  type Ref,
+} from "react";
 
 import { classNames } from "../../lib/classNames";
 import { buttonVariants } from "../../lib/uiVariants";
@@ -14,24 +21,15 @@ export type ButtonVariant = keyof typeof buttonVariants.variant;
 export type ButtonSize = keyof typeof buttonVariants.size;
 
 /**
- * Props for the Button primitive.
+ * Shared visual props for button-like controls.
  *
- * Responsibilities:
- * - Render an accessible button control by default
- * - Provide bounded visual emphasis variants
- * - Provide bounded size options
- * - Allow safe className extension without breaking the base contract
- *
- * Out of scope:
- * - link rendering
- * - loading states
- * - async business logic
- * - icon-only rules beyond ordinary composition
+ * Purpose:
+ * - Keep the visual contract identical for both button and anchor rendering
+ * - Avoid duplicating style-related props across the two render modes
  */
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonBaseProps {
   /**
-   * Visual treatment of the button.
+   * Visual treatment of the control.
    *
    * Defaults to "primary".
    */
@@ -43,44 +41,132 @@ export interface ButtonProps
    * Defaults to "md".
    */
   size?: ButtonSize;
+
+  /**
+   * Optional additional class names.
+   */
+  className?: string;
+
+  /**
+   * Rendered child content.
+   */
+  children?: ReactNode;
 }
+
+/**
+ * Native button rendering mode.
+ *
+ * Responsibilities:
+ * - Support standard interactive button behavior
+ * - Preserve native keyboard and disabled semantics
+ */
+type NativeButtonProps = ButtonBaseProps &
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children"> & {
+    href?: undefined;
+  };
+
+/**
+ * Anchor rendering mode.
+ *
+ * Responsibilities:
+ * - Support semantic navigation when the control is a link
+ * - Prevent invalid nested interactive markup
+ *
+ * Notes:
+ * - `disabled` is intentionally not supported for anchors because
+ *   anchors do not have native disabled behavior.
+ */
+type AnchorButtonProps = ButtonBaseProps &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children"> & {
+    href: string;
+    disabled?: never;
+    type?: never;
+  };
+
+/**
+ * Union of supported button props.
+ *
+ * Behavior:
+ * - if `href` exists, render an anchor
+ * - otherwise, render a button
+ */
+export type ButtonProps = NativeButtonProps | AnchorButtonProps;
 
 /**
  * Canonical Button primitive.
  *
  * Accessibility notes:
- * - Renders a real <button> element
- * - Preserves native keyboard and disabled behavior
- * - Uses visible focus styles for keyboard navigation
+ * - Renders a real <button> by default
+ * - Renders a real <a> when `href` is provided
+ * - Preserves correct semantics for actions vs navigation
+ * - Uses visible focus styles in both modes
+ *
+ * Design notes:
+ * - This stays intentionally bounded
+ * - It does not implement `asChild`
+ * - It does not attempt to become a generic polymorphic component system
  */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(
-    {
-      className,
-      variant = "primary",
-      size = "md",
-      type = "button",
-      disabled,
-      ...props
-    },
-    ref,
-  ) {
-    return (
-      <button
-        ref={ref}
-        type={type}
-        disabled={disabled}
-        className={classNames(
-          "inline-flex items-center justify-center gap-2 rounded-[var(--radius-panel-md)]",
-          "font-medium transition duration-200 ease-out",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900",
-          "disabled:cursor-not-allowed disabled:opacity-50",
-          buttonVariants.variant[variant],
-          buttonVariants.size[size],
-          className,
-        )}
-        {...props}
-      />
-    );
+export const Button = forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  ButtonProps
+>(function Button(
+  {
+    className,
+    variant = "primary",
+    size = "md",
+    children,
+    ...props
   },
-);
+  ref,
+): JSX.Element {
+  const classes = classNames(
+    "inline-flex items-center justify-center gap-2 rounded-[var(--radius-panel-md)]",
+    "font-medium transition duration-200 ease-out",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900",
+    buttonVariants.variant[variant],
+    buttonVariants.size[size],
+    className,
+  );
+
+  /**
+   * Anchor mode.
+   *
+   * Use for navigation targets such as:
+   * - in-page hash links
+   * - internal routes
+   * - external URLs
+   */
+  if ("href" in props && typeof props.href === "string") {
+    return (
+      <a
+        ref={ref as Ref<HTMLAnchorElement>}
+        className={classes}
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  /**
+   * Native button mode.
+   *
+   * Use for:
+   * - click handlers
+   * - form actions
+   * - local UI actions
+   */
+  return (
+    <button
+      ref={ref as Ref<HTMLButtonElement>}
+      type={props.type ?? "button"}
+      className={classNames(
+        classes,
+        props.disabled ? "cursor-not-allowed opacity-50" : "",
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+});
