@@ -1,23 +1,23 @@
-import { AppRouter } from "./router";
-import { MotionProvider } from "./MotionProvider";
 import type { JSX } from "react";
+
+import { MotionProvider } from "./MotionProvider";
+import { ThemeProvider } from "./ThemeProvider";
+import { AppRouter } from "./router";
 
 /**
  * Root application entry component.
  *
  * Responsibilities:
- * - Compose global providers required by the application baseline
- * - Delegate rendering to the canonical router
- *
- * Notes:
- * - Routing is intentionally centralized in AppRouter
- * - MotionProvider remains above the routed tree so all routes inherit
- *   consistent motion behavior
+ * - Compose application-wide providers
+ * - Ensure theme baseline is applied before routed UI renders
+ * - Delegate route rendering to the canonical router
  */
 export default function App(): JSX.Element {
   return (
-    <MotionProvider>
-      <AppRouter />
-    </MotionProvider>
+    <ThemeProvider>
+      <MotionProvider>
+        <AppRouter />
+      </MotionProvider>
+    </ThemeProvider>
   );
 }

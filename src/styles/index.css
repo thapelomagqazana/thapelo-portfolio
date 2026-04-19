@@ -68,6 +68,30 @@
 }
 
 /**
+ * Canonical theme selectors.
+ *
+ * Purpose:
+ * - Establish one approved root-level theme application pattern
+ * - Keep the current dark theme explicit
+ * - Allow future themes to extend the same selector model
+ *
+ * Current phase:
+ * - only [data-theme="dark"] is supported
+ */
+
+/**
+ * Default root theme baseline.
+ *
+ * The app is designed dark-first, so the root variables already align with
+ * the dark visual system. The explicit selector below makes the applied theme
+ * deterministic and future-ready.
+ */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/**
  * Base browser/document normalization.
  */
 :root {
