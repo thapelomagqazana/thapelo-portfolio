@@ -1,78 +1,93 @@
-import { Card, Panel, Text } from "../components/ui";
 import { Container, Grid, Section } from "../components/layout";
 import { KPIValue, StatusChip, SystemBadge } from "../components/system";
+import { Card, Panel, Text } from "../components/ui";
+import { FadeIn, GlowPulse, SlideUp } from "../components/motion";
+import { MotionProvider } from "./MotionProvider";
 import type { JSX } from "react";
 
 /**
- * Status and metric validation surface.
+ * Motion system validation surface.
  *
  * Purpose:
- * - Prove that canonical status/metric primitives render correctly
- * - Demonstrate separation between status, metadata, and KPI display
- * - Validate normalized PASS/WARN/FAIL presentation
+ * - Demonstrate the canonical motion presets
+ * - Validate reduced-motion-safe composition
+ * - Prove helper reuse across different UI primitives
  *
  * Important:
- * - This is not the final homepage
- * - It is a bounded validation harness for WBS 1.4.1
+ * - This is not the final product screen
+ * - It is a bounded WBS 1.5.1 validation harness
  */
 export default function App(): JSX.Element {
   return (
-    <main className="min-h-screen bg-bg-900 text-text-primary">
-      <Section space="hero">
-        <Container width="wide">
-          <Panel variant="focus">
-            <SystemBadge variant="info">status system</SystemBadge>
+    <MotionProvider>
+      <main className="min-h-screen bg-bg-900 text-text-primary">
+        <Section space="hero">
+          <Container width="wide">
+            <SlideUp>
+              <Panel variant="focus">
+                <SystemBadge variant="info">motion system</SystemBadge>
 
-            <Text as="h1" variant="display" className="mt-4">
-              Canonical status and metric primitives are operational
-            </Text>
+                <Text as="h1" variant="display" className="mt-4">
+                  Canonical motion helpers are operational
+                </Text>
 
-            <Text variant="body-muted" className="mt-4 max-w-3xl">
-              This validation surface confirms that operational state,
-              metadata labeling, and KPI display are separated cleanly and
-              rendered through a centralized semantic vocabulary.
-            </Text>
+                <Text variant="body-muted" className="mt-4 max-w-3xl">
+                  This validation surface confirms that fade, slide, and glow
+                  emphasis behaviors are centralized, reusable, and reduced-motion aware.
+                </Text>
+              </Panel>
+            </SlideUp>
+          </Container>
+        </Section>
+
+        <Section space="standard" surface="subtle">
+          <Container>
+            <Grid columns={3} gap="lg">
+              <FadeIn>
+                <Card>
+                  <Text variant="label">fade in</Text>
+                  <Text as="h2" variant="h2" className="mt-4">
+                    Content appearance
+                  </Text>
+                  <Text variant="body-muted" className="mt-3">
+                    Opacity-only entrance for calm, readable reveal.
+                  </Text>
+                </Card>
+              </FadeIn>
+
+              <SlideUp>
+                <Card>
+                  <Text variant="label">slide up</Text>
+                  <Text as="h2" variant="h2" className="mt-4">
+                    Entrance motion
+                  </Text>
+                  <Text variant="body-muted" className="mt-3">
+                    Subtle vertical entry using opacity and transform.
+                  </Text>
+                </Card>
+              </SlideUp>
+
+              <GlowPulse>
+                <KPIValue label="Release Confidence" value="92%" tone="success" />
+              </GlowPulse>
+            </Grid>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <StatusChip status="PASS" />
-              <StatusChip status="WARN" />
-              <StatusChip status="FAIL" />
-            </div>
-          </Panel>
-        </Container>
-      </Section>
+              <GlowPulse>
+                <StatusChip status="PASS" value="ready" />
+              </GlowPulse>
 
-      <Section space="standard" surface="subtle">
-        <Container>
-          <Grid columns={3} gap="lg">
-            <Card>
-              <Text variant="label">normalized statuses</Text>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <StatusChip status="PASS" value="98%" />
+              <FadeIn>
                 <StatusChip status="WARN" value="latency" />
+              </FadeIn>
+
+              <SlideUp>
                 <StatusChip status="FAIL" value="blocked" />
-              </div>
-            </Card>
-
-            <Card>
-              <Text variant="label">metadata badges</Text>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <SystemBadge>module</SystemBadge>
-                <SystemBadge variant="info">production</SystemBadge>
-                <SystemBadge variant="active">live</SystemBadge>
-              </div>
-            </Card>
-
-            <Card>
-              <Text variant="label">kpi display</Text>
-              <div className="mt-4 grid gap-3">
-                <KPIValue label="Release Confidence" value="92%" tone="success" />
-                <KPIValue label="Risk Signal" value="Warning" tone="warning" />
-              </div>
-            </Card>
-          </Grid>
-        </Container>
-      </Section>
-    </main>
+              </SlideUp>
+            </div>
+          </Container>
+        </Section>
+      </main>
+    </MotionProvider>
   );
 }
