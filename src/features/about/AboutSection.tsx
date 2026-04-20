@@ -6,6 +6,7 @@ import { Card, Panel, Text } from "../../components/ui";
 import { classNames } from "../../lib/classNames";
 import { DEFAULT_ABOUT_SECTION_CONTENT } from "./aboutContent";
 import type { AboutSectionContent, AboutSectionSlots } from "./aboutTypes";
+import { CapabilitiesPanel } from "../capabilities";
 
 /**
  * Props for the canonical AboutSection component.
@@ -70,29 +71,11 @@ function DefaultStoryRegion({
  * Default capabilities region renderer.
  *
  * Purpose:
- * - Provide a concise, scannable capability surface
- * - Preserve clear separation from the narrative story region
+ * - Delegate capability presentation to the canonical panel component
+ * - Keep the About layout shell separate from capability presentation logic
  */
-function DefaultCapabilitiesRegion({
-  title,
-  items,
-}: AboutSectionContent["capabilities"]): JSX.Element {
-  return (
-    <Panel variant="focus" className="h-full">
-      <Text variant="label">capabilities</Text>
-      <Text as="h3" variant="h3" className="mt-4">
-        {title}
-      </Text>
-
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        {items.map((item) => (
-          <Card key={item} className="bg-bg-800/80">
-            <Text variant="body">{item}</Text>
-          </Card>
-        ))}
-      </div>
-    </Panel>
-  );
+function DefaultCapabilitiesRegion(): JSX.Element {
+  return <CapabilitiesPanel />;
 }
 
 /**
@@ -146,9 +129,7 @@ export function AboutSection({
           </div>
 
           <div data-region="capabilities">
-            {slots?.capabilities ?? (
-              <DefaultCapabilitiesRegion {...content.capabilities} />
-            )}
+            {slots?.capabilities ?? <DefaultCapabilitiesRegion />}
           </div>
         </Grid>
       </Container>
