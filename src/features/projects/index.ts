@@ -3,4 +3,5 @@
  */
 export * from "./ModuleCard";
 export * from "./projectData";
-export * from "./projectTypes";
+export * from "./projectModel";
+export * from "./projectValidation";

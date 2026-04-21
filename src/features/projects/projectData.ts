@@ -1,20 +1,21 @@
-import type { ProjectModule } from "./projectTypes";
+import type { ProjectModule } from "./projectModel";
+import { assertProjectModule } from "./projectValidation";
 
 /**
- * Canonical example module fixtures.
+ * Canonical example project-module fixtures.
  *
  * Purpose:
- * - Provide bounded data for validation and testing
- * - Keep module-card rendering driven by structured data
- * - Support early module-list/grid work without duplicating sample objects
+ * - Provide bounded example data for rendering and testing
+ * - Prove the canonical model is usable in real UI scenarios
+ * - Create a stable source of truth for early project-module work
  */
-export const DEFAULT_PROJECT_MODULES: readonly ProjectModule[] = [
+const RAW_PROJECT_MODULES: readonly ProjectModule[] = [
   {
     id: "brikbyteos",
     name: "BrikByteOS",
     status: "ACTIVE",
     description:
-      "A release-intelligence operating system focused on quality orchestration, evidence-driven confidence, and structured certification workflows.",
+      "A release-intelligence operating system focused on evidence-driven confidence, policy gates, and structured release orchestration.",
     techStack: ["Go", "OPA", "JSON Schema", "CLI", "React"],
     href: "/projects/brikbyteos",
   },
@@ -23,8 +24,22 @@ export const DEFAULT_PROJECT_MODULES: readonly ProjectModule[] = [
     name: "Cargo Pulse",
     status: "DEPLOYED",
     description:
-      "A marketing-focused cargo tracking experience that translates logistics visibility into a clean, engaging frontend system.",
+      "A cargo-tracking web experience designed to translate logistics visibility into a clear, marketing-ready frontend system.",
     techStack: ["React", "Bootstrap", "Leaflet", "Docker", "Nginx"],
-    href: "/projects/cargo-pulse",
+    href: "/projects/brikbyteos",
   },
 ] as const;
+
+/**
+ * Runtime assertion pass for all canonical fixtures.
+ *
+ * Purpose:
+ * - Catch invalid fixture drift immediately during module import in development/test
+ * - Keep the dataset aligned with the canonical model
+ */
+RAW_PROJECT_MODULES.forEach(assertProjectModule);
+
+/**
+ * Canonical exported project-module fixture set.
+ */
+export const DEFAULT_PROJECT_MODULES: readonly ProjectModule[] = RAW_PROJECT_MODULES;

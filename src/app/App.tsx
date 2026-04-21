@@ -24,7 +24,6 @@ export default function App(): JSX.Element {
     <ThemeProvider>
       <MotionProvider>
         <MainLayout>
-          {/* HERO */}
           <HeroSystem
             preview={
               <div className="space-y-4">
@@ -34,11 +33,9 @@ export default function App(): JSX.Element {
             }
           />
 
-          {/* ABOUT */}
           <AboutSection />
 
-          {/* PROJECT MODULES */}
-          <Section space="default" aria-labelledby="projects-title">
+          <Section space="standard" aria-labelledby="projects-title">
             <Container width="wide">
               <Text
                 as="h2"
