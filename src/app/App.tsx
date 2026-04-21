@@ -4,33 +4,27 @@ import { HeroSystem } from "../features/hero";
 import { TerminalSimulator } from "../features/terminal";
 import { SystemDashboard } from "../features/dashboard";
 import { AboutSection } from "../features/about";
+import { ModuleCard, DEFAULT_PROJECT_MODULES } from "../features/projects";
 import { MotionProvider } from "./MotionProvider";
 import { ThemeProvider } from "./ThemeProvider";
 import { MainLayout } from "../components/layout-shell";
+import { Section, Container, Grid } from "../components/layout";
+import { Text } from "../components/ui";
 
 /**
  * Root application validation entry component.
  *
- * Responsibilities:
- * - Compose application-wide providers
- * - Use MainLayout as the canonical shell
- * - Render the final “Control Room Hero” experience
- *
  * Validation scope:
- * - Navbar (via MainLayout)
- * - HeroSystem (with preview slot)
+ * - HeroSystem (with preview)
  * - AboutSection
- * - Footer (via MainLayout)
- *
- * Notes:
- * - Terminal + Dashboard are now part of the Hero preview
- * - This represents the final Phase 3 composition
+ * - ModuleCard system
  */
 export default function App(): JSX.Element {
   return (
     <ThemeProvider>
       <MotionProvider>
         <MainLayout>
+          {/* HERO */}
           <HeroSystem
             preview={
               <div className="space-y-4">
@@ -40,7 +34,28 @@ export default function App(): JSX.Element {
             }
           />
 
+          {/* ABOUT */}
           <AboutSection />
+
+          {/* PROJECT MODULES */}
+          <Section space="default" aria-labelledby="projects-title">
+            <Container width="wide">
+              <Text
+                as="h2"
+                variant="h2"
+                id="projects-title"
+                className="mb-6"
+              >
+                System Modules
+              </Text>
+
+              <Grid columns={2} gap="lg">
+                {DEFAULT_PROJECT_MODULES.map((module) => (
+                  <ModuleCard key={module.id} module={module} />
+                ))}
+              </Grid>
+            </Container>
+          </Section>
         </MainLayout>
       </MotionProvider>
     </ThemeProvider>
