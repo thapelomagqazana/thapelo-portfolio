@@ -1,92 +1,147 @@
-import { Link, useParams } from "react-router";
+import type { JSX } from "react";
+import { useParams } from "react-router-dom";
+
 import { Container, Section } from "../components/layout";
 import { StatusChip, SystemBadge } from "../components/system";
-import { Card, Panel, Text } from "../components/ui";
-import { ROUTE_PATHS } from "../app/routePaths";
-import { getProjectByRouteId, normalizeProjectId } from "../routes/projectRoute";
-import type { JSX } from "react";
+import { Card, Text } from "../components/ui";
+import { findProjectDetailById, getProjectDetailSections } from "../features/projects/projectDetailUtils";
+import type { ProjectDetail } from "../features/projects/projectDetailModel";
 
 /**
- * Project detail route page.
+ * Maps project-module status to the canonical status-chip vocabulary.
+ *
+ * Rationale:
+ * - DEPLOYED is presented as a pass-like stable state
+ * - ACTIVE is presented as a warn-like active/in-progress state
+ */
+function mapProjectStatusToChipStatus(
+  status: ProjectDetail["status"],
+): "PASS" | "WARN" {
+  return status === "DEPLOYED" ? "PASS" : "WARN";
+}
+
+/**
+ * Bounded not-found state for unknown project ids.
  *
  * Responsibilities:
- * - Read the `id` route parameter
- * - Resolve known vs unknown project identifiers deterministically
- * - Render a bounded detail shell without introducing full project feature logic
+ * - Fail gracefully when the route id does not resolve
+ * - Keep the UI bounded and readable
+ * - Avoid crashing or showing a blank screen
+ */
+function ProjectNotFoundState({ id }: { readonly id?: string }): JSX.Element {
+  return (
+    <Section space="standard" aria-labelledby="project-not-found-title">
+      <Container width="narrow">
+        <SystemBadge variant="warning">not found</SystemBadge>
+
+        <Text
+          as="h1"
+          variant="h1"
+          id="project-not-found-title"
+          className="mt-4"
+        >
+          Project module not found
+        </Text>
+
+        <Text variant="body-muted" className="mt-4">
+          The requested project detail could not be resolved from the canonical
+          project dataset.
+        </Text>
+
+        {id ? (
+          <Text variant="mono-output" className="mt-6">
+            REQUESTED_ID={id}
+          </Text>
+        ) : null}
+      </Container>
+    </Section>
+  );
+}
+
+/**
+ * Canonical project detail route and view.
  *
- * Behavior:
- * - known project id   -> renders project route shell
- * - unknown project id -> renders graceful fallback state
+ * Responsibilities:
+ * - Resolve a project detail from the route parameter
+ * - Render structured project-detail content
+ * - Fail gracefully when the route id is invalid
+ *
+ * Accessibility notes:
+ * - Uses semantic heading hierarchy
+ * - Keeps detail sections structured and readable
  */
 export function ProjectDetailPage(): JSX.Element {
-  const { id } = useParams();
-  const normalizedId = normalizeProjectId(id);
-  const project = getProjectByRouteId(id);
+  const { id } = useParams<{ id: string }>();
+
+  if (!id) {
+    return <ProjectNotFoundState />;
+  }
+
+  const project = findProjectDetailById(id);
+
+  if (!project) {
+    return <ProjectNotFoundState id={id} />;
+  }
+
+  const sections = getProjectDetailSections(project);
 
   return (
-    <main className="min-h-screen bg-bg-900 text-text-primary">
-      <Section space="hero">
-        <Container width="narrow">
-          <Panel variant="focus">
-            <SystemBadge variant="info">project detail route</SystemBadge>
+    <Section
+      space="standard"
+      aria-labelledby="project-detail-title"
+      data-page="project-detail"
+    >
+      <Container width="wide">
+        <div className="max-w-4xl">
+          <div className="flex flex-wrap items-center gap-3">
+            <SystemBadge variant="info">project detail</SystemBadge>
+            <StatusChip
+              status={mapProjectStatusToChipStatus(project.status)}
+              value={project.status}
+            />
+          </div>
 
-            <Text as="h1" variant="display" className="mt-4">
-              {project ? project.title : "Unknown Project Route"}
-            </Text>
+          <Text
+            as="h1"
+            variant="h1"
+            id="project-detail-title"
+            className="mt-4"
+          >
+            {project.name}
+          </Text>
 
-            <Text variant="body-muted" className="mt-4">
-              Route parameter received:{" "}
-              <span className="font-mono text-accent-green">
-                {normalizedId || "(missing)"}
-              </span>
-            </Text>
+          <Text variant="body-muted" className="mt-4">
+            {project.summary ?? project.description}
+          </Text>
 
-            <div className="mt-6">
-              <StatusChip status={project ? "PASS" : "WARN"} />
-            </div>
-          </Panel>
-        </Container>
-      </Section>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {project.techStack.map((tech) => (
+              <SystemBadge key={tech}>{tech}</SystemBadge>
+            ))}
+          </div>
+        </div>
 
-      <Section space="standard" surface="subtle">
-        <Container width="narrow">
-          {project ? (
-            <Card>
-              <Text variant="label">project summary</Text>
-              <Text variant="body" className="mt-4">
-                {project.summary}
+        <div className="mt-10 grid gap-6">
+          {sections.map((section) => (
+            <Card key={section.title}>
+              <Text as="h2" variant="h2">
+                {section.title}
               </Text>
 
-              <Text variant="caption" className="mt-6">
-                This is the bounded placeholder shell for a known project detail
-                route in WBS 2.1.1.
-              </Text>
-            </Card>
-          ) : (
-            <Card>
-              <Text variant="label">fallback state</Text>
-              <Text as="h2" variant="h2" className="mt-4">
-                Project route not found
-              </Text>
-
-              <Text variant="body-muted" className="mt-4">
-                The requested project identifier is not part of the approved
-                routing baseline. The application remains stable and provides a
-                bounded fallback instead of crashing.
-              </Text>
-
-              <div className="mt-6">
-                <Link
-                  to={ROUTE_PATHS.home}
-                  className="inline-flex h-11 items-center justify-center rounded-[var(--radius-panel-md)] border border-border-strong px-4 text-sm font-medium text-text-primary transition hover:bg-bg-750"
-                >
-                  Return Home
-                </Link>
+              <div className="mt-4 space-y-4">
+                {section.paragraphs.map((paragraph, index) => (
+                  <Text
+                    key={`${section.title}-paragraph-${index}`}
+                    variant="body-muted"
+                  >
+                    {paragraph}
+                  </Text>
+                ))}
               </div>
             </Card>
-          )}
-        </Container>
-      </Section>
-    </main>
+          ))}
+        </div>
+      </Container>
+    </Section>
   );
 }

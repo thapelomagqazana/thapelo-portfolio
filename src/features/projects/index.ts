@@ -3,5 +3,8 @@
  */
 export * from "./ModuleCard";
 export * from "./projectData";
+export * from "./projectDetailData";
+export * from "./projectDetailModel";
+export * from "./projectDetailUtils";
 export * from "./projectModel";
 export * from "./projectValidation";

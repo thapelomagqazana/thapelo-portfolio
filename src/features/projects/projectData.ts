@@ -26,7 +26,7 @@ const RAW_PROJECT_MODULES: readonly ProjectModule[] = [
     description:
       "A cargo-tracking web experience designed to translate logistics visibility into a clear, marketing-ready frontend system.",
     techStack: ["React", "Bootstrap", "Leaflet", "Docker", "Nginx"],
-    href: "/projects/brikbyteos",
+    href: "/projects/cargo-pulse",
   },
 ] as const;
 
