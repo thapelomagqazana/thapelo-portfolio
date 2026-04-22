@@ -1,4 +1,8 @@
-import type { SiteNavigationItem, SiteSectionId } from "./navigation.types";
+import type {
+  NavigationLabelStyle,
+  SiteNavigationItem,
+  SiteSectionId,
+} from "./navigation.types";
 import { MobileNavPanel } from "./MobileNavPanel";
 import { useLockBodyScroll } from "../../hooks/useLockBodyScroll";
 
@@ -9,6 +13,7 @@ export interface MobileNavSheetProps {
   readonly isOpen: boolean;
   readonly items: readonly SiteNavigationItem[];
   readonly activeSection: SiteSectionId;
+  readonly labelStyle: NavigationLabelStyle;
   readonly onClose: () => void;
 }
 
@@ -18,17 +23,13 @@ export interface MobileNavSheetProps {
  * Responsibilities:
  * - Render backdrop + mobile panel as one overlay system
  * - Prevent background interaction while open
- * - Preserve a clean, focused navigation experience on small screens
- *
- * Accessibility:
- * - Backdrop prevents background interaction
- * - Body scroll is locked while open
- * - Panel remains the only interactive focus region
+ * - Preserve the same label system as desktop navigation
  */
 export function MobileNavSheet({
   isOpen,
   items,
   activeSection,
+  labelStyle,
   onClose,
 }: MobileNavSheetProps) {
   useLockBodyScroll(isOpen);
@@ -56,6 +57,7 @@ export function MobileNavSheet({
         isOpen={isOpen}
         items={items}
         activeSection={activeSection}
+        labelStyle={labelStyle}
         onClose={onClose}
       />
     </div>

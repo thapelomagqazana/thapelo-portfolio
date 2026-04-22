@@ -1,7 +1,11 @@
 import type { MouseEvent } from "react";
 import { classNames } from "../../lib/classNames";
 import { scrollToSection } from "../../lib/scrollToSection";
-import type { SiteNavigationItem } from "./navigation.types";
+import { getNavigationLabel } from "./navigation.content";
+import type {
+  NavigationLabelStyle,
+  SiteNavigationItem,
+} from "./navigation.types";
 
 /**
  * Props for the SiteNavLink component.
@@ -10,6 +14,14 @@ export interface SiteNavLinkProps {
   readonly item: SiteNavigationItem;
   readonly isActive: boolean;
   readonly onNavigate?: () => void;
+
+  /**
+   * Visible label style for the navigation item.
+   *
+   * Default:
+   * - balanced
+   */
+  readonly labelStyle?: NavigationLabelStyle;
 }
 
 /**
@@ -19,15 +31,17 @@ export interface SiteNavLinkProps {
  * - Render one consistent navigation target
  * - Support active-state styling across desktop and mobile surfaces
  * - Trigger smooth in-page scrolling with predictable section alignment
+ * - Keep visible labeling consistent with the selected thematic style
  *
  * Accessibility:
  * - Applies `aria-current="page"` to the active destination
- * - Uses clear text labels with strong focus treatment
+ * - Uses clear accessible names independent of visual styling
  */
 export function SiteNavLink({
   item,
   isActive,
   onNavigate,
+  labelStyle = "balanced",
 }: SiteNavLinkProps) {
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
@@ -40,6 +54,7 @@ export function SiteNavLink({
     <a
       href={item.href}
       onClick={handleClick}
+      aria-label={item.ariaLabel}
       aria-current={isActive ? "page" : undefined}
       className={classNames(
         "inline-flex min-h-11 items-center rounded-[var(--radius-panel-md)] px-3 py-2 text-sm font-medium transition-[color,background-color,border-color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900",
@@ -55,7 +70,7 @@ export function SiteNavLink({
         )}
         aria-hidden="true"
       />
-      {item.label}
+      {getNavigationLabel(item, labelStyle)}
     </a>
   );
 }

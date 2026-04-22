@@ -4,6 +4,7 @@ import { SiteNavLink } from "./SiteNavLink";
 import { MobileNavSheet } from "./MobileNavSheet";
 import { MobileNavTrigger } from "./MobileNavTrigger";
 import { useActiveSection } from "../../hooks/useActiveSection";
+import type { NavigationLabelStyle } from "./navigation.types";
 
 /**
  * Sticky primary site navigation.
@@ -13,6 +14,7 @@ import { useActiveSection } from "../../hooks/useActiveSection";
  * - Reflect the active section clearly
  * - Support both desktop and mobile navigation experiences
  * - Preserve the intended mission flow from identity to action
+ * - Enforce one coherent navigation labeling system
  *
  * Accessibility:
  * - Exposes a named primary navigation region
@@ -26,6 +28,16 @@ export function SiteNavigation() {
 
   const activeSection = useActiveSection(sectionIds);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+  /**
+   * Choose the visible label strategy for the navigation.
+   *
+   * Recommendation:
+   * - Use "balanced" as the default for highest clarity
+   * - Switch to "enhanced" only if the rest of the section system uses the
+   *   same naming consistently
+   */
+  const labelStyle: NavigationLabelStyle = "balanced";
 
   return (
     <>
@@ -53,6 +65,7 @@ export function SiteNavigation() {
                 key={item.id}
                 item={item}
                 isActive={item.id === activeSection}
+                labelStyle={labelStyle}
               />
             ))}
           </nav>
@@ -68,6 +81,7 @@ export function SiteNavigation() {
         isOpen={isMobileOpen}
         items={PRIMARY_SITE_NAV_ITEMS}
         activeSection={activeSection}
+        labelStyle={labelStyle}
         onClose={() => setIsMobileOpen(false)}
       />
     </>

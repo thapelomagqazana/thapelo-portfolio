@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
-import type { SiteNavigationItem, SiteSectionId } from "./navigation.types";
+import type {
+  NavigationLabelStyle,
+  SiteNavigationItem,
+  SiteSectionId,
+} from "./navigation.types";
 import { SiteNavLink } from "./SiteNavLink";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 
@@ -7,24 +11,10 @@ import { useFocusTrap } from "../../hooks/useFocusTrap";
  * Props for the MobileNavPanel component.
  */
 export interface MobileNavPanelProps {
-  /**
-   * Whether the panel is visible.
-   */
   readonly isOpen: boolean;
-
-  /**
-   * Navigation items to render.
-   */
   readonly items: readonly SiteNavigationItem[];
-
-  /**
-   * Currently active section id.
-   */
   readonly activeSection: SiteSectionId;
-
-  /**
-   * Called when the panel should close.
-   */
+  readonly labelStyle: NavigationLabelStyle;
   readonly onClose: () => void;
 }
 
@@ -34,18 +24,14 @@ export interface MobileNavPanelProps {
  * Responsibilities:
  * - Render a clean, vertically stacked touch-first navigation sheet
  * - Preserve the same navigation meaning and order as desktop
+ * - Preserve the same thematic label system as desktop
  * - Keep focus trapped while the panel is open
- * - Support Escape-to-close and explicit close control
- *
- * Accessibility:
- * - Exposes a named dialog-like region
- * - Traps focus while open
- * - Supports Escape to close
  */
 export function MobileNavPanel({
   isOpen,
   items,
   activeSection,
+  labelStyle,
   onClose,
 }: MobileNavPanelProps) {
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -107,6 +93,7 @@ export function MobileNavPanel({
               key={item.id}
               item={item}
               isActive={item.id === activeSection}
+              labelStyle={labelStyle}
               onNavigate={onClose}
             />
           ))}
