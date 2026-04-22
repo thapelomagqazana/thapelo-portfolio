@@ -1,6 +1,7 @@
 import type { HeroMetric } from "./hero.types";
 import { Panel } from "../ui/Panel";
 import { StatusChip } from "../ui/StatusChip";
+import { heroPanelSweepClass } from "../../lib/motion";
 
 /**
  * Props for the hero dashboard summary panel.
@@ -25,7 +26,7 @@ export interface SystemDashboardProps {
 export function SystemDashboard({ metrics }: SystemDashboardProps) {
   return (
     <Panel
-      className="hero-panel-sweep grid gap-4"
+      className={`${heroPanelSweepClass()} grid gap-4`}
       role="region"
       aria-label="Release confidence summary"
     >
@@ -46,7 +47,7 @@ export function SystemDashboard({ metrics }: SystemDashboardProps) {
             key={metric.label}
             role="group"
             aria-label={`Metric: ${metric.label}`}
-            className="rounded-[var(--radius-panel-lg)] border border-border-subtle bg-bg-800/70 p-4"
+            className="rounded-[var(--radius-panel-lg)] border border-border-subtle bg-bg-800/70 p-4 transition-transform duration-200 ease-out hover:-translate-y-0.5"
           >
             <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
               {metric.label}

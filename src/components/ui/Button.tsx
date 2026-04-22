@@ -10,43 +10,27 @@ import { classNames } from "../../lib/classNames";
  */
 export type ButtonVariant = "primary" | "secondary" | "tertiary";
 
-/**
- * Shared props for both button and link rendering modes.
- */
 interface ButtonBaseProps {
   readonly children: ReactNode;
   readonly variant?: ButtonVariant;
   readonly className?: string;
 }
 
-/**
- * Native button props.
- */
 type NativeButtonProps = ButtonBaseProps &
   ButtonHTMLAttributes<HTMLButtonElement> & {
     readonly href?: never;
   };
 
-/**
- * Anchor button props.
- */
 type AnchorButtonProps = ButtonBaseProps &
   AnchorHTMLAttributes<HTMLAnchorElement> & {
     readonly href: string;
     readonly type?: never;
   };
 
-/**
- * Canonical discriminated union for the button primitive.
- */
 export type ButtonProps = NativeButtonProps | AnchorButtonProps;
 
 /**
  * Type guard for anchor-style button props.
- *
- * Purpose:
- * - Safely narrow the union before prop spreading
- * - Prevent button-only props from leaking into anchor rendering
  */
 function isAnchorButtonProps(props: ButtonProps): props is AnchorButtonProps {
   return typeof props.href === "string";
@@ -59,11 +43,11 @@ function isAnchorButtonProps(props: ButtonProps): props is AnchorButtonProps {
  * - Render a consistent CTA primitive for hero and future sections
  * - Support both anchor and native button modes
  * - Preserve accessible focus states and predictable interaction behavior
- * - Provide visual hierarchy for primary, secondary, and tertiary actions
+ * - Provide subtle hover motion that does not feel noisy
  */
 export function Button(props: ButtonProps) {
   const baseClasses =
-    "inline-flex min-h-11 items-center justify-center rounded-[var(--radius-panel-md)] px-5 py-3 text-sm font-semibold transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900";
+    "inline-flex min-h-11 items-center justify-center rounded-[var(--radius-panel-md)] px-5 py-3 text-sm font-semibold transition-[transform,box-shadow,border-color,background-color,color] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900";
 
   const variantClasses =
     props.variant === "primary"

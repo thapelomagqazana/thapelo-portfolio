@@ -14,9 +14,13 @@ export interface TerminalPreviewProps {
  * Terminal-inspired preview panel.
  *
  * Responsibilities:
- * - Reinforce the engineering-console theme with a believable CLI surface.
- * - Provide deterministic, non-interactive hero feedback without JS complexity.
- * - Remain accessible and readable on all screen sizes.
+ * - Reinforce the engineering-console theme with a believable CLI surface
+ * - Provide deterministic hero feedback without heavy runtime animation
+ * - Keep the terminal feeling active through a lightweight blinking cursor
+ *
+ * Accessibility:
+ * - Exposes the panel as a named region
+ * - Uses readable text and keeps decorative terminal dots hidden from assistive tech
  */
 export function TerminalPreview({
   command,
@@ -24,7 +28,12 @@ export function TerminalPreview({
   id = "terminal-preview",
 }: TerminalPreviewProps) {
   return (
-    <Panel id={id} className="bg-bg-900/80">
+    <Panel
+      id={id}
+      className="bg-bg-900/80"
+      role="region"
+      aria-label="Terminal preview"
+    >
       <div className="mb-4 flex items-center gap-2" aria-hidden="true">
         <span className="h-3 w-3 rounded-full bg-accent-red/80" />
         <span className="h-3 w-3 rounded-full bg-accent-amber/80" />
@@ -48,7 +57,9 @@ export function TerminalPreview({
         </div>
 
         <p className="mt-3 text-accent-cyan">
-          <span aria-hidden="true" className="terminal-cursor">▋</span>
+          <span aria-hidden="true" className="terminal-cursor">
+            ▋
+          </span>
           <span className="sr-only">Active terminal cursor</span>
         </p>
       </div>
