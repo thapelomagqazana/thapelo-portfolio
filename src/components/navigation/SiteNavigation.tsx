@@ -11,7 +11,7 @@ import type { NavigationLabelStyle } from "./navigation.types";
  *
  * Responsibilities:
  * - Keep section navigation available while scrolling
- * - Reflect the active section clearly
+ * - Reflect the active section clearly and persistently
  * - Support both desktop and mobile navigation experiences
  * - Preserve the intended mission flow from identity to action
  * - Enforce one coherent navigation labeling system
@@ -19,6 +19,7 @@ import type { NavigationLabelStyle } from "./navigation.types";
  * Accessibility:
  * - Exposes a named primary navigation region
  * - Preserves keyboard access and strong focus indicators
+ * - Uses active-state semantics through `aria-current`
  */
 export function SiteNavigation() {
   const sectionIds = useMemo(
@@ -29,14 +30,6 @@ export function SiteNavigation() {
   const activeSection = useActiveSection(sectionIds);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  /**
-   * Choose the visible label strategy for the navigation.
-   *
-   * Recommendation:
-   * - Use "balanced" as the default for highest clarity
-   * - Switch to "enhanced" only if the rest of the section system uses the
-   *   same naming consistently
-   */
   const labelStyle: NavigationLabelStyle = "balanced";
 
   return (

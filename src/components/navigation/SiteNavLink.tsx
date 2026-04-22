@@ -2,6 +2,7 @@ import type { MouseEvent } from "react";
 import { classNames } from "../../lib/classNames";
 import { scrollToSection } from "../../lib/scrollToSection";
 import { getNavigationLabel } from "./navigation.content";
+import { ActiveSectionIndicator } from "./ActiveSectionIndicator";
 import type {
   NavigationLabelStyle,
   SiteNavigationItem,
@@ -14,13 +15,6 @@ export interface SiteNavLinkProps {
   readonly item: SiteNavigationItem;
   readonly isActive: boolean;
   readonly onNavigate?: () => void;
-
-  /**
-   * Visible label style for the navigation item.
-   *
-   * Default:
-   * - balanced
-   */
   readonly labelStyle?: NavigationLabelStyle;
 }
 
@@ -36,6 +30,7 @@ export interface SiteNavLinkProps {
  * Accessibility:
  * - Applies `aria-current="page"` to the active destination
  * - Uses clear accessible names independent of visual styling
+ * - Keeps focus state and active state visually distinct
  */
 export function SiteNavLink({
   item,
@@ -57,19 +52,13 @@ export function SiteNavLink({
       aria-label={item.ariaLabel}
       aria-current={isActive ? "page" : undefined}
       className={classNames(
-        "inline-flex min-h-11 items-center rounded-[var(--radius-panel-md)] px-3 py-2 text-sm font-medium transition-[color,background-color,border-color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900",
+        "inline-flex min-h-11 items-center rounded-[var(--radius-panel-md)] px-3 py-2 text-sm font-medium transition-[color,background-color,border-color,box-shadow,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900",
         isActive
-          ? "border border-border-active bg-bg-800/75 text-text-primary shadow-[0_0_0_1px_rgba(61,220,255,0.08)]"
+          ? "border border-border-active bg-bg-800/80 text-text-primary shadow-[0_0_0_1px_rgba(61,220,255,0.10),0_0_18px_rgba(61,220,255,0.08)]"
           : "border border-transparent text-text-secondary hover:-translate-y-0.5 hover:text-text-primary hover:bg-bg-850/70",
       )}
     >
-      <span
-        className={classNames(
-          "mr-2 inline-block h-2 w-2 rounded-full",
-          isActive ? "bg-accent-cyan" : "bg-transparent",
-        )}
-        aria-hidden="true"
-      />
+      <ActiveSectionIndicator isActive={isActive} className="mr-2" />
       {getNavigationLabel(item, labelStyle)}
     </a>
   );

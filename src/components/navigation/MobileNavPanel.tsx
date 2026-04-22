@@ -24,7 +24,7 @@ export interface MobileNavPanelProps {
  * Responsibilities:
  * - Render a clean, vertically stacked touch-first navigation sheet
  * - Preserve the same navigation meaning and order as desktop
- * - Preserve the same thematic label system as desktop
+ * - Preserve the same active-state cues as desktop
  * - Keep focus trapped while the panel is open
  */
 export function MobileNavPanel({
