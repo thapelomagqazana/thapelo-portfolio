@@ -1,18 +1,36 @@
 import { HeroSystem } from "../components/hero/HeroSystem";
 import { SiteNavigation } from "../components/navigation/SiteNavigation";
 import { getSectionHeading } from "../content/sections/sectionHeadings";
+import { RECRUITER_GUIDED_FLOW } from "../content/page-flow/recruiterFlow";
+import { ActiveModulesSection } from "../components/sections/ActiveModulesSection";
+import { OperationalHistorySection } from "../components/sections/OperationalHistorySection";
+import { CredentialStackSection } from "../components/sections/CredentialStackSection";
+import { OpenTransmissionSection } from "../components/sections/OpenTransmissionSection";
 
 /**
  * Home page entry.
  *
  * Responsibilities:
- * - Compose the full mission flow of the portfolio
- * - Preserve a strict section order for recruiter evaluation
- * - Provide stable DOM anchors for navigation, smooth scrolling,
- *   and active section tracking
- * - Keep visible section headings aligned with navigation naming
+ * - Compose the portfolio in a recruiter-first evaluation sequence
+ * - Preserve stable DOM anchors for navigation and active-section tracking
+ * - Ensure the page leads visitors from:
+ *   identity -> proof -> trust -> action
+ *
+ * Design rules:
+ * - Keep page composition thin
+ * - Do not embed section business logic here
+ * - Delegate rendering to dedicated section components
  */
 export function HomePage() {
+  /**
+   * Explicit reference to the canonical recruiter flow.
+   *
+   * Purpose:
+   * - Make the page order obvious in the composition layer
+   * - Create a visible anchor for future tests and maintenance
+   */
+  void RECRUITER_GUIDED_FLOW;
+
   return (
     <>
       <SiteNavigation />
@@ -22,61 +40,33 @@ export function HomePage() {
           <HeroSystem />
         </section>
 
-        <section
+        <ActiveModulesSection
           id="active-modules"
-          data-section-id="modules"
-          className="px-6 py-20 sm:px-8 lg:px-10"
-        >
-          <div className="mx-auto max-w-7xl">
-            <h2 className="type-h2">{getSectionHeading("modules")}</h2>
-            <p className="mt-4 max-w-2xl text-text-secondary">
-              Systems and projects that demonstrate release confidence,
-              reliability thinking, and production-ready engineering.
-            </p>
-          </div>
-        </section>
+          sectionId="modules"
+          title={getSectionHeading("modules")}
+          summary="Proof of systems thinking, engineering depth, and release-confidence-oriented work appears early so the value is visible before deep trust content."
+        />
 
-        <section
+        <OperationalHistorySection
           id="operational-history"
-          data-section-id="history"
-          className="px-6 py-20 sm:px-8 lg:px-10"
-        >
-          <div className="mx-auto max-w-7xl">
-            <h2 className="type-h2">{getSectionHeading("history")}</h2>
-            <p className="mt-4 max-w-2xl text-text-secondary">
-              Timeline of engineering experience, test analysis work,
-              and system-building exposure across real environments.
-            </p>
-          </div>
-        </section>
+          sectionId="history"
+          title={getSectionHeading("history")}
+          summary="Practical work history follows proof to reinforce relevance and show the environments where these capabilities have been applied."
+        />
 
-        <section
+        <CredentialStackSection
           id="credential-stack"
-          data-section-id="credentials"
-          className="px-6 py-20 sm:px-8 lg:px-10"
-        >
-          <div className="mx-auto max-w-7xl">
-            <h2 className="type-h2">{getSectionHeading("credentials")}</h2>
-            <p className="mt-4 max-w-2xl text-text-secondary">
-              Education, certifications, and foundational training that
-              reinforce technical capability and discipline.
-            </p>
-          </div>
-        </section>
+          sectionId="credentials"
+          title={getSectionHeading("credentials")}
+          summary="Education and training reinforce credibility after capability and practical exposure are already visible."
+        />
 
-        <section
+        <OpenTransmissionSection
           id="open-transmission"
-          data-section-id="contact"
-          className="px-6 py-20 sm:px-8 lg:px-10"
-        >
-          <div className="mx-auto max-w-7xl">
-            <h2 className="type-h2">{getSectionHeading("contact")}</h2>
-            <p className="mt-4 max-w-2xl text-text-secondary">
-              Ready to collaborate on systems that improve software
-              reliability and release confidence.
-            </p>
-          </div>
-        </section>
+          sectionId="contact"
+          title={getSectionHeading("contact")}
+          summary="Once identity, proof, and trust are established, the portfolio closes with a clear action layer and next step."
+        />
       </main>
     </>
   );
