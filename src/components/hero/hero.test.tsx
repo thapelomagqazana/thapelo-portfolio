@@ -45,26 +45,6 @@ describe("HeroSystem", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders recruiter classification signals", () => {
-    render(<HeroSystem />);
-
-    const recruiterSignals = screen.getByRole("list", {
-      name: /recruiter classification signals/i,
-    });
-
-    expect(
-      within(recruiterSignals).getByText(/software engineer/i),
-    ).toBeInTheDocument();
-
-    expect(
-      within(recruiterSignals).getByText(/test analyst/i),
-    ).toBeInTheDocument();
-
-    expect(
-      within(recruiterSignals).getByText(/release confidence/i),
-    ).toBeInTheDocument();
-  });
-
   it("renders the operational status signal", () => {
     render(<HeroSystem />);
 

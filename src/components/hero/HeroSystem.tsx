@@ -1,6 +1,5 @@
 import { HERO_CONTENT } from "./hero.content";
-import { HeroPositioning } from "./HeroPositioning";
-import { HeroPositioningSignals } from "./HeroPositioningSignals";
+import { HeroManagerPositioning } from "./HeroManagerPositioning";
 import { HeroSystemActions } from "./HeroSystemActions";
 import { SystemDashboard } from "./SystemDashboard";
 import { TerminalPreview } from "./TerminalPreview";
@@ -44,12 +43,13 @@ export function HeroSystem() {
               description={state.description}
             />
 
-            <HeroPositioning
+            <HeroManagerPositioning
               kicker={HERO_CONTENT.kicker}
               title={HERO_CONTENT.title}
               summary={HERO_CONTENT.summary}
               recruiterSignals={HERO_CONTENT.recruiterSignals}
-              className="mt-6"
+              managerSignals={HERO_CONTENT.managerSignals}
+              className="mt-8"
             />
 
             <div className="mt-8">
@@ -64,15 +64,6 @@ export function HeroSystem() {
               metrics={HERO_CONTENT.metrics}
               recruiterSummarySignals={HERO_CONTENT.recruiterSummarySignals}
               infoSignals={HERO_CONTENT.infoSignals}
-            />
-
-            <HeroPositioningSignals
-              items={[
-                "Release-focused engineering signal",
-                "QA and reliability relevance",
-                "Production-ready delivery mindset",
-                "Systems-thinking differentiation",
-              ]}
             />
 
             <TerminalPreview

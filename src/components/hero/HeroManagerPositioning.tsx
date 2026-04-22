@@ -1,86 +1,105 @@
-import type { HeroManagerSignal, HeroRoleSignal } from "./hero.types";
+import type { HTMLAttributes } from "react";
+import type {
+  HeroManagerSignal,
+  HeroRoleSignal,
+} from "./hero.types";
 import { classNames } from "../../lib/classNames";
 
 /**
- * Props for the engineering-manager-facing positioning block.
+ * Props for the hero positioning block.
  */
-export interface HeroManagerPositioningProps {
+export interface HeroManagerPositioningProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  /**
+   * Small overline or classification label shown before the main statement.
+   */
   readonly kicker: string;
+
+  /**
+   * Primary hero statement.
+   *
+   * Purpose:
+   * - Act as the dominant output of the hero
+   * - Communicate the portfolio's niche immediately
+   */
   readonly title: string;
+
+  /**
+   * Supporting summary line beneath the headline.
+   *
+   * Rules:
+   * - Must remain concise
+   * - Must reinforce value without competing with the headline
+   */
   readonly summary: string;
+
+  /**
+   * Recruiter-facing fast-scan chips.
+   */
   readonly recruiterSignals: readonly HeroRoleSignal[];
+
+  /**
+   * Engineering-manager-facing structured proof signals.
+   *
+   * Note:
+   * - This component currently receives them for future flexibility and API stability
+   * - They are not rendered here directly
+   */
   readonly managerSignals: readonly HeroManagerSignal[];
-  readonly className?: string;
 }
 
 /**
- * Engineering-manager-oriented positioning layer for the hero.
+ * Hero positioning block.
  *
  * Responsibilities:
- * - Present the dominant engineering value statement above the fold
- * - Communicate systems thinking and release reliability in under 5–8 seconds
- * - Reinforce the candidate's strategic engineering fit without requiring deep reading
- * - Preserve a concise, skimmable structure suitable for top-level hiring scans
+ * - Present the dominant value proposition in the hero
+ * - Make the headline feel like the primary output of the interface
+ * - Maintain strong scan hierarchy for recruiters and engineering managers
  *
- * Accessibility:
- * - Uses a semantic heading as the primary hero statement
- * - Exposes role and manager signals as named lists
- * - Preserves strong reading order across responsive layouts
+ * Design goals:
+ * - Wider but controlled measure
+ * - More generous line-height for large heading text
+ * - Clear vertical separation from system labels above and actions below
  */
 export function HeroManagerPositioning({
   kicker,
   title,
   summary,
   recruiterSignals,
-  managerSignals,
+  managerSignals: _managerSignals,
   className,
+  ...rest
 }: HeroManagerPositioningProps) {
   return (
-    <div className={classNames("max-w-3xl", className)}>
-      <p className="type-label text-accent-cyan">{kicker}</p>
+    <div
+      {...rest}
+      className={classNames("max-w-[52rem]", className)}
+    >
+      <p className="type-label text-accent-cyan">
+        {kicker}
+      </p>
 
       <h1
         id="hero-title"
-        className="type-display mt-4 max-w-4xl text-balance"
+        className="mt-7 max-w-[14ch] text-balance text-[clamp(3.5rem,7vw,6rem)] font-semibold leading-[0.95] tracking-[-0.04em] text-text-primary"
       >
         {title}
       </h1>
 
-      <p className="mt-5 max-w-2xl text-base leading-7 text-text-secondary sm:text-body-lg">
+      <p className="mt-8 max-w-[42rem] text-[1.2rem] leading-8 text-text-secondary">
         {summary}
       </p>
 
-      <ul
-        aria-label="Recruiter classification signals"
-        className="mt-6 flex flex-wrap gap-2"
-      >
+      <div className="mt-8 flex flex-wrap gap-3">
         {recruiterSignals.map((signal) => (
-          <li key={signal.id} className="list-none">
-            <span className="inline-flex items-center rounded-full border border-border-subtle bg-bg-800/75 px-3 py-1.5 font-mono text-[0.72rem] font-medium uppercase tracking-[0.08em] text-text-secondary">
-              {signal.label}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <ul
-        aria-label="Engineering manager strategic signals"
-        className="mt-6 grid gap-3 sm:grid-cols-2"
-      >
-        {managerSignals.map((signal) => (
-          <li
+          <span
             key={signal.id}
-            className="list-none rounded-[var(--radius-panel-lg)] border border-border-subtle bg-bg-800/70 p-4"
+            className="inline-flex items-center rounded-full border border-border-subtle bg-bg-850/70 px-4 py-2 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-text-secondary"
           >
-            <p className="text-sm font-semibold text-text-primary">
-              {signal.label}
-            </p>
-            <p className="mt-2 text-sm leading-6 text-text-secondary">
-              {signal.description}
-            </p>
-          </li>
+            {signal.label}
+          </span>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
