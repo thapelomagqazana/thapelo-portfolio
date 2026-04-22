@@ -1,172 +1,106 @@
-import {
-  forwardRef,
-  type AnchorHTMLAttributes,
-  type ButtonHTMLAttributes,
-  type JSX,
-  type ReactNode,
-  type Ref,
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ReactNode,
 } from "react";
-
 import { classNames } from "../../lib/classNames";
-import { buttonVariants } from "../../lib/uiVariants";
 
 /**
- * Supported visual variants for the Button primitive.
+ * Supported visual variants for the canonical button primitive.
  */
-export type ButtonVariant = keyof typeof buttonVariants.variant;
+type ButtonVariant = "primary" | "secondary";
 
 /**
- * Supported size variants for the Button primitive.
- */
-export type ButtonSize = keyof typeof buttonVariants.size;
-
-/**
- * Shared visual props for button-like controls.
- *
- * Purpose:
- * - Keep the visual contract identical for both button and anchor rendering
- * - Avoid duplicating style-related props across the two render modes
+ * Shared props for both button and link rendering modes.
  */
 interface ButtonBaseProps {
-  /**
-   * Visual treatment of the control.
-   *
-   * Defaults to "primary".
-   */
-  variant?: ButtonVariant;
-
-  /**
-   * Size preset for spacing and text sizing.
-   *
-   * Defaults to "md".
-   */
-  size?: ButtonSize;
-
-  /**
-   * Optional additional class names.
-   */
-  className?: string;
-
-  /**
-   * Rendered child content.
-   */
-  children?: ReactNode;
+  readonly children: ReactNode;
+  readonly variant?: ButtonVariant;
+  readonly className?: string;
 }
 
 /**
- * Native button rendering mode.
- *
- * Responsibilities:
- * - Support standard interactive button behavior
- * - Preserve native keyboard and disabled semantics
+ * Native button props.
  */
 type NativeButtonProps = ButtonBaseProps &
-  Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children"> & {
-    href?: undefined;
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    readonly href?: never;
   };
 
 /**
- * Anchor rendering mode.
- *
- * Responsibilities:
- * - Support semantic navigation when the control is a link
- * - Prevent invalid nested interactive markup
- *
- * Notes:
- * - `disabled` is intentionally not supported for anchors because
- *   anchors do not have native disabled behavior.
+ * Anchor button props.
  */
 type AnchorButtonProps = ButtonBaseProps &
-  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children"> & {
-    href: string;
-    disabled?: never;
-    type?: never;
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    readonly href: string;
   };
 
 /**
- * Union of supported button props.
+ * Canonical discriminated union for the button primitive.
  *
- * Behavior:
- * - if `href` exists, render an anchor
- * - otherwise, render a button
+ * The presence of `href` determines whether the component renders:
+ * - an anchor element
+ * - a native button element
  */
 export type ButtonProps = NativeButtonProps | AnchorButtonProps;
 
 /**
- * Canonical Button primitive.
+ * Type guard for anchor-style button props.
  *
- * Accessibility notes:
- * - Renders a real <button> by default
- * - Renders a real <a> when `href` is provided
- * - Preserves correct semantics for actions vs navigation
- * - Uses visible focus styles in both modes
- *
- * Design notes:
- * - This stays intentionally bounded
- * - It does not implement `asChild`
- * - It does not attempt to become a generic polymorphic component system
+ * Purpose:
+ * - Help TypeScript narrow the union safely before prop spreading
+ * - Prevent button-only props from leaking into anchor rendering
  */
-export const Button = forwardRef<
-  HTMLButtonElement | HTMLAnchorElement,
-  ButtonProps
->(function Button(
-  {
-    className,
-    variant = "primary",
-    size = "md",
-    children,
-    ...props
-  },
-  ref,
-): JSX.Element {
-  const classes = classNames(
-    "inline-flex items-center justify-center gap-2 rounded-[var(--radius-panel-md)]",
-    "font-medium transition duration-200 ease-out",
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900",
-    buttonVariants.variant[variant],
-    buttonVariants.size[size],
-    className,
-  );
+function isAnchorButtonProps(props: ButtonProps): props is AnchorButtonProps {
+  return typeof props.href === "string";
+}
 
-  /**
-   * Anchor mode.
-   *
-   * Use for navigation targets such as:
-   * - in-page hash links
-   * - internal routes
-   * - external URLs
-   */
-  if ("href" in props && typeof props.href === "string") {
+/**
+ * Canonical action button for the portfolio system UI.
+ *
+ * Responsibilities:
+ * - Render a single consistent CTA primitive for hero and future sections
+ * - Support both anchor and native button modes without duplicating styles
+ * - Preserve accessible focus states and predictable interaction behavior
+ */
+export function Button(props: ButtonProps) {
+  const baseClasses =
+    "inline-flex items-center justify-center rounded-[var(--radius-panel-md)] px-5 py-3 text-sm font-semibold transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900";
+
+  const variantClasses =
+    props.variant === "primary"
+      ? "bg-linear-to-r from-accent-cyan via-accent-blue to-accent-violet text-bg-900 shadow-[0_0_0_1px_rgba(61,220,255,0.18),0_0_24px_rgba(61,220,255,0.12)] hover:-translate-y-0.5"
+      : "border border-border-strong bg-bg-850/70 text-text-primary shadow-[var(--shadow-panel-quiet)] hover:-translate-y-0.5 hover:border-border-active hover:bg-bg-800/80";
+
+  const classes = classNames(baseClasses, variantClasses, props.className);
+
+  if (isAnchorButtonProps(props)) {
+    const {
+      children,
+      variant: _variant,
+      className: _className,
+      href,
+      ...anchorProps
+    } = props;
+
     return (
-      <a
-        ref={ref as Ref<HTMLAnchorElement>}
-        className={classes}
-        {...props}
-      >
+      <a {...anchorProps} href={href} className={classes}>
         {children}
       </a>
     );
   }
 
-  /**
-   * Native button mode.
-   *
-   * Use for:
-   * - click handlers
-   * - form actions
-   * - local UI actions
-   */
+  const {
+    children,
+    variant: _variant,
+    className: _className,
+    type,
+    ...buttonProps
+  } = props;
+
   return (
-    <button
-      ref={ref as Ref<HTMLButtonElement>}
-      type={props.type ?? "button"}
-      className={classNames(
-        classes,
-        props.disabled ? "cursor-not-allowed opacity-50" : "",
-      )}
-      {...props}
-    >
+    <button {...buttonProps} className={classes} type={type ?? "button"}>
       {children}
     </button>
   );
-});
+}

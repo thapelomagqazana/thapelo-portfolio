@@ -1,50 +1,25 @@
-import type { HTMLAttributes, JSX } from "react";
-
+import type { HTMLAttributes } from "react";
 import { classNames } from "../../lib/classNames";
-import { panelVariants } from "../../lib/uiVariants";
 
 /**
- * Supported visual variants for the Panel primitive.
- */
-export type PanelVariant = keyof typeof panelVariants.variant;
-
-/**
- * Props for the Panel primitive.
+ * Reusable control-room surface container.
  *
  * Responsibilities:
- * - Render major elevated interface surfaces
- * - Support emphasis for core system sections
- * - Stay structural by default
- */
-export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Surface emphasis preset.
-   *
-   * Defaults to "default".
-   */
-  variant?: PanelVariant;
-}
-
-/**
- * Canonical Panel primitive.
- *
- * Design intent:
- * - Higher-emphasis than Card
- * - Suitable for hero panels, overlays, featured surfaces, and command areas
+ * - Provide the canonical elevated panel treatment for dashboard and terminal UI.
+ * - Centralize blur, border, radius, and shadow styling.
+ * - Support extension through className without losing the base system look.
  */
 export function Panel({
   className,
-  variant = "default",
   ...props
-}: PanelProps): JSX.Element {
+}: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
+      {...props}
       className={classNames(
-        "rounded-[var(--radius-panel-xl)] border p-6 md:p-8",
-        panelVariants.variant[variant],
+        "relative overflow-hidden rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)] backdrop-blur-md",
         className,
       )}
-      {...props}
     />
   );
 }

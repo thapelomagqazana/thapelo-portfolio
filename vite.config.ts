@@ -4,54 +4,34 @@
  * Vite configuration.
  *
  * Purpose:
- * - Keeps the frontend build configuration explicit and minimal
- * - Registers the React plugin
- * - Registers the Tailwind Vite plugin as the canonical styling pipeline
- * - Provides the canonical Vitest configuration for local component tests
+ * - Keep the frontend build configuration explicit and minimal
+ * - Register the React plugin
+ * - Register the Tailwind Vite plugin as the canonical styling pipeline
+ * - Register Vitest configuration in the same canonical config file
  *
  * Notes:
- * - This file intentionally avoids speculative configuration.
+ * - This file intentionally avoids speculative configuration
  * - Do not add aliases, env shaping, or custom build overrides here
- *   until a WBS item explicitly requires them.
- * - Vitest reads vite.config.* by default, so colocating the `test`
- *   configuration here keeps the repo simple and deterministic.
+ *   until a WBS item explicitly requires them
  */
 
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 /**
- * Canonical Vite configuration for the portfolio repository.
+ * Canonical Vite + Vitest configuration for the portfolio repository.
  *
  * Current scope:
  * - React runtime support
  * - Tailwind CSS integration through the first-party Vite plugin
- * - Vitest test runner configuration for jsdom-based component tests
+ * - Vitest browser-like test environment via jsdom
  */
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-
   test: {
-    /**
-     * Enables global test APIs like:
-     * - describe
-     * - it
-     * - expect
-     *
-     * This keeps test files concise.
-     */
     globals: true,
-
-    /**
-     * Uses a browser-like DOM environment for React component tests.
-     */
     environment: "jsdom",
-
-    /**
-     * Optional but recommended setup file for extending assertions,
-     * e.g. @testing-library/jest-dom.
-     */
-    setupFiles: "./src/test/setup.ts",
+    setupFiles: ["./src/test/setup.ts"],
   },
 });

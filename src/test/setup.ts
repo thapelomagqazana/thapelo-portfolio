@@ -1,14 +1,9 @@
 /**
- * Test setup for Vitest + Testing Library.
+ * Global test setup.
  *
- * Purpose:
- * - Extend Vitest's `expect` with DOM matchers like:
- *   - toBeInTheDocument
- *   - toBeDisabled
- *   - toHaveTextContent
- *
- * Important:
- * - Use the `/vitest` entrypoint so matcher types and runtime wiring
- *   are applied correctly for Vitest.
+ * Responsibilities:
+ * - Register Testing Library DOM matchers with Vitest
+ * - Keep test environment setup in one canonical place
  */
+
 import "@testing-library/jest-dom/vitest";
