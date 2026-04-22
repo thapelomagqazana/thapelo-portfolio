@@ -7,6 +7,7 @@ import type { HeroContent } from "./hero.types";
  * - immediate niche recognition
  * - systems and reliability positioning
  * - realistic, non-gimmicky dashboard proof
+ * - fast recruiter scanning
  */
 export const HERO_CONTENT: HeroContent = {
   status: {
@@ -85,14 +86,6 @@ export const HERO_CONTENT: HeroContent = {
   secondaryActionLabel: "View Modules",
   secondaryActionHref: "#active-modules",
 
-  /**
-   * Core engineering-style dashboard metrics.
-   *
-   * Rules:
-   * - Must feel realistic and believable
-   * - Must reinforce systems and reliability narrative
-   * - Must be understandable in under a few seconds
-   */
   metrics: [
     { label: "Release Confidence", value: "92%", tone: "info" },
     { label: "Security", value: "PASS", tone: "pass" },
@@ -101,12 +94,32 @@ export const HERO_CONTENT: HeroContent = {
   ],
 
   /**
-   * Practical visitor-facing signals.
+   * Recruiter-facing summary signals.
    *
-   * Purpose:
-   * - Help visitors understand real, useful information quickly
-   * - Complement the engineering summary without competing with it
+   * Rules:
+   * - Must be scannable in seconds
+   * - Must feel like profile classification, not vanity metrics
+   * - Must reinforce systems, quality, and reliability positioning
    */
+  recruiterSummarySignals: [
+    {
+      label: "Engineering Style",
+      value: "Systems & Reliability",
+    },
+    {
+      label: "Primary Strength",
+      value: "Quality-Driven Delivery",
+    },
+    {
+      label: "Profile Fit",
+      value: "Software Engineer / Test Analyst",
+    },
+    {
+      label: "Operational Lens",
+      value: "Release Confidence",
+    },
+  ],
+
   infoSignals: [
     {
       label: "Current Focus",

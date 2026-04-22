@@ -1,8 +1,13 @@
-import type { HeroInfoSignal, HeroMetric } from "./hero.types";
+import type { 
+  HeroInfoSignal, 
+  HeroMetric, 
+  HeroRecruiterSummarySignal
+ } from "./hero.types";
 import { Panel } from "../ui/Panel";
 import { StatusChip } from "../ui/StatusChip";
 import { MetricCard } from "./MetricCard";
 import { HeroInfoSignals } from "./HeroInfoSignals";
+import { RecruiterSummarySignals } from "./RecruiterSummarySignals";
 import { heroPanelSweepClass } from "../../lib/motion";
 
 /**
@@ -10,6 +15,7 @@ import { heroPanelSweepClass } from "../../lib/motion";
  */
 export interface SystemDashboardProps {
   readonly metrics: readonly HeroMetric[];
+  readonly recruiterSummarySignals: readonly HeroRecruiterSummarySignal[];
   readonly infoSignals: readonly HeroInfoSignal[];
 }
 
@@ -33,6 +39,7 @@ export interface SystemDashboardProps {
  */
 export function SystemDashboard({
   metrics,
+  recruiterSummarySignals,
   infoSignals,
 }: SystemDashboardProps) {
   return (
@@ -56,6 +63,10 @@ export function SystemDashboard({
         {metrics.map((metric) => (
           <MetricCard key={metric.label} metric={metric} />
         ))}
+      </div>
+
+      <div className="border-t border-border-subtle pt-1">
+        <RecruiterSummarySignals signals={recruiterSummarySignals} />
       </div>
 
       <div className="border-t border-border-subtle pt-1">

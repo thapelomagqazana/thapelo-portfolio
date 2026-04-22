@@ -62,6 +62,7 @@ export function HeroSystem() {
           <div className="grid gap-5">
             <SystemDashboard
               metrics={HERO_CONTENT.metrics}
+              recruiterSummarySignals={HERO_CONTENT.recruiterSummarySignals}
               infoSignals={HERO_CONTENT.infoSignals}
             />
 

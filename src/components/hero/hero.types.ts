@@ -81,6 +81,36 @@ export interface TerminalLine {
 }
 
 /**
+ * Data contract for recruiter-facing visual summary signals.
+ *
+ * Purpose:
+ * - Help recruiters classify the candidate quickly
+ * - Translate strengths into high-signal, compact dashboard rows
+ * - Reinforce profile fit without forcing deep reading
+ */
+export interface HeroRecruiterSummarySignal {
+  /**
+   * Concise summary label.
+   *
+   * Example:
+   * - "Engineering Style"
+   * - "Primary Strength"
+   * - "Profile Fit"
+   */
+  readonly label: string;
+
+  /**
+   * Visible value for the summary signal.
+   *
+   * Example:
+   * - "Systems & Reliability"
+   * - "Quality-Driven Delivery"
+   * - "Software Engineer / Test Analyst"
+   */
+  readonly value: string;
+}
+
+/**
  * Data contract for recruiter-facing role mapping signals.
  *
  * Purpose:
@@ -249,6 +279,11 @@ export interface HeroContent {
    * Primary engineering-style dashboard metrics.
    */
   readonly metrics: readonly HeroMetric[];
+
+  /**
+   * Recruiter-facing visual summary layer.
+   */
+  readonly recruiterSummarySignals: readonly HeroRecruiterSummarySignal[];
 
   /**
    * Secondary practical visitor-facing dashboard signals.
