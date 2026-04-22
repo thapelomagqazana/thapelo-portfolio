@@ -1,6 +1,7 @@
 import type { HTMLAttributes } from "react";
 import { classNames } from "../../lib/classNames";
 import { ABOUT_MISSION_PROFILE_CONTENT } from "./about.content";
+import { AboutValueSignals } from "./AboutValueSignals";
 
 /**
  * Props for the AboutMissionProfile component.
@@ -53,6 +54,12 @@ export function AboutMissionProfile({
           <p className="mt-6 max-w-[68ch] text-base leading-8 text-text-secondary sm:text-[1.05rem]">
             {ABOUT_MISSION_PROFILE_CONTENT.story}
           </p>
+
+          <div className="lg:pt-10">
+            <AboutValueSignals
+              signals={ABOUT_MISSION_PROFILE_CONTENT.valueSignals}
+            />
+          </div>
         </div>
       </div>
     </section>

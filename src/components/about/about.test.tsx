@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { AboutMissionProfile } from "./AboutMissionProfile";
 import { ABOUT_MISSION_PROFILE_CONTENT } from "./about.content";
@@ -57,4 +57,17 @@ describe("AboutMissionProfile", () => {
         `Expected About story word count to be between 90 and 130, received ${wordCount}.`,
     ).toBeLessThanOrEqual(130);
  });
+
+ it("renders current engineering value signals for fast scanning", () => {
+    render(<AboutMissionProfile />);
+
+    const signals = screen.getByRole("region", {
+      name: /current engineering value signals/i,
+    });
+
+    expect(within(signals).getByText(/systems thinking/i)).toBeInTheDocument();
+    expect(within(signals).getByText(/software quality/i)).toBeInTheDocument();
+    expect(within(signals).getByText(/reliability mindset/i)).toBeInTheDocument();
+    expect(within(signals).getByText(/release confidence/i)).toBeInTheDocument();
+  });
 });

@@ -1,4 +1,24 @@
 /**
+ * Data contract for a short About value signal.
+ *
+ * Purpose:
+ * - Reinforce the current-value framing beside the story
+ * - Keep recruiter-facing cues structured and reusable
+ */
+export interface AboutValueSignal {
+  /**
+   * Short signal label.
+   *
+   * Examples:
+   * - "Systems Thinking"
+   * - "Software Quality"
+   * - "Release Confidence"
+   */
+  readonly label: string;
+}
+
+
+/**
  * Data contract for the concise About / Mission Profile story.
  *
  * Purpose:
@@ -33,4 +53,13 @@ export interface AboutMissionProfileContent {
    * - Must stay within the approved brevity target
    */
   readonly story: string;
+
+  /**
+   * Supporting recruiter-facing value signals.
+   *
+   * Purpose:
+   * - Make current value scannable beside the story
+   * - Reinforce positioning without repeating the hero verbatim
+   */
+  readonly valueSignals: readonly AboutValueSignal[];
 }
