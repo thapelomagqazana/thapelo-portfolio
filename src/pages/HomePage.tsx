@@ -6,6 +6,7 @@ import { ActiveModulesSection } from "../components/sections/ActiveModulesSectio
 import { OperationalHistorySection } from "../components/sections/OperationalHistorySection";
 import { CredentialStackSection } from "../components/sections/CredentialStackSection";
 import { OpenTransmissionSection } from "../components/sections/OpenTransmissionSection";
+import { AboutMissionProfile } from "../components/about/AboutMissionProfile";
 
 /**
  * Home page entry.
@@ -39,6 +40,8 @@ export function HomePage() {
         <section id="system" data-section-id="system">
           <HeroSystem />
         </section>
+
+        <AboutMissionProfile />
 
         <ActiveModulesSection
           id="active-modules"
