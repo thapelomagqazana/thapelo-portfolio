@@ -20,4 +20,47 @@ export const ABOUT_MISSION_PROFILE_CONTENT: AboutMissionProfileContent = {
     { label: "Reliability Mindset" },
     { label: "Release Confidence" },
   ],
+
+  /**
+   * Capability groups for fast engineering-manager scanning.
+   *
+   * Rules:
+   * - Keep the domains concrete and professionally legible
+   * - Avoid soft-skill dumping and raw tool-list framing
+   * - Reinforce the same positioning already present in the hero and story
+   */
+  capabilityGroups: [
+    {
+      title: "Systems Thinking",
+      summary: "Structured reasoning across moving parts and delivery context.",
+      items: [
+        { label: "End-to-end awareness" },
+        { label: "Dependency reasoning" },
+      ],
+    },
+    {
+      title: "Software Quality",
+      summary: "Confidence-building through validation and disciplined checking.",
+      items: [
+        { label: "Test design" },
+        { label: "Regression focus" },
+      ],
+    },
+    {
+      title: "Reliability / Release",
+      summary: "Engineering work framed around readiness and dependable outcomes.",
+      items: [
+        { label: "Release confidence" },
+        { label: "Validation mindset" },
+      ],
+    },
+    {
+      title: "Technical Execution",
+      summary: "Practical delivery across application and systems-facing work.",
+      items: [
+        { label: "Frontend delivery" },
+        { label: "DevOps foundations" },
+      ],
+    },
+  ],
 };

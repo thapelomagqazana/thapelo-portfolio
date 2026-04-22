@@ -17,6 +17,67 @@ export interface AboutValueSignal {
   readonly label: string;
 }
 
+/**
+ * Data contract for one capability item inside a domain group.
+ *
+ * Purpose:
+ * - Keep capability labels short and scannable
+ * - Allow optional supporting phrases without forcing verbosity
+ */
+export interface AboutCapabilityItem {
+  /**
+   * Short capability label.
+   *
+   * Rules:
+   * - 1 to 4 words
+   * - readable in under a second
+   */
+  readonly label: string;
+
+  /**
+   * Optional short support phrase.
+   *
+   * Rules:
+   * - 8 words maximum
+   * - should clarify the capability, not repeat the label
+   */
+  readonly detail?: string;
+}
+
+/**
+ * Data contract for one grouped capability domain.
+ *
+ * Purpose:
+ * - Express strengths through recognizable engineering areas
+ * - Avoid flat, resume-like skill dumping
+ */
+export interface AboutCapabilityGroup {
+  /**
+   * Domain title.
+   *
+   * Examples:
+   * - Systems Thinking
+   * - Software Quality
+   * - Reliability / Release
+   * - Technical Execution
+   */
+  readonly title: string;
+
+  /**
+   * Optional short domain summary.
+   *
+   * Purpose:
+   * - Help technical readers understand why this domain matters
+   * - Keep the panel concrete rather than decorative
+   */
+  readonly summary?: string;
+
+  /**
+   * Capability items belonging to this domain.
+   */
+  readonly items: readonly AboutCapabilityItem[];
+}
+
 
 /**
  * Data contract for the concise About / Mission Profile story.
@@ -62,4 +123,13 @@ export interface AboutMissionProfileContent {
    * - Reinforce positioning without repeating the hero verbatim
    */
   readonly valueSignals: readonly AboutValueSignal[];
+
+  /**
+   * Structured engineering capability groups.
+   *
+   * Purpose:
+   * - Help engineering managers scan strengths quickly
+   * - Keep capability framing aligned with the About story
+   */
+  readonly capabilityGroups: readonly AboutCapabilityGroup[];
 }

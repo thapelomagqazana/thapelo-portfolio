@@ -70,4 +70,82 @@ describe("AboutMissionProfile", () => {
     expect(within(signals).getByText(/reliability mindset/i)).toBeInTheDocument();
     expect(within(signals).getByText(/release confidence/i)).toBeInTheDocument();
   });
+
+  it("renders a structured engineering capability panel", () => {
+    render(<AboutMissionProfile />);
+
+    expect(
+      screen.getByRole("complementary", {
+        name: /engineering capability panel/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders at least two meaningful capability groups", () => {
+    render(<AboutMissionProfile />);
+
+    const panel = screen.getByRole("complementary", {
+      name: /engineering capability panel/i,
+    });
+
+    expect(
+      within(panel).getByRole("heading", {
+        level: 3,
+        name: /systems thinking/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(panel).getByRole("heading", {
+        level: 3,
+        name: /software quality/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders between six and ten capability items", () => {
+    const totalCapabilities = ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups
+      .flatMap((group) => group.items)
+      .length;
+
+    expect(totalCapabilities).toBeGreaterThanOrEqual(6);
+    expect(totalCapabilities).toBeLessThanOrEqual(10);
+  });
+
+  it("reinforces at least three positioning-aligned capabilities", () => {
+    const allLabels = ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups
+      .flatMap((group) => group.items)
+      .map((item) => item.label.toLowerCase());
+
+    const matchedThemes = [
+      allLabels.some((label) => label.includes("end-to-end") || label.includes("dependency")),
+      allLabels.some((label) => label.includes("test") || label.includes("regression")),
+      allLabels.some((label) => label.includes("release") || label.includes("validation")),
+    ].filter(Boolean);
+
+    expect(matchedThemes.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("does not read like a raw tool dump", () => {
+    const forbiddenFlatList = [
+      "react",
+      "vite",
+      "docker",
+      "git",
+      "typescript",
+    ];
+
+    const titlesAndLabels = [
+      ...ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups.map((group) => group.title.toLowerCase()),
+      ...ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups.flatMap((group) =>
+        group.items.map((item) => item.label.toLowerCase()),
+      ),
+    ];
+
+    const directMatches = forbiddenFlatList.filter((tool) =>
+      titlesAndLabels.includes(tool),
+    );
+
+    expect(directMatches).toHaveLength(0);
+  });
 });
