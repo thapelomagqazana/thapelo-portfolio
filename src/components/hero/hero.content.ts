@@ -3,10 +3,10 @@ import type { HeroContent } from "./hero.types";
 /**
  * Canonical hero copy for the landing page.
  *
- * This content intentionally prioritizes:
- * - immediate identity clarity
- * - differentiation from generic developer portfolios
- * - concise, high-signal messaging
+ * This content is optimized for:
+ * - immediate recruiter recognition
+ * - systems-thinking differentiation
+ * - release-confidence positioning
  */
 export const HERO_CONTENT: HeroContent = {
   status: {
@@ -14,10 +14,16 @@ export const HERO_CONTENT: HeroContent = {
     tone: "pass",
   },
   modeLabel: "Mode: Release Analysis",
-  kicker: "Control Room / Mission Control",
+  kicker: "Mission Profile",
   title: "I build systems that decide whether software is safe to release.",
   summary:
-    "Software engineer focused on release confidence, quality systems, and production-ready delivery.",
+    "Software engineer focused on release confidence, software quality, and production-ready delivery.",
+  recruiterSignals: [
+    { id: "software-engineer", label: "Software Engineer" },
+    { id: "test-analyst", label: "Test Analyst" },
+    { id: "reliability-mindset", label: "Reliability Mindset" },
+    { id: "release-confidence", label: "Release Confidence" },
+  ],
   primaryActionLabel: "Run Inspection",
   primaryActionHref: "#terminal-preview",
   secondaryActionLabel: "View Modules",
@@ -32,7 +38,7 @@ export const HERO_CONTENT: HeroContent = {
   terminalLines: [
     { id: "line-1", content: "Running analysis..." },
     { id: "line-2", content: "✔ Projects loaded" },
-    { id: "line-3", content: "✔ Skills validated" },
+    { id: "line-3", content: "✔ Recruiter fit classified" },
     { id: "line-4", content: "✔ Candidate: APPROVED" },
   ],
 };

@@ -21,6 +21,16 @@ describe("HeroSystem", () => {
     ).toBeInTheDocument();
   });
 
+  it("renders the supporting recruiter-facing summary", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByText(
+        /software engineer focused on release confidence, software quality, and production-ready delivery/i,
+      ),
+    ).toBeInTheDocument();
+  });
+
   it("renders the primary hero actions", () => {
     render(<HeroSystem />);
 
@@ -30,6 +40,26 @@ describe("HeroSystem", () => {
 
     expect(
       screen.getByRole("link", { name: /view modules/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders recruiter classification signals", () => {
+    render(<HeroSystem />);
+
+    const recruiterSignals = screen.getByRole("list", {
+      name: /recruiter classification signals/i,
+    });
+
+    expect(
+      within(recruiterSignals).getByText(/software engineer/i),
+    ).toBeInTheDocument();
+
+    expect(
+      within(recruiterSignals).getByText(/test analyst/i),
+    ).toBeInTheDocument();
+
+    expect(
+      within(recruiterSignals).getByText(/release confidence/i),
     ).toBeInTheDocument();
   });
 
@@ -69,6 +99,18 @@ describe("HeroSystem", () => {
     expect(
       within(verdictMetric).getAllByText("APPROVED"),
     ).toHaveLength(2);
+  });
+
+  it("renders the primary recruiter navigation actions", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByRole("link", { name: /run inspection/i }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("link", { name: /view modules/i }),
+    ).toBeInTheDocument();
   });
 
   it("renders the terminal preview command", () => {
