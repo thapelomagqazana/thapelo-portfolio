@@ -79,7 +79,7 @@ describe("HeroSystem", () => {
     render(<HeroSystem />);
 
     const dashboard = screen.getByRole("region", {
-      name: /release confidence summary/i,
+      name: /live system panel/i,
     });
 
     const releaseConfidenceMetric = within(dashboard).getByRole("group", {
@@ -202,6 +202,108 @@ describe("HeroSystem", () => {
 
     expect(
       screen.getByText(/live release-readiness posture for portfolio inspection/i),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the live system panel near the top of the hero", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByRole("region", {
+        name: /live system panel/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders engineering-style dashboard metrics", () => {
+    render(<HeroSystem />);
+
+    const dashboard = screen.getByRole("region", {
+      name: /live system panel/i,
+    });
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: release confidence/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: security/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: performance/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: verdict/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders practical dashboard signals", () => {
+    render(<HeroSystem />);
+
+    const practicalSignals = screen.getByRole("region", {
+      name: /current practical signals/i,
+    });
+
+    expect(
+      within(practicalSignals).getByText(/current focus/i),
+    ).toBeInTheDocument();
+
+    expect(
+      within(practicalSignals).getByText(/core stack/i),
+    ).toBeInTheDocument();
+
+    expect(
+      within(practicalSignals).getByText(/availability/i),
+    ).toBeInTheDocument();
+  });
+
+  it("uses explicit text labels and does not rely on color alone", () => {
+    render(<HeroSystem />);
+
+    const dashboard = screen.getByRole("region", {
+      name: /live system panel/i,
+    });
+
+    const securityMetric = within(dashboard).getByRole("group", {
+      name: /metric: security/i,
+    });
+
+    const performanceMetric = within(dashboard).getByRole("group", {
+      name: /metric: performance/i,
+    });
+
+    const verdictMetric = within(dashboard).getByRole("group", {
+      name: /metric: verdict/i,
+    });
+
+    expect(within(securityMetric).getAllByText(/^pass$/i)).toHaveLength(2);
+    expect(within(performanceMetric).getAllByText(/^warning$/i)).toHaveLength(2);
+    expect(within(verdictMetric).getAllByText(/^approved$/i)).toHaveLength(2);
+  });
+
+  it("renders realistic practical values", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByText(/brikbyteos — release intelligence/i),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(/go, react, typescript, docker/i),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(/open to opportunities/i),
     ).toBeInTheDocument();
   });
 });

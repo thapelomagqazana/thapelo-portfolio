@@ -4,28 +4,18 @@ import type { HeroContent } from "./hero.types";
  * Canonical hero copy for the landing page.
  *
  * This content is optimized for:
- * - immediate visitor guidance
- * - systems-thinking differentiation
- * - clear status and operating-mode visibility
+ * - immediate niche recognition
+ * - systems and reliability positioning
+ * - realistic, non-gimmicky dashboard proof
  */
 export const HERO_CONTENT: HeroContent = {
   status: {
     label: "System Status: Operational",
     tone: "pass",
   },
-
-  /**
-   * Visible operating mode shown near the hero status.
-   *
-   * The label should remain concise, system-like, and readable in under
-   * a few seconds.
-   */
   modeLabel: "Mode: Release Analysis",
-
   kicker: "Mission Profile",
-
   title: "I build systems that decide whether software is safe to release.",
-
   summary:
     "Software engineer focused on release confidence, software quality, and production-ready delivery.",
 
@@ -83,26 +73,53 @@ export const HERO_CONTENT: HeroContent = {
     {
       id: "inspect-brikbyteos",
       label: "Inspect BrikByteOS",
-      href: "#flagship-module",
+      href: "#active-modules",
       priority: "tertiary",
       outcome: "open_flagship_module",
       ariaLabel: "Inspect BrikByteOS flagship module",
     },
   ],
 
-  /**
-   * Legacy compatibility fields preserved for older rendering paths.
-   */
   primaryActionLabel: "Run Inspection",
   primaryActionHref: "#terminal-preview",
   secondaryActionLabel: "View Modules",
   secondaryActionHref: "#active-modules",
 
+  /**
+   * Core engineering-style dashboard metrics.
+   *
+   * Rules:
+   * - Must feel realistic and believable
+   * - Must reinforce systems and reliability narrative
+   * - Must be understandable in under a few seconds
+   */
   metrics: [
     { label: "Release Confidence", value: "92%", tone: "info" },
     { label: "Security", value: "PASS", tone: "pass" },
     { label: "Performance", value: "WARNING", tone: "warn" },
     { label: "Verdict", value: "APPROVED", tone: "pass" },
+  ],
+
+  /**
+   * Practical visitor-facing signals.
+   *
+   * Purpose:
+   * - Help visitors understand real, useful information quickly
+   * - Complement the engineering summary without competing with it
+   */
+  infoSignals: [
+    {
+      label: "Current Focus",
+      value: "BrikByteOS — Release Intelligence",
+    },
+    {
+      label: "Core Stack",
+      value: "Go, React, TypeScript, Docker",
+    },
+    {
+      label: "Availability",
+      value: "Open to Opportunities",
+    },
   ],
 
   terminalCommand: "bb run --portfolio",

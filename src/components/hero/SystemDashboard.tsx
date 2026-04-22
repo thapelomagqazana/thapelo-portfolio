@@ -1,6 +1,8 @@
-import type { HeroMetric } from "./hero.types";
+import type { HeroInfoSignal, HeroMetric } from "./hero.types";
 import { Panel } from "../ui/Panel";
 import { StatusChip } from "../ui/StatusChip";
+import { MetricCard } from "./MetricCard";
+import { HeroInfoSignals } from "./HeroInfoSignals";
 import { heroPanelSweepClass } from "../../lib/motion";
 
 /**
@@ -8,33 +10,42 @@ import { heroPanelSweepClass } from "../../lib/motion";
  */
 export interface SystemDashboardProps {
   readonly metrics: readonly HeroMetric[];
+  readonly infoSignals: readonly HeroInfoSignal[];
 }
 
 /**
- * Hero system dashboard.
+ * Live system dashboard for the hero.
  *
  * Responsibilities:
- * - Provide a fast visual proof layer for the visitor.
- * - Reinforce the release-confidence positioning.
- * - Keep the UI compact, readable, and above-the-fold friendly.
+ * - Provide a fast visual proof layer for the visitor
+ * - Reinforce the systems and reliability positioning immediately
+ * - Summarize strengths in a credible, engineering-style way
+ * - Surface practical signals without making the panel feel gimmicky
+ *
+ * Motion:
+ * - Uses a subtle telemetry sweep to suggest activity
+ * - Keeps movement ambient and non-blocking
  *
  * Accessibility:
- * - Exposes the dashboard as a named landmark region
- * - Exposes each metric card as a named group for reliable querying
- * - Preserves readable text labels alongside visual status indicators
+ * - Exposes the panel as a named dashboard region
+ * - Uses explicit labels and values for all signals
+ * - Keeps meaning readable without relying on color alone
  */
-export function SystemDashboard({ metrics }: SystemDashboardProps) {
+export function SystemDashboard({
+  metrics,
+  infoSignals,
+}: SystemDashboardProps) {
   return (
     <Panel
-      className={`${heroPanelSweepClass()} grid gap-4`}
+      className={`${heroPanelSweepClass()} grid gap-5`}
       role="region"
-      aria-label="Release confidence summary"
+      aria-label="Live system panel"
     >
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="type-label">Live System Panel</p>
           <p className="mt-2 text-sm text-text-secondary">
-            Operational telemetry aligned to software release confidence.
+            Release-confidence and quality signals aligned to a systems-first engineering profile.
           </p>
         </div>
 
@@ -43,29 +54,16 @@ export function SystemDashboard({ metrics }: SystemDashboardProps) {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {metrics.map((metric) => (
-          <div
-            key={metric.label}
-            role="group"
-            aria-label={`Metric: ${metric.label}`}
-            className="rounded-[var(--radius-panel-lg)] border border-border-subtle bg-bg-800/70 p-4 transition-transform duration-200 ease-out hover:-translate-y-0.5"
-          >
-            <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">
-              {metric.label}
-            </p>
-
-            <div className="mt-2 flex items-center justify-between gap-3">
-              <p className="text-lg font-semibold text-text-primary">
-                {metric.value}
-              </p>
-
-              <StatusChip
-                label={metric.value}
-                tone={metric.tone ?? "info"}
-                className="shrink-0"
-              />
-            </div>
-          </div>
+          <MetricCard key={metric.label} metric={metric} />
         ))}
+      </div>
+
+      <div className="border-t border-border-subtle pt-1">
+        <p className="type-label">Current Signals</p>
+
+        <div className="mt-4">
+          <HeroInfoSignals signals={infoSignals} />
+        </div>
       </div>
     </Panel>
   );

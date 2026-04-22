@@ -8,11 +8,68 @@ export interface HeroStatus {
 
 /**
  * Data contract for a dashboard metric row.
+ *
+ * Responsibilities:
+ * - Represent one engineering-style dashboard signal
+ * - Keep metric meaning explicit through label + value pairing
+ * - Support accessible, non-color-only status communication
  */
 export interface HeroMetric {
+  /**
+   * Human-readable signal name.
+   *
+   * Example:
+   * - "Release Confidence"
+   * - "Security"
+   * - "Performance"
+   * - "Verdict"
+   */
   readonly label: string;
+
+  /**
+   * Visible value or state for the signal.
+   *
+   * Example:
+   * - "92%"
+   * - "PASS"
+   * - "WARNING"
+   * - "APPROVED"
+   */
   readonly value: string;
+
+  /**
+   * Optional tone used to reinforce signal meaning visually.
+   */
   readonly tone?: "pass" | "warn" | "info";
+}
+
+/**
+ * Data contract for practical hero information signals.
+ *
+ * Purpose:
+ * - Surface useful real-world visitor information quickly
+ * - Complement engineering metrics with profile-level signals
+ */
+export interface HeroInfoSignal {
+  /**
+   * Human-readable signal label.
+   *
+   * Example:
+   * - "Current Focus"
+   * - "Core Stack"
+   * - "Availability"
+   */
+  readonly label: string;
+
+  /**
+   * Visible value for the signal.
+   *
+   * Example:
+   * - "BrikByteOS — Release Intelligence"
+   * - "Go, React, TypeScript, Docker"
+   * - "Open to Opportunities"
+   */
+  readonly value: string;
 }
 
 /**
@@ -80,6 +137,7 @@ export type HeroActionOutcome =
 export interface HeroAction {
   readonly id: string;
   readonly label: string;
+
   /**
    * Anchor-style href for in-page navigation.
    *
@@ -88,6 +146,7 @@ export interface HeroAction {
    * - Must target a valid section
    */
   readonly href: `#${string}`;
+
   readonly priority: HeroActionPriority;
   readonly outcome: HeroActionOutcome;
   readonly ariaLabel?: string;
@@ -186,7 +245,16 @@ export interface HeroContent {
    */
   readonly secondaryActionHref: string;
 
+  /**
+   * Primary engineering-style dashboard metrics.
+   */
   readonly metrics: readonly HeroMetric[];
+
+  /**
+   * Secondary practical visitor-facing dashboard signals.
+   */
+  readonly infoSignals: readonly HeroInfoSignal[];
+
   readonly terminalCommand: string;
   readonly terminalLines: readonly TerminalLine[];
 }

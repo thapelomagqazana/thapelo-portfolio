@@ -60,6 +60,11 @@ export function HeroSystem() {
         
         <HeroSystemMotion>
           <div className="grid gap-5">
+            <SystemDashboard
+              metrics={HERO_CONTENT.metrics}
+              infoSignals={HERO_CONTENT.infoSignals}
+            />
+
             <HeroPositioningSignals
               items={[
                 "Release-focused engineering signal",
@@ -68,8 +73,6 @@ export function HeroSystem() {
                 "Systems-thinking differentiation",
               ]}
             />
-
-            <SystemDashboard metrics={HERO_CONTENT.metrics} />
 
             <TerminalPreview
               id="terminal-preview"
