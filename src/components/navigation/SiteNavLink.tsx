@@ -1,8 +1,8 @@
 import type { MouseEvent } from "react";
 import { classNames } from "../../lib/classNames";
-import { scrollToSection } from "../../lib/scrollToSection";
 import { getNavigationLabel } from "./navigation.content";
 import { ActiveSectionIndicator } from "./ActiveSectionIndicator";
+import { useScrollToSection } from "../../hooks/useScrollToSection";
 import type {
   NavigationLabelStyle,
   SiteNavigationItem,
@@ -38,10 +38,12 @@ export function SiteNavLink({
   onNavigate,
   labelStyle = "balanced",
 }: SiteNavLinkProps) {
+  const { scrollToAnchorHref } = useScrollToSection();
+
   function handleClick(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
 
-    scrollToSection(item.href.replace(/^#/, ""));
+    scrollToAnchorHref(item.href);
     onNavigate?.();
   }
 

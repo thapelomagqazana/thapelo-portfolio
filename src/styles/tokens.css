@@ -153,6 +153,73 @@
   }
 }
 
+
+/**
+ * Smooth scroll and section entry motion tokens.
+ *
+ * Responsibilities:
+ * - Provide a shared, low-intensity motion language for section transitions
+ * - Keep timing short, predictable, and visually restrained
+ * - Respect reduced-motion preferences
+ */
+
+/**
+ * Fade-up entry motion for sections.
+ *
+ * Purpose:
+ * - Reinforce spatial continuity as sections enter view
+ * - Add structure without hiding content or delaying interaction
+ */
+@keyframes section-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Utility class for lightly animating a section into view.
+ *
+ * Notes:
+ * - Keep content visible even before animation completes
+ * - Do not use this to block rendering
+ */
+.section-fade-up {
+  animation: section-fade-up 320ms ease-out both;
+}
+
+/**
+ * Native smooth scrolling for in-page navigation.
+ *
+ * Notes:
+ * - Provides a browser-level smooth-scroll baseline
+ * - JS utilities should still account for sticky header offsets
+ */
+html {
+  scroll-behavior: smooth;
+}
+
+/**
+ * Reduced motion support.
+ *
+ * Purpose:
+ * - Disable non-essential transition motion while preserving usability
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .section-fade-up {
+    animation: none !important;
+  }
+}
+
 /**
  * Fade-up entry animation.
  *

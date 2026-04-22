@@ -80,7 +80,14 @@ export type HeroActionOutcome =
 export interface HeroAction {
   readonly id: string;
   readonly label: string;
-  readonly href: string;
+  /**
+   * Anchor-style href for in-page navigation.
+   *
+   * Enforces:
+   * - Must start with "#"
+   * - Must target a valid section
+   */
+  readonly href: `#${string}`;
   readonly priority: HeroActionPriority;
   readonly outcome: HeroActionOutcome;
   readonly ariaLabel?: string;

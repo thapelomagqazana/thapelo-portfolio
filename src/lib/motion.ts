@@ -30,3 +30,22 @@ export function heroPanelSweepClass(): string {
 export function heroStatusPulseClass(): string {
   return "hero-status-pulse";
 }
+
+/**
+ * Shared motion utility helpers.
+ *
+ * Purpose:
+ * - Keep motion class selection explicit and reusable
+ * - Avoid scattering raw motion class strings through components
+ */
+
+/**
+ * Returns the standard section fade-up class.
+ *
+ * Usage:
+ * - Apply to section containers to add restrained entry polish
+ * - Do not use to hide content before it becomes usable
+ */
+export function sectionFadeUpClass(): string {
+  return "section-fade-up";
+}

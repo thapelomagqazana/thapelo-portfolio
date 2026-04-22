@@ -1,5 +1,6 @@
 import type { HeroAction } from "./hero.types";
 import { Button } from "../ui/Button";
+import { useScrollToSection } from "../../hooks/useScrollToSection";
 
 /**
  * Props for the hero action group.
@@ -23,6 +24,7 @@ export interface HeroSystemActionsProps {
  * - Keeps touch targets large and keyboard focus visible
  */
 export function HeroSystemActions({ actions }: HeroSystemActionsProps) {
+  const { scrollToAnchorHref } = useScrollToSection();
   const visibleActions = actions.slice(0, 3);
 
   return (
@@ -34,6 +36,10 @@ export function HeroSystemActions({ actions }: HeroSystemActionsProps) {
             href={action.href}
             variant={action.priority}
             aria-label={action.ariaLabel ?? action.label}
+            onClick={(event) => {
+              event.preventDefault();
+              scrollToAnchorHref(action.href);
+            }}
           >
             {action.label}
           </Button>
