@@ -4,7 +4,8 @@ import { HeroPositioningSignals } from "./HeroPositioningSignals";
 import { HeroSystemActions } from "./HeroSystemActions";
 import { SystemDashboard } from "./SystemDashboard";
 import { TerminalPreview } from "./TerminalPreview";
-import { StatusChip } from "../ui/StatusChip";
+import { HeroSystemHeader } from "./HeroSystemHeader";
+import { useHeroSystemStatus } from "./useHeroSystemStatus";
 
 /**
  * Hero section for the landing page.
@@ -22,6 +23,12 @@ import { StatusChip } from "../ui/StatusChip";
  * - Keeps recruiter-facing supporting signals in named, structured UI
  */
 export function HeroSystem() {
+  const { state } = useHeroSystemStatus({
+    status: HERO_CONTENT.status,
+    modeLabel: HERO_CONTENT.modeLabel,
+    description: "Live release-readiness posture for portfolio inspection.",
+  });
+
   return (
     <section
       aria-labelledby="hero-title"
@@ -29,15 +36,11 @@ export function HeroSystem() {
     >
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">
         <div>
-          <div className="flex flex-wrap items-center gap-3">
-            <StatusChip
-              label={HERO_CONTENT.status.label}
-              tone={HERO_CONTENT.status.tone}
-            />
-            <p className="type-label text-accent-cyan">
-              {HERO_CONTENT.modeLabel}
-            </p>
-          </div>
+          <HeroSystemHeader
+            status={state.status}
+            modeLabel={state.modeLabel}
+            description={state.description}
+          />
 
           <HeroPositioning
             kicker={HERO_CONTENT.kicker}

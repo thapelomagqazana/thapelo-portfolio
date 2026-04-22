@@ -180,4 +180,28 @@ describe("HeroSystem", () => {
 
     expect(within(heroActions).getAllByRole("link")).toHaveLength(3);
   });
+
+  it("renders the visible hero system status above the fold", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByText(/system status: operational/i),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the hero operating mode label", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByText(/mode: release analysis/i),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the hero operating mode description", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByText(/live release-readiness posture for portfolio inspection/i),
+    ).toBeInTheDocument();
+  });
 });

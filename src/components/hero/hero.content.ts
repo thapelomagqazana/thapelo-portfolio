@@ -5,18 +5,27 @@ import type { HeroContent } from "./hero.types";
  *
  * This content is optimized for:
  * - immediate visitor guidance
- * - recruiter and manager recognition
  * - systems-thinking differentiation
- * - strong hero CTA clarity
+ * - clear status and operating-mode visibility
  */
 export const HERO_CONTENT: HeroContent = {
   status: {
     label: "System Status: Operational",
     tone: "pass",
   },
+
+  /**
+   * Visible operating mode shown near the hero status.
+   *
+   * The label should remain concise, system-like, and readable in under
+   * a few seconds.
+   */
   modeLabel: "Mode: Release Analysis",
+
   kicker: "Mission Profile",
+
   title: "I build systems that decide whether software is safe to release.",
+
   summary:
     "Software engineer focused on release confidence, software quality, and production-ready delivery.",
 
@@ -54,14 +63,6 @@ export const HERO_CONTENT: HeroContent = {
     },
   ],
 
-  /**
-   * Structured hero actions used by the CTA layer.
-   *
-   * Order matters:
-   * - dominant action first
-   * - secondary exploration second
-   * - optional flagship action third
-   */
   actions: [
     {
       id: "run-inspection",
@@ -90,10 +91,7 @@ export const HERO_CONTENT: HeroContent = {
   ],
 
   /**
-   * Legacy compatibility fields.
-   *
-   * These map to the first two structured actions and exist only to avoid
-   * breaking older rendering code during migration.
+   * Legacy compatibility fields preserved for older rendering paths.
    */
   primaryActionLabel: "Run Inspection",
   primaryActionHref: "#terminal-preview",
