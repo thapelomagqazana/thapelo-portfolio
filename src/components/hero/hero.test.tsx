@@ -418,4 +418,70 @@ describe("HeroSystem", () => {
       }),
     ).toBeInTheDocument();
   });
+
+  it("renders explicit label and value pairings for engineering metrics", () => {
+    render(<HeroSystem />);
+
+    const dashboard = screen.getByRole("region", {
+      name: /live system panel/i,
+    });
+
+    const securityMetric = within(dashboard).getByRole("group", {
+      name: /metric: security/i,
+    });
+
+    const performanceMetric = within(dashboard).getByRole("group", {
+      name: /metric: performance/i,
+    });
+
+    const verdictMetric = within(dashboard).getByRole("group", {
+      name: /metric: verdict/i,
+    });
+
+    expect(within(securityMetric).getByText(/^security$/i)).toBeInTheDocument();
+    expect(within(securityMetric).getAllByText(/^pass$/i).length).toBeGreaterThan(0);
+
+    expect(within(performanceMetric).getByText(/^performance$/i)).toBeInTheDocument();
+    expect(within(performanceMetric).getAllByText(/^warning$/i).length).toBeGreaterThan(0);
+
+    expect(within(verdictMetric).getByText(/^verdict$/i)).toBeInTheDocument();
+    expect(within(verdictMetric).getAllByText(/^approved$/i).length).toBeGreaterThan(0);
+  });
+
+  it("gives status chips contextual accessibility labels", () => {
+    render(<HeroSystem />);
+
+    expect(
+      screen.getByLabelText(/security status: pass/i),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(/performance status: warning/i),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByLabelText(/verdict status: approved/i),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps dashboard statuses understandable without relying on color alone", () => {
+    render(<HeroSystem />);
+
+    const dashboard = screen.getByRole("region", {
+      name: /live system panel/i,
+    });
+
+    expect(within(dashboard).getByText(/^tests$/i)).toBeInTheDocument();
+    expect(within(dashboard).getByText(/^security$/i)).toBeInTheDocument();
+    expect(within(dashboard).getByText(/^performance$/i)).toBeInTheDocument();
+    expect(
+      within(dashboard).getAllByText(/^pass$/i).length,
+    ).toBeGreaterThan(0);
+    expect(
+      within(dashboard).getAllByText(/^warning$/i).length,
+    ).toBeGreaterThan(0);
+    expect(
+      within(dashboard).getAllByText(/^approved$/i).length,
+    ).toBeGreaterThan(0);
+  });
 });

@@ -70,6 +70,7 @@ export function MetricCard({
         <StatusChip
           label={metric.value}
           tone={metric.tone ?? "info"}
+          contextLabel={metric.label}
           className="shrink-0"
         />
       </div>

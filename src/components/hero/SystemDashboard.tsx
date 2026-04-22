@@ -56,12 +56,20 @@ export function SystemDashboard({
           </p>
         </div>
 
-        <StatusChip label="Live" tone="info" />
+        <StatusChip
+          label="Live"
+          tone="info"
+          contextLabel="System panel"
+        />
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {metrics.map((metric) => (
-          <MetricCard key={metric.label} metric={metric} />
+        {metrics.map((metric, index) => (
+          <MetricCard
+            key={metric.label}
+            metric={metric}
+            revealIndex={index}
+          />
         ))}
       </div>
 
