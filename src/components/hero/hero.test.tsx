@@ -35,11 +35,13 @@ describe("HeroSystem", () => {
     render(<HeroSystem />);
 
     expect(
-      screen.getByRole("link", { name: /run inspection/i }),
+      screen.getByRole("link", {
+        name: /run portfolio inspection/i,
+      }),
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("link", { name: /view modules/i }),
+      screen.getByRole("link", { name: /view portfolio modules/i }),
     ).toBeInTheDocument();
   });
 
@@ -105,11 +107,21 @@ describe("HeroSystem", () => {
     render(<HeroSystem />);
 
     expect(
-      screen.getByRole("link", { name: /run inspection/i }),
+      screen.getByRole("link", {
+        name: /run portfolio inspection/i,
+      }),
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("link", { name: /view modules/i }),
+      screen.getByRole("link", {
+        name: /view portfolio modules/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("link", {
+        name: /inspect brikbyteos flagship module/i,
+      }),
     ).toBeInTheDocument();
   });
 
@@ -117,6 +129,55 @@ describe("HeroSystem", () => {
     render(<HeroSystem />);
 
     expect(screen.getByText(/bb run --portfolio/i)).toBeInTheDocument();
-    expect(screen.getByText(/candidate: approved/i)).toBeInTheDocument();
+    expect(screen.getByText(/systems thinking detected/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/release reliability signal:\s*high/i),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/candidate:\s*strategic fit/i)).toBeInTheDocument();
+  });
+
+
+  it("renders the hero primary action navigation", () => {
+    render(<HeroSystem />);
+
+    const heroActions = screen.getByRole("navigation", {
+      name: /hero primary actions/i,
+    });
+
+    expect(
+      within(heroActions).getByRole("link", {
+        name: /run portfolio inspection/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(heroActions).getByRole("link", {
+        name: /view portfolio modules/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(heroActions).getByRole("link", {
+        name: /inspect brikbyteos flagship module/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders command-style visible CTA labels", () => {
+    render(<HeroSystem />);
+
+    expect(screen.getByText(/^run inspection$/i)).toBeInTheDocument();
+    expect(screen.getByText(/^view modules$/i)).toBeInTheDocument();
+    expect(screen.getByText(/^inspect brikbyteos$/i)).toBeInTheDocument();
+  });
+
+  it("limits the hero to at most three visible primary actions", () => {
+    render(<HeroSystem />);
+
+    const heroActions = screen.getByRole("navigation", {
+      name: /hero primary actions/i,
+    });
+
+    expect(within(heroActions).getAllByRole("link")).toHaveLength(3);
   });
 });

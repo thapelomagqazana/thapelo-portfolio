@@ -48,12 +48,7 @@ export function HeroSystem() {
           />
 
           <div className="mt-8">
-            <HeroSystemActions
-              primaryLabel={HERO_CONTENT.primaryActionLabel}
-              primaryHref={HERO_CONTENT.primaryActionHref}
-              secondaryLabel={HERO_CONTENT.secondaryActionLabel}
-              secondaryHref={HERO_CONTENT.secondaryActionHref}
-            />
+            <HeroSystemActions actions={HERO_CONTENT.actions} />
           </div>
         </div>
 
