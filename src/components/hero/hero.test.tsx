@@ -306,4 +306,116 @@ describe("HeroSystem", () => {
       screen.getByText(/open to opportunities/i),
     ).toBeInTheDocument();
   });
+
+  it("renders engineering-legible dashboard states", () => {
+    render(<HeroSystem />);
+
+    const dashboard = screen.getByRole("region", {
+      name: /live system panel/i,
+    });
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: tests/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: security/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: performance/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: release confidence/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: verdict/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("uses operational values that feel like real release-readiness signals", () => {
+    render(<HeroSystem />);
+
+    const dashboard = screen.getByRole("region", {
+      name: /live system panel/i,
+    });
+
+    const testsMetric = within(dashboard).getByRole("group", {
+      name: /metric: tests/i,
+    });
+
+    const securityMetric = within(dashboard).getByRole("group", {
+      name: /metric: security/i,
+    });
+
+    const performanceMetric = within(dashboard).getByRole("group", {
+      name: /metric: performance/i,
+    });
+
+    const releaseConfidenceMetric = within(dashboard).getByRole("group", {
+      name: /metric: release confidence/i,
+    });
+
+    const verdictMetric = within(dashboard).getByRole("group", {
+      name: /metric: verdict/i,
+    });
+
+    expect(within(testsMetric).getAllByText(/^pass$/i)).toHaveLength(2);
+    expect(within(securityMetric).getAllByText(/^pass$/i)).toHaveLength(2);
+    expect(within(performanceMetric).getAllByText(/^warning$/i)).toHaveLength(2);
+    expect(
+      within(releaseConfidenceMetric).getAllByText(/^92%$/i),
+    ).toHaveLength(2);
+    expect(within(verdictMetric).getAllByText(/^approved$/i)).toHaveLength(2);
+  });
+
+  it("makes the dashboard feel like engineering judgment, not passive decoration", () => {
+    render(<HeroSystem />);
+
+    const dashboard = screen.getByRole("region", {
+      name: /live system panel/i,
+    });
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: tests/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: security/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: performance/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: release confidence/i,
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(dashboard).getByRole("group", {
+        name: /metric: verdict/i,
+      }),
+    ).toBeInTheDocument();
+  });
 });

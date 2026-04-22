@@ -194,6 +194,63 @@
 }
 
 /**
+ * Metric reveal motion for the live system panel.
+ *
+ * Responsibilities:
+ * - Make metric cards feel intentionally surfaced
+ * - Keep motion subtle, fast, and readability-safe
+ * - Use transform and opacity only for strong performance
+ */
+
+/**
+ * Fade-and-rise reveal for metric cards.
+ *
+ * Purpose:
+ * - Suggest telemetry becoming available
+ * - Avoid theatrical motion patterns
+ */
+@keyframes metric-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * Base reveal class for live metric cards.
+ *
+ * Notes:
+ * - The default delay is controlled per-card via --metric-stagger-index
+ * - Content remains in the DOM immediately for accessibility and testing
+ */
+.metric-reveal {
+  animation-name: metric-reveal-in;
+  animation-duration: 240ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+  animation-delay: calc(var(--metric-stagger-index, 0) * 70ms);
+  will-change: transform, opacity;
+}
+
+/**
+ * Reduced-motion support.
+ *
+ * Purpose:
+ * - Remove stagger and animated entry for users who prefer reduced motion
+ * - Preserve instant readability and meaning
+ */
+@media (prefers-reduced-motion: reduce) {
+  .metric-reveal {
+    animation: none !important;
+  }
+}
+
+/**
  * Native smooth scrolling for in-page navigation.
  *
  * Notes:

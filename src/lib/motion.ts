@@ -49,3 +49,15 @@ export function heroStatusPulseClass(): string {
 export function sectionFadeUpClass(): string {
   return "section-fade-up";
 }
+
+/**
+ * Build the staggered metric reveal class for a metric card.
+ *
+ * Responsibilities:
+ * - Keep metric animation class generation centralized
+ * - Encode the metric order as a CSS custom property rather than ad hoc inline classes
+ * - Support future timing changes without component rewrites
+ */
+export function metricRevealClass(): string {
+  return "metric-reveal";
+}

@@ -7,7 +7,7 @@ import type { HeroContent } from "./hero.types";
  * - immediate niche recognition
  * - systems and reliability positioning
  * - realistic, non-gimmicky dashboard proof
- * - fast recruiter scanning
+ * - fast recruiter and engineering-manager scanning
  */
 export const HERO_CONTENT: HeroContent = {
   status: {
@@ -86,21 +86,23 @@ export const HERO_CONTENT: HeroContent = {
   secondaryActionLabel: "View Modules",
   secondaryActionHref: "#active-modules",
 
+  /**
+   * Core engineering-style dashboard metrics.
+   *
+   * Rules:
+   * - Must feel operational, not decorative
+   * - Must imply a believable release-readiness model
+   * - Must remain understandable in a few seconds
+   * - Must support engineering-manager scanning
+   */
   metrics: [
-    { label: "Release Confidence", value: "92%", tone: "info" },
+    { label: "Tests", value: "PASS", tone: "pass" },
     { label: "Security", value: "PASS", tone: "pass" },
     { label: "Performance", value: "WARNING", tone: "warn" },
+    { label: "Release Confidence", value: "92%", tone: "info" },
     { label: "Verdict", value: "APPROVED", tone: "pass" },
   ],
 
-  /**
-   * Recruiter-facing summary signals.
-   *
-   * Rules:
-   * - Must be scannable in seconds
-   * - Must feel like profile classification, not vanity metrics
-   * - Must reinforce systems, quality, and reliability positioning
-   */
   recruiterSummarySignals: [
     {
       label: "Engineering Style",
