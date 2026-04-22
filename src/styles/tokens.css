@@ -229,6 +229,16 @@
 }
 
 /**
+ * Reduced-motion support for navigation overlays and panels.
+ */
+@media (prefers-reduced-motion: reduce) {
+  #mobile-navigation-panel,
+  [aria-label="Close mobile navigation"] {
+    transition: none !important;
+  }
+}
+
+/**
  * Shared typography utilities.
  *
  * Purpose:

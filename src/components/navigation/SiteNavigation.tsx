@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { PRIMARY_SITE_NAV_ITEMS } from "./navigation.content";
 import { SiteNavLink } from "./SiteNavLink";
 import { MobileNavSheet } from "./MobileNavSheet";
+import { MobileNavTrigger } from "./MobileNavTrigger";
 import { useActiveSection } from "../../hooks/useActiveSection";
 
 /**
@@ -56,14 +57,10 @@ export function SiteNavigation() {
             ))}
           </nav>
 
-          <button
-            type="button"
-            aria-label="Open mobile navigation"
-            onClick={() => setIsMobileOpen(true)}
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-[var(--radius-panel-md)] border border-border-subtle text-text-secondary transition-colors duration-200 hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-bg-900 md:hidden"
-          >
-            ☰
-          </button>
+          <MobileNavTrigger
+            isOpen={isMobileOpen}
+            onOpen={() => setIsMobileOpen(true)}
+          />
         </div>
       </header>
 
