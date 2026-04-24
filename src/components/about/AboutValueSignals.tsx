@@ -1,42 +1,44 @@
 import type { AboutValueSignal } from "./about.types";
 
 /**
- * Props for the AboutValueSignals component.
+ * Props for AboutValueSignals.
  */
 export interface AboutValueSignalsProps {
-  /**
-   * Structured value signals to render beside or below the About story.
-   */
   readonly signals: readonly AboutValueSignal[];
 }
 
 /**
- * About-section value signal strip.
+ * Recruiter-facing engineering value signal layer.
  *
  * Responsibilities:
- * - Reinforce the story's present-day engineering value
- * - Help recruiters scan current positioning quickly
- * - Keep the About section professionally relevant and aligned with the hero
- *
- * Accessibility:
- * - Uses a named region for grouped supporting signals
- * - Keeps visible labels short and readable
+ * - Convert the About story into fast-scannable professional signals
+ * - Help recruiters understand current value without reading all story modules
+ * - Keep meaning explicit through label/value pairs
  */
 export function AboutValueSignals({ signals }: AboutValueSignalsProps) {
   return (
-    <div
+    <section
       role="region"
       aria-label="Current engineering value signals"
-      className="flex flex-wrap gap-3"
+      className="mt-8 rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/60 p-5"
     >
-      {signals.map((signal) => (
-        <span
-          key={signal.label}
-          className="inline-flex items-center rounded-full border border-border-subtle bg-bg-850/70 px-4 py-2 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-text-secondary"
-        >
-          {signal.label}
-        </span>
-      ))}
-    </div>
+      <p className="type-label text-accent-cyan">Current Engineering Signals</p>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        {signals.map((signal) => (
+          <div
+            key={signal.label}
+            className="rounded-[var(--radius-panel-lg)] border border-border-subtle bg-bg-800/60 px-4 py-3"
+          >
+            <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-text-muted">
+              {signal.label}
+            </p>
+            <p className="mt-2 text-sm font-semibold text-text-primary">
+              {signal.value}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

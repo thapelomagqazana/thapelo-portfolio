@@ -80,4 +80,46 @@ describe("AboutMissionProfile", () => {
 
     expect(combinedCopy).toMatch(/quality|reliability|systems|release confidence/);
   });
+
+  it("renders current engineering value signals for fast scanning", () => {
+    render(<AboutMissionProfile />);
+
+    const signals = screen.getByRole("region", {
+      name: /current engineering value signals/i,
+    });
+
+    expect(within(signals).getByText(/release confidence/i)).toBeInTheDocument();
+    expect(within(signals).getByText(/reliability focus/i)).toBeInTheDocument();
+    expect(within(signals).getByText(/systems thinking/i)).toBeInTheDocument();
+  });
+
+  it("renders a structured engineering capability panel", () => {
+    render(<AboutMissionProfile />);
+
+    expect(
+      screen.getByRole("complementary", {
+        name: /engineering capability panel/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders meaningful capability groups", () => {
+    render(<AboutMissionProfile />);
+
+    const panel = screen.getByRole("complementary", {
+      name: /engineering capability panel/i,
+    });
+
+    expect(
+      within(panel).getByRole("heading", { name: /systems thinking/i }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(panel).getByRole("heading", { name: /software quality/i }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(panel).getByRole("heading", { name: /reliability \/ release/i }),
+    ).toBeInTheDocument();
+  });
 });

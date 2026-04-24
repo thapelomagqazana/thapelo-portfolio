@@ -106,4 +106,34 @@ export const ABOUT_MISSION_PROFILE_CONTENT: AboutMissionProfileContent = {
         "Today, I focus on software quality, reliability, release confidence, and systems thinking so teams can reduce uncertainty and move toward dependable software outcomes.",
     },
   ],
+
+  valueSignals: [
+    { label: "Release Confidence", value: "High" },
+    { label: "Reliability Focus", value: "Strong" },
+    { label: "Systems Thinking", value: "End-to-end" },
+  ],
+
+  capabilityGroups: [
+    {
+      title: "Systems Thinking",
+      items: [
+        { label: "End-to-end awareness" },
+        { label: "Dependency reasoning" },
+      ],
+    },
+    {
+      title: "Software Quality",
+      items: [
+        { label: "Test design" },
+        { label: "Regression focus" },
+      ],
+    },
+    {
+      title: "Reliability / Release",
+      items: [
+        { label: "Release validation" },
+        { label: "Failure awareness" },
+      ],
+    },
+  ],
 };

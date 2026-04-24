@@ -15,6 +15,7 @@ export interface AboutValueSignal {
    * - "Release Confidence"
    */
   readonly label: string;
+  readonly value: string;
 }
 
 export interface AboutStoryModule {
@@ -38,25 +39,6 @@ export interface AboutStoryModule {
 }
 
 /**
- * Data contract for a short reliability/quality framing signal.
- *
- * Purpose:
- * - Make the About section's orientation visible without deep reading
- * - Reinforce consistency with the hero and live system panel
- */
-export interface AboutReliabilitySignal {
-  /**
-   * Short signal label.
-   *
-   * Examples:
-   * - "Software Quality"
-   * - "Reliability Mindset"
-   * - "Structured Delivery"
-   */
-  readonly label: string;
-}
-
-/**
  * Data contract for one capability item inside a domain group.
  *
  * Purpose:
@@ -72,15 +54,6 @@ export interface AboutCapabilityItem {
    * - readable in under a second
    */
   readonly label: string;
-
-  /**
-   * Optional short support phrase.
-   *
-   * Rules:
-   * - 8 words maximum
-   * - should clarify the capability, not repeat the label
-   */
-  readonly detail?: string;
 }
 
 /**
@@ -101,15 +74,6 @@ export interface AboutCapabilityGroup {
    * - Technical Execution
    */
   readonly title: string;
-
-  /**
-   * Optional short domain summary.
-   *
-   * Purpose:
-   * - Help technical readers understand why this domain matters
-   * - Keep the panel concrete rather than decorative
-   */
-  readonly summary?: string;
 
   /**
    * Capability items belonging to this domain.
@@ -154,4 +118,7 @@ export interface AboutMissionProfileContent {
    * - Must avoid becoming a full biography or resume dump
    */
   readonly storyModules: readonly AboutStoryModule[];
+  
+  readonly valueSignals: readonly AboutValueSignal[];
+  readonly capabilityGroups: readonly AboutCapabilityGroup[];
 }
