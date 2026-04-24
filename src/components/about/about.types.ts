@@ -17,6 +17,45 @@ export interface AboutValueSignal {
   readonly label: string;
 }
 
+export interface AboutStoryModule {
+  /**
+   * Short module title.
+   *
+   * Rules:
+   * - 1–3 words
+   * - must describe a real story phase
+   */
+  readonly title: string;
+
+  /**
+   * Concise module body.
+   *
+   * Rules:
+   * - max 60 words
+   * - must add distinct story value
+   */
+  readonly body: string;
+}
+
+/**
+ * Data contract for a short reliability/quality framing signal.
+ *
+ * Purpose:
+ * - Make the About section's orientation visible without deep reading
+ * - Reinforce consistency with the hero and live system panel
+ */
+export interface AboutReliabilitySignal {
+  /**
+   * Short signal label.
+   *
+   * Examples:
+   * - "Software Quality"
+   * - "Reliability Mindset"
+   * - "Structured Delivery"
+   */
+  readonly label: string;
+}
+
 /**
  * Data contract for one capability item inside a domain group.
  *
@@ -107,29 +146,12 @@ export interface AboutMissionProfileContent {
   readonly title: string;
 
   /**
-   * Primary story paragraph.
+   * Concise narrative content for the section.
    *
    * Rules:
-   * - Must include background, transition, and present value
-   * - Must stay within the approved brevity target
+   * - Must be between 90 and 130 words
+   * - Must include construction background, software transition, and current value
+   * - Must avoid becoming a full biography or resume dump
    */
-  readonly story: string;
-
-  /**
-   * Supporting recruiter-facing value signals.
-   *
-   * Purpose:
-   * - Make current value scannable beside the story
-   * - Reinforce positioning without repeating the hero verbatim
-   */
-  readonly valueSignals: readonly AboutValueSignal[];
-
-  /**
-   * Structured engineering capability groups.
-   *
-   * Purpose:
-   * - Help engineering managers scan strengths quickly
-   * - Keep capability framing aligned with the About story
-   */
-  readonly capabilityGroups: readonly AboutCapabilityGroup[];
+  readonly storyModules: readonly AboutStoryModule[];
 }

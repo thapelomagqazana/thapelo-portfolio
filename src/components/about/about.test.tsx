@@ -3,13 +3,6 @@ import { describe, expect, it } from "vitest";
 import { AboutMissionProfile } from "./AboutMissionProfile";
 import { ABOUT_MISSION_PROFILE_CONTENT } from "./about.content";
 
-/**
- * Count words in a string using simple whitespace tokenization.
- *
- * Purpose:
- * - Keep the About story inside the approved brevity envelope
- * - Provide a stable unit-test guard against copy drift
- */
 function countWords(value: string): number {
   return value.trim().split(/\s+/u).length;
 }
@@ -34,118 +27,57 @@ describe("AboutMissionProfile", () => {
     ).toBeInTheDocument();
   });
 
-  it("includes construction background, software transition, and current value", () => {
-    render(<AboutMissionProfile />);
-
-    const story = ABOUT_MISSION_PROFILE_CONTENT.story.toLowerCase();
-
-    expect(story).toContain("construction");
-    expect(story).toContain("software");
-    expect(story).toContain("quality");
-  });
-
-  it("keeps the story within the approved word-count limit", () => {
-    const wordCount = countWords(ABOUT_MISSION_PROFILE_CONTENT.story);
-
-    expect(
-        wordCount,
-        `Expected About story word count to be between 90 and 130, received ${wordCount}.`,
-    ).toBeGreaterThanOrEqual(90);
-
-    expect(
-        wordCount,
-        `Expected About story word count to be between 90 and 130, received ${wordCount}.`,
-    ).toBeLessThanOrEqual(130);
- });
-
- it("renders current engineering value signals for fast scanning", () => {
-    render(<AboutMissionProfile />);
-
-    const signals = screen.getByRole("region", {
-      name: /current engineering value signals/i,
-    });
-
-    expect(within(signals).getByText(/systems thinking/i)).toBeInTheDocument();
-    expect(within(signals).getByText(/software quality/i)).toBeInTheDocument();
-    expect(within(signals).getByText(/reliability mindset/i)).toBeInTheDocument();
-    expect(within(signals).getByText(/release confidence/i)).toBeInTheDocument();
-  });
-
-  it("renders a structured engineering capability panel", () => {
+  it("renders the modular About section heading", () => {
     render(<AboutMissionProfile />);
 
     expect(
-      screen.getByRole("complementary", {
-        name: /engineering capability panel/i,
+      screen.getByRole("heading", {
+        level: 2,
+        name: /From construction to software, with systems thinking intact./i,
       }),
     ).toBeInTheDocument();
   });
 
-  it("renders at least two meaningful capability groups", () => {
+  it("renders story modules in the required narrative sequence", () => {
     render(<AboutMissionProfile />);
 
-    const panel = screen.getByRole("complementary", {
-      name: /engineering capability panel/i,
+    const list = screen.getByRole("list", {
+      name: /mission profile story modules/i,
     });
 
     expect(
-      within(panel).getByRole("heading", {
-        level: 3,
-        name: /systems thinking/i,
-      }),
+      within(list).getByRole("heading", { name: /origin/i })
     ).toBeInTheDocument();
 
     expect(
-      within(panel).getByRole("heading", {
-        level: 3,
-        name: /software quality/i,
-      }),
+      within(list).getByRole("heading", { name: /transition/i })
+    ).toBeInTheDocument();
+
+    expect(
+      within(list).getByRole("heading", { name: /current value/i })
     ).toBeInTheDocument();
   });
 
-  it("renders between six and ten capability items", () => {
-    const totalCapabilities = ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups
-      .flatMap((group) => group.items)
-      .length;
-
-    expect(totalCapabilities).toBeGreaterThanOrEqual(6);
-    expect(totalCapabilities).toBeLessThanOrEqual(10);
+  it("keeps the module count within the approved range", () => {
+    expect(ABOUT_MISSION_PROFILE_CONTENT.storyModules.length).toBeGreaterThanOrEqual(2);
+    expect(ABOUT_MISSION_PROFILE_CONTENT.storyModules.length).toBeLessThanOrEqual(4);
   });
 
-  it("reinforces at least three positioning-aligned capabilities", () => {
-    const allLabels = ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups
-      .flatMap((group) => group.items)
-      .map((item) => item.label.toLowerCase());
-
-    const matchedThemes = [
-      allLabels.some((label) => label.includes("end-to-end") || label.includes("dependency")),
-      allLabels.some((label) => label.includes("test") || label.includes("regression")),
-      allLabels.some((label) => label.includes("release") || label.includes("validation")),
-    ].filter(Boolean);
-
-    expect(matchedThemes.length).toBeGreaterThanOrEqual(3);
+  it("keeps every module under the approved word limit", () => {
+    for (const module of ABOUT_MISSION_PROFILE_CONTENT.storyModules) {
+      expect(
+        countWords(module.body),
+        `${module.title} exceeds the 60-word module limit.`,
+      ).toBeLessThanOrEqual(60);
+    }
   });
 
-  it("does not read like a raw tool dump", () => {
-    const forbiddenFlatList = [
-      "react",
-      "vite",
-      "docker",
-      "git",
-      "typescript",
-    ];
+  it("reinforces reliability, quality, or systems positioning", () => {
+    const combinedCopy = ABOUT_MISSION_PROFILE_CONTENT.storyModules
+      .map((module) => module.body)
+      .join(" ")
+      .toLowerCase();
 
-    const titlesAndLabels = [
-      ...ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups.map((group) => group.title.toLowerCase()),
-      ...ABOUT_MISSION_PROFILE_CONTENT.capabilityGroups.flatMap((group) =>
-        group.items.map((item) => item.label.toLowerCase()),
-      ),
-    ];
-
-    const directMatches = forbiddenFlatList.filter((tool) =>
-      titlesAndLabels.includes(tool),
-    );
-
-    expect(directMatches).toHaveLength(0);
+    expect(combinedCopy).toMatch(/quality|reliability|systems|release confidence/);
   });
 });
