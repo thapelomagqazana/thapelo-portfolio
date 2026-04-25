@@ -47,7 +47,7 @@ export function HomePage() {
           id="active-modules"
           sectionId="modules"
           title={getSectionHeading("modules")}
-          summary="Proof of systems thinking, engineering depth, and release-confidence-oriented work appears early so the value is visible before deep trust content."
+          summary="Production-grade systems structured for fast evaluation. Purpose, signals, maturity, and outcomes are exposed upfront."
         />
 
         <OperationalHistorySection

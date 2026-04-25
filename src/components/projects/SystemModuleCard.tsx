@@ -4,6 +4,7 @@ import { SystemModuleHeader } from "./SystemModuleHeader";
 import { SystemProblemOutcome } from "./SystemProblemOutcome";
 import { SystemCapabilityList } from "./SystemCapabilityList";
 import { SystemModuleActions } from "./SystemModuleActions";
+import { ProjectCategoryChips } from "./ProjectCategoryChips";
 
 export interface SystemModuleCardProps {
   readonly module: ProjectModule;
@@ -44,6 +45,8 @@ export function SystemModuleCard({ module }: SystemModuleCardProps) {
         status={module.status}
         titleId={headingId}
       />
+
+      <ProjectCategoryChips categories={module.categories} />
 
       <section aria-label="Project purpose" className="max-w-3xl">
         <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">

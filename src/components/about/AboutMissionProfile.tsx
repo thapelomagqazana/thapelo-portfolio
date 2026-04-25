@@ -40,7 +40,7 @@ export function AboutMissionProfile({
 
             <h2
               id="about-mission-profile-title"
-              className="mt-4 max-w-4xl text-3xl font-semibold tracking-[-0.03em] text-text-primary sm:text-4xl"
+              className="mt-6 text-4xl font-semibold tracking-[-0.035em] text-text-primary sm:text-5xl"
             >
               {ABOUT_MISSION_PROFILE_CONTENT.title}
             </h2>

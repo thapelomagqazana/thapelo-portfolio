@@ -5,6 +5,15 @@ export type ProjectModuleStatus =
   | "EXPERIMENTAL"
   | "ARCHIVED";
 
+export type ProjectCategory =
+  | "SYSTEMS"
+  | "QUALITY"
+  | "FRONTEND"
+  | "DEVOPS"
+  | "DATA";
+
+export type ProjectCategoryFilter = "ALL" | ProjectCategory;
+
 export interface ProjectSignal {
   readonly label: string;
   readonly value: string;
@@ -47,6 +56,7 @@ export interface ProjectModule {
   readonly tag?: string;
   readonly variant?: ProjectModuleVariant;
   readonly status: ProjectModuleStatus;
+  readonly categories: readonly ProjectCategory[];
 
   /**
    * Recruiter-facing purpose line.

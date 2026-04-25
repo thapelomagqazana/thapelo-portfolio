@@ -15,6 +15,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
     tag: "FLAGSHIP SYSTEM",
     variant: "flagship",
     status: "ACTIVE",
+    categories: ["SYSTEMS", "QUALITY"],
     purpose:
       "Release intelligence system that unifies quality signals to determine whether software is safe to ship.",
     summary:
@@ -51,6 +52,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
     tag: "ACTIVE MODULE",
     variant: "standard",
     status: "IN_DEVELOPMENT",
+    categories: ["FRONTEND", "SYSTEMS"],
     purpose:
       "System-styled portfolio interface for turning career proof into operational signals.",
     summary:
