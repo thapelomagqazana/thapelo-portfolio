@@ -1,75 +1,86 @@
-import type { PortfolioSectionProps } from "./section.types";
+import type { HTMLAttributes } from "react";
+
+import { classNames } from "../../lib/classNames";
+import { PROJECT_MODULES } from "../projects/project.content";
+import { SystemModuleCard } from "../projects/SystemModuleCard";
 
 /**
- * Proof section for the portfolio.
+ * Props for the ActiveModulesSection component.
+ */
+export interface ActiveModulesSectionProps
+  extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+  /**
+   * Navigation section id used by active-section tracking.
+   *
+   * Example:
+   * - "modules"
+   */
+  readonly sectionId?: string;
+
+  /**
+   * Visible section heading.
+   */
+  readonly title?: string;
+
+  /**
+   * Supporting section summary.
+   */
+  readonly summary?: string;
+}
+
+/**
+ * Active Modules section.
  *
  * Responsibilities:
- * - Surface capability evidence quickly after the hero
- * - Reinforce systems thinking and technical depth
- * - Give recruiters immediate proof before asking for trust
+ * - Present portfolio projects as system modules
+ * - Replace generic project cards with structured operational units
+ * - Preserve fast scanning for recruiters and engineering managers
+ * - Support configurable section metadata from page composition
  *
- * UX role:
- * - Answers: "Why should I care?" and "What has he built?"
+ * Accessibility:
+ * - Uses a semantic section with a stable labelled heading
+ * - Keeps project modules inside a predictable grid structure
  */
 export function ActiveModulesSection({
-  id,
-  sectionId,
-  title,
-  summary,
-}: PortfolioSectionProps) {
+  id = "active-modules",
+  sectionId = "modules",
+  title = "Projects presented as operational systems.",
+  summary = "Each module shows purpose, status, operational signals, capabilities, and actions for fast evaluation.",
+  className,
+  ...rest
+}: ActiveModulesSectionProps) {
+  const headingId = `${id}-title`;
+
   return (
     <section
+      {...rest}
       id={id}
       data-section-id={sectionId}
-      className="px-6 py-20 sm:px-8 lg:px-10"
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={headingId}
+      className={classNames("px-6 py-20 sm:px-8 lg:px-10", className)}
     >
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-2xl">
-          <p className="type-label text-accent-cyan">Proof Layer</p>
+        <div className="max-w-3xl">
+          <p className="type-label text-accent-cyan">Active Modules</p>
 
-          <h2 id={`${id}-heading`} className="type-h2 mt-3">
+          <h2
+            id={headingId}
+            className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-text-primary sm:text-4xl"
+          >
             {title}
           </h2>
 
-          <p className="mt-4 text-text-secondary">
-            {summary}
-          </p>
+          {summary ? (
+            <p className="mt-5 text-base leading-7 text-text-secondary">
+              {summary}
+            </p>
+          ) : null}
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Flagship Module</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              BrikByteOS
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Release intelligence and quality orchestration thinking expressed
-              through structured system design, scoring, gating, and evidence-driven delivery.
-            </p>
-          </article>
-
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Engineering Signal</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              Reliability Thinking
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Work organized around safer releases, operational clarity,
-              and production-confidence decisions rather than generic app output alone.
-            </p>
-          </article>
-
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Execution Signal</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              Systems + QA Depth
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Combines software delivery, test analysis, structured problem-solving,
-              and system-oriented thinking into one coherent engineering profile.
-            </p>
-          </article>
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          {PROJECT_MODULES.map((module) => (
+            <SystemModuleCard key={module.id} module={module} />
+          ))}
         </div>
       </div>
     </section>

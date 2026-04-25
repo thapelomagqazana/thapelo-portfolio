@@ -93,17 +93,17 @@ export const ABOUT_MISSION_PROFILE_CONTENT: AboutMissionProfileContent = {
     {
       title: "Origin",
       body:
-        "My background began in construction studies, where planning, coordination, sequencing, and disciplined execution were essential to delivering complex work reliably and safely.",
+        "My background began in construction studies, where delivering complex projects required precise planning, coordination, sequencing, and disciplined execution under real-world constraints.",
     },
     {
       title: "Transition",
       body:
-        "I later transitioned into software development and testing, carrying that structured mindset into engineering environments where clarity, validation, and delivery discipline matter.",
+        "I transitioned into software development and testing, carrying that discipline into engineering. Construction trained me to think in systems, dependencies, sequencing, and failure impact—principles I now apply to software quality, reliability, and release confidence.",
     },
     {
       title: "Current Value",
       body:
-        "Today, I focus on software quality, reliability, release confidence, and systems thinking so teams can reduce uncertainty and move toward dependable software outcomes.",
+        "Today, I focus on building confidence in software delivery by improving quality, validating systems, and reducing release risk so teams can ship dependable, production-ready systems with clarity.",
     },
   ],
 
