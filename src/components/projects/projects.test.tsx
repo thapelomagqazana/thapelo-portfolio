@@ -21,13 +21,6 @@ describe("ActiveModulesSection", () => {
     }
   });
 
-  it("keeps operational signals meaningful and bounded", () => {
-    for (const module of PROJECT_MODULES) {
-      expect(module.signals.length).toBeGreaterThanOrEqual(2);
-      expect(module.signals.length).toBeLessThanOrEqual(3);
-    }
-  });
-
   it("keeps capability snapshots short and domain-based", () => {
     for (const module of PROJECT_MODULES) {
       expect(module.capabilities.length).toBeGreaterThanOrEqual(3);
@@ -45,5 +38,48 @@ describe("ActiveModulesSection", () => {
     for (const forbidden of forbiddenToolOnlyLabels) {
       expect(capabilityLabels).not.toContain(forbidden);
     }
+  });
+
+  it("renders BrikByteOS as the first flagship module", () => {
+    render(<ActiveModulesSection />);
+
+    const modules = screen.getAllByRole("article");
+
+    expect(modules[0]).toHaveAttribute("id", "brikbyteos");
+    expect(modules[0]).toHaveAttribute("data-module-variant", "flagship");
+    expect(within(modules[0]).getByText(/flagship system/i)).toBeInTheDocument();
+  });
+
+  it("uses flagship-specific BrikByteOS action priority", () => {
+    render(<ActiveModulesSection />);
+
+    const brikbyteos = screen.getByRole("article", {
+        name: /brikbyteos/i,
+    });
+
+    expect(
+        within(brikbyteos).getByRole("link", { name: /view brikbyteos/i }),
+    ).toBeInTheDocument();
+
+    expect(
+        within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("allows flagship modules to carry deeper capability breadth", () => {
+    const flagship = PROJECT_MODULES.find(
+        (module) => module.variant === "flagship",
+    );
+
+    expect(flagship).toBeDefined();
+    expect(flagship?.capabilities.length).toBeGreaterThanOrEqual(4);
+    expect(flagship?.capabilities.length).toBeLessThanOrEqual(6);
+  });
+
+  it("keeps BrikByteOS purpose specific and direction-setting", () => {
+    const brikbyteos = PROJECT_MODULES.find((module) => module.id === "brikbyteos");
+
+    expect(brikbyteos?.purpose.toLowerCase()).toContain("release intelligence");
+    expect(brikbyteos?.purpose.toLowerCase()).toContain("safe to ship");
   });
 });

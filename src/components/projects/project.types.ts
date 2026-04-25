@@ -28,6 +28,8 @@ export interface ProjectTechStackGroup {
   readonly items: readonly string[];
 }
 
+export type ProjectModuleVariant = "standard" | "flagship";
+
 /**
  * Structured evidence point that supports the project outcome.
  *
@@ -43,6 +45,7 @@ export interface ProjectModule {
   readonly id: string;
   readonly title: string;
   readonly tag?: string;
+  readonly variant?: ProjectModuleVariant;
   readonly status: ProjectModuleStatus;
 
   /**
@@ -81,8 +84,6 @@ export interface ProjectModule {
    * - must strengthen the outcome claim
    */
   readonly outcomeIndicators?: readonly ProjectOutcomeIndicator[];
-
-  readonly signals: readonly ProjectSignal[];
   readonly capabilities: readonly string[];
   readonly actions: readonly ProjectAction[];
 }

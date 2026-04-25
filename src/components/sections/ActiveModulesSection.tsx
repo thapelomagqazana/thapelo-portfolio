@@ -28,6 +28,14 @@ export interface ActiveModulesSectionProps
   readonly summary?: string;
 }
 
+const flagshipModules = PROJECT_MODULES.filter(
+  (module) => module.variant === "flagship",
+);
+
+const standardModules = PROJECT_MODULES.filter(
+  (module) => module.variant !== "flagship",
+);
+
 /**
  * Active Modules section.
  *
@@ -77,10 +85,18 @@ export function ActiveModulesSection({
           ) : null}
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
-          {PROJECT_MODULES.map((module) => (
+        <div className="mt-10 grid gap-6">
+          {flagshipModules.map((module) => (
             <SystemModuleCard key={module.id} module={module} />
           ))}
+
+          {standardModules.length > 0 ? (
+            <div className="grid gap-6 lg:grid-cols-2">
+              {standardModules.map((module) => (
+                <SystemModuleCard key={module.id} module={module} />
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

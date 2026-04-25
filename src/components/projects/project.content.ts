@@ -13,20 +13,16 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
     id: "brikbyteos",
     title: "BrikByteOS",
     tag: "FLAGSHIP SYSTEM",
+    variant: "flagship",
     status: "ACTIVE",
     purpose:
-      "Release intelligence system for validating software readiness before production deployment.",
+      "Release intelligence system that unifies quality signals to determine whether software is safe to ship.",
     summary:
       "Release intelligence system that evaluates software readiness through quality, security, performance, and policy signals.",
     techStack: [
       { label: "Runtime", items: ["Go"] },
       { label: "Policy", items: ["OPA"] },
       { label: "Quality", items: ["Playwright", "k6", "Trivy"] },
-    ],
-    signals: [
-      { label: "Focus", value: "Release Intelligence" },
-      { label: "System Type", value: "CLI / Platform" },
-      { label: "Quality Signal", value: "Policy-Gated" },
     ],
     capabilities: [
       "Release validation",
@@ -36,7 +32,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       "Risk scoring",
     ],
     actions: [
-      { label: "View Module", href: "#brikbyteos", variant: "primary" },
+      { label: "View BrikByteOS", href: "#brikbyteos", variant: "primary" },
       { label: "Inspect System", href: "#brikbyteos", variant: "secondary" },
     ],
     problem:
@@ -53,6 +49,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
     id: "portfolio-control-room",
     title: "Portfolio Control Room",
     tag: "ACTIVE MODULE",
+    variant: "standard",
     status: "IN_DEVELOPMENT",
     purpose:
       "System-styled portfolio interface for turning career proof into operational signals.",
@@ -62,11 +59,6 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       { label: "Frontend", items: ["React", "TypeScript"] },
       { label: "UI", items: ["Tailwind"] },
       { label: "Quality", items: ["Vitest"] },
-    ],
-    signals: [
-      { label: "Focus", value: "Recruiter Scanning" },
-      { label: "System Type", value: "Frontend System" },
-      { label: "Quality Signal", value: "Tested UI" },
     ],
     capabilities: [
       "Design systems",

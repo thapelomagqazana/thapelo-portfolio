@@ -1,4 +1,5 @@
 import type { ProjectModule } from "./project.types";
+import { classNames } from "../../lib/classNames";
 import { SystemModuleHeader } from "./SystemModuleHeader";
 import { SystemProblemOutcome } from "./SystemProblemOutcome";
 import { SystemCapabilityList } from "./SystemCapabilityList";
@@ -15,49 +16,65 @@ function flattenTechStack(module: ProjectModule): string {
 /**
  * System module card.
  *
- * Responsibilities:
- * - Present each project as a clean system module
- * - Avoid duplicated purpose/status/summary content
- * - Prioritize fast scanning before deeper inspection
- *
- * Layout contract:
- * 1. Header: title + status
- * 2. Purpose: primary summary
- * 3. Stack: compact implementation context
- * 4. Problem → Outcome: business value
- * 5. Capabilities: demonstrated engineering value
- * 6. Actions
+ * Purpose:
+ * - Present a project as a clean operational module
+ * - Preserve hierarchy: identity → purpose → proof → action
+ * - Avoid duplicate cards, noisy boxes, and uneven spacing
  */
 export function SystemModuleCard({ module }: SystemModuleCardProps) {
+  const isFlagship = module.variant === "flagship";
+  const headingId = `${module.id}-title`;
+
   return (
     <article
       id={module.id}
-      aria-labelledby={`${module.id}-title`}
-      className="grid gap-5 rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/70 p-6"
+      aria-labelledby={headingId}
+      data-module-variant={module.variant ?? "standard"}
+      className={classNames(
+        "rounded-[var(--radius-panel-xl)] border bg-bg-850/70",
+        "grid gap-6 p-6 sm:p-7",
+        isFlagship
+          ? "border-accent-cyan/50 shadow-[0_0_42px_rgba(34,211,238,0.10)]"
+          : "border-border-subtle",
+      )}
     >
       <SystemModuleHeader
         title={module.title}
         tag={module.tag}
         status={module.status}
-        titleId={`${module.id}-title`}
+        titleId={headingId}
       />
 
-      <section aria-label="Project purpose">
+      <section aria-label="Project purpose" className="max-w-3xl">
         <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
           Purpose
         </p>
-        <p className="mt-2 max-w-[64ch] text-sm font-semibold leading-6 text-text-primary">
+        <p className="mt-2 text-base font-semibold leading-7 text-text-primary">
           {module.purpose}
         </p>
       </section>
 
-      <section aria-label="Tech stack">
-        <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
-          Stack
-        </p>
-        <p className="mt-2 text-sm text-text-secondary">
-          {flattenTechStack(module)}
-        </p>
+      <section
+        aria-label="Module metadata"
+        className="grid gap-3 rounded-[var(--radius-panel-lg)] border border-border-subtle bg-bg-800/35 p-4 sm:grid-cols-[minmax(120px,0.35fr)_1fr]"
+      >
+        <div>
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
+            Status
+          </p>
+          <p className="mt-2 font-mono text-sm font-semibold uppercase text-text-primary">
+            {module.status.replaceAll("_", " ")}
+          </p>
+        </div>
+
+        <div>
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
+            Stack
+          </p>
+          <p className="mt-2 text-sm leading-6 text-text-secondary">
+            {flattenTechStack(module)}
+          </p>
+        </div>
       </section>
 
       <SystemProblemOutcome problem={module.problem} outcome={module.outcome} />
