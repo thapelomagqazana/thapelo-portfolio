@@ -54,27 +54,13 @@ export function SystemModuleCard({ module }: SystemModuleCardProps) {
         </p>
       </section>
 
-      <section
-        aria-label="Module metadata"
-        className="grid gap-3 rounded-[var(--radius-panel-lg)] border border-border-subtle bg-bg-800/35 p-4 sm:grid-cols-[minmax(120px,0.35fr)_1fr]"
-      >
-        <div>
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
-            Status
-          </p>
-          <p className="mt-2 font-mono text-sm font-semibold uppercase text-text-primary">
-            {module.status.replaceAll("_", " ")}
-          </p>
-        </div>
-
-        <div>
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
-            Stack
-          </p>
-          <p className="mt-2 text-sm leading-6 text-text-secondary">
-            {flattenTechStack(module)}
-          </p>
-        </div>
+      <section aria-label="Tech stack">
+        <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
+          Stack
+        </p>
+        <p className="mt-2 text-sm leading-6 text-text-secondary">
+          {flattenTechStack(module)}
+        </p>
       </section>
 
       <SystemProblemOutcome problem={module.problem} outcome={module.outcome} />

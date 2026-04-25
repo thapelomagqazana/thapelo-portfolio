@@ -1,4 +1,5 @@
 import type { ProjectModuleStatus } from "./project.types";
+import { SystemStatusBadge } from "./SystemStatusBadge";
 
 export interface SystemModuleHeaderProps {
   readonly title: string;
@@ -6,13 +7,9 @@ export interface SystemModuleHeaderProps {
   readonly status: ProjectModuleStatus;
 
   /**
-   * Optional heading id used by the parent article's aria-labelledby.
+   * Optional heading id used by parent article aria-labelledby.
    */
   readonly titleId?: string;
-}
-
-function formatStatus(status: ProjectModuleStatus): string {
-  return status.replaceAll("_", " ");
 }
 
 /**
@@ -20,9 +17,8 @@ function formatStatus(status: ProjectModuleStatus): string {
  *
  * Responsibilities:
  * - Present the module title as the primary project identifier
- * - Display project maturity as a system-style state
- * - Provide an optional stable heading id for accessible article labeling
- * - Avoid generic card-header patterns
+ * - Display project maturity through the standardized status badge
+ * - Avoid inconsistent status rendering across project modules
  */
 export function SystemModuleHeader({
   title,
@@ -43,12 +39,7 @@ export function SystemModuleHeader({
         </h3>
       </div>
 
-      <span
-        aria-label={`Project status: ${formatStatus(status)}`}
-        className="shrink-0 rounded-full border border-border-subtle bg-bg-800/70 px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-[0.08em] text-text-secondary"
-      >
-        {formatStatus(status)}
-      </span>
+      <SystemStatusBadge status={status} />
     </header>
   );
 }
