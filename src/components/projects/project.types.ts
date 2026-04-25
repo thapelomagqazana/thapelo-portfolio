@@ -16,12 +16,72 @@ export interface ProjectAction {
   readonly variant: "primary" | "secondary";
 }
 
+/**
+ * Grouped tech stack signal.
+ *
+ * Purpose:
+ * - Keep tech context structured
+ * - Avoid dumping every tool into the module UI
+ */
+export interface ProjectTechStackGroup {
+  readonly label: string;
+  readonly items: readonly string[];
+}
+
+/**
+ * Structured evidence point that supports the project outcome.
+ *
+ * Purpose:
+ * - Make outcome claims more credible
+ * - Keep evidence concise and scannable
+ */
+export interface ProjectOutcomeIndicator {
+  readonly label: string;
+}
+
 export interface ProjectModule {
   readonly id: string;
   readonly title: string;
   readonly tag?: string;
   readonly status: ProjectModuleStatus;
+
+  /**
+   * Recruiter-facing purpose line.
+   */
+  readonly purpose: string;
+
   readonly summary: string;
+  readonly techStack: readonly ProjectTechStackGroup[];
+
+  /**
+   * Business or engineering problem addressed by the module.
+   *
+   * Rules:
+   * - concrete
+   * - concise
+   * - must not simply repeat purpose
+   */
+  readonly problem: string;
+
+  /**
+   * Observable outcome created by the module.
+   *
+   * Rules:
+   * - concise
+   * - value-oriented
+   * - should communicate clarity, confidence, efficiency, or risk reduction
+   */
+  readonly outcome: string;
+
+  /**
+   * Optional supporting evidence for the outcome.
+   *
+   * Rules:
+   * - 2–3 indicators max
+   * - must strengthen the outcome claim
+   */
+  readonly outcomeIndicators?: readonly ProjectOutcomeIndicator[];
+
   readonly signals: readonly ProjectSignal[];
   readonly capabilities: readonly string[];
   readonly actions: readonly ProjectAction[];

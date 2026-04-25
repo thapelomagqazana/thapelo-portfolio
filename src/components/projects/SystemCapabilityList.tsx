@@ -3,25 +3,26 @@ export interface SystemCapabilityListProps {
 }
 
 /**
- * System capability snapshot.
+ * Compact capability snapshot.
  *
- * Responsibilities:
- * - Show what the module demonstrates
- * - Avoid raw tool-list presentation
- * - Keep the list short enough for fast scanning
+ * Purpose:
+ * - Show what the project demonstrates
+ * - Keep capabilities secondary to purpose and outcome
  */
 export function SystemCapabilityList({
   capabilities,
 }: SystemCapabilityListProps) {
   return (
     <section aria-label="Capability snapshot">
-      <p className="type-label text-text-muted">Capability Snapshot</p>
+      <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
+        Capabilities
+      </p>
 
-      <ul className="mt-3 grid gap-2">
+      <ul className="mt-3 flex flex-wrap gap-2">
         {capabilities.slice(0, 5).map((capability) => (
           <li
             key={capability}
-            className="rounded-[var(--radius-panel-md)] border border-border-subtle bg-bg-800/55 px-3 py-2 font-mono text-[0.75rem] uppercase tracking-[0.08em] text-text-secondary"
+            className="rounded-full border border-border-subtle px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-secondary"
           >
             {capability}
           </li>

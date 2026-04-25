@@ -4,6 +4,11 @@ export interface SystemModuleHeaderProps {
   readonly title: string;
   readonly tag?: string;
   readonly status: ProjectModuleStatus;
+
+  /**
+   * Optional heading id used by the parent article's aria-labelledby.
+   */
+  readonly titleId?: string;
 }
 
 function formatStatus(status: ProjectModuleStatus): string {
@@ -16,23 +21,24 @@ function formatStatus(status: ProjectModuleStatus): string {
  * Responsibilities:
  * - Present the module title as the primary project identifier
  * - Display project maturity as a system-style state
+ * - Provide an optional stable heading id for accessible article labeling
  * - Avoid generic card-header patterns
  */
 export function SystemModuleHeader({
   title,
   tag,
   status,
+  titleId,
 }: SystemModuleHeaderProps) {
   return (
     <header className="flex items-start justify-between gap-4">
       <div>
-        {tag ? (
-          <p className="type-label text-accent-cyan">
-            {tag}
-          </p>
-        ) : null}
+        {tag ? <p className="type-label text-accent-cyan">{tag}</p> : null}
 
-        <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-text-primary">
+        <h3
+          id={titleId}
+          className="mt-2 text-xl font-semibold tracking-[-0.02em] text-text-primary"
+        >
           {title}
         </h3>
       </div>

@@ -1,6 +1,6 @@
 import type { ProjectModule } from "./project.types";
 import { SystemModuleHeader } from "./SystemModuleHeader";
-import { SystemSignalGroup } from "./SystemSignalGroup";
+import { SystemProblemOutcome } from "./SystemProblemOutcome";
 import { SystemCapabilityList } from "./SystemCapabilityList";
 import { SystemModuleActions } from "./SystemModuleActions";
 
@@ -8,41 +8,59 @@ export interface SystemModuleCardProps {
   readonly module: ProjectModule;
 }
 
+function flattenTechStack(module: ProjectModule): string {
+  return module.techStack.flatMap((group) => group.items).slice(0, 5).join(" • ");
+}
+
 /**
  * System module card.
  *
  * Responsibilities:
- * - Render a project as an operational system module
- * - Preserve consistent module structure across all projects
- * - Surface summary, signals, capabilities, and actions in a predictable order
+ * - Present each project as a clean system module
+ * - Avoid duplicated purpose/status/summary content
+ * - Prioritize fast scanning before deeper inspection
  *
  * Layout contract:
- * 1. Header
- * 2. Summary
- * 3. Operational signals
- * 4. Capability snapshot
- * 5. Actions
+ * 1. Header: title + status
+ * 2. Purpose: primary summary
+ * 3. Stack: compact implementation context
+ * 4. Problem → Outcome: business value
+ * 5. Capabilities: demonstrated engineering value
+ * 6. Actions
  */
 export function SystemModuleCard({ module }: SystemModuleCardProps) {
   return (
     <article
       id={module.id}
       aria-labelledby={`${module.id}-title`}
-      className="grid gap-6 rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/70 p-6"
+      className="grid gap-5 rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/70 p-6"
     >
-      <div id={`${module.id}-title`}>
-        <SystemModuleHeader
-          title={module.title}
-          tag={module.tag}
-          status={module.status}
-        />
-      </div>
+      <SystemModuleHeader
+        title={module.title}
+        tag={module.tag}
+        status={module.status}
+        titleId={`${module.id}-title`}
+      />
 
-      <p className="max-w-[64ch] text-base leading-7 text-text-secondary">
-        {module.summary}
-      </p>
+      <section aria-label="Project purpose">
+        <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
+          Purpose
+        </p>
+        <p className="mt-2 max-w-[64ch] text-sm font-semibold leading-6 text-text-primary">
+          {module.purpose}
+        </p>
+      </section>
 
-      <SystemSignalGroup signals={module.signals} />
+      <section aria-label="Tech stack">
+        <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
+          Stack
+        </p>
+        <p className="mt-2 text-sm text-text-secondary">
+          {flattenTechStack(module)}
+        </p>
+      </section>
+
+      <SystemProblemOutcome problem={module.problem} outcome={module.outcome} />
 
       <SystemCapabilityList capabilities={module.capabilities} />
 

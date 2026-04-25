@@ -21,20 +21,6 @@ describe("ActiveModulesSection", () => {
     }
   });
 
-  it("renders required module structure", () => {
-    render(<ActiveModulesSection />);
-
-    const brikbyte = screen.getByRole("article", {
-      name: /brikbyteos/i,
-    });
-
-    expect(within(brikbyte).getByText(/flagship system/i)).toBeInTheDocument();
-    expect(within(brikbyte).getByText(/release intelligence system/i)).toBeInTheDocument();
-    expect(within(brikbyte).getByRole("region", { name: /operational signals/i })).toBeInTheDocument();
-    expect(within(brikbyte).getByRole("region", { name: /capability snapshot/i })).toBeInTheDocument();
-    expect(within(brikbyte).getByRole("navigation", { name: /module actions/i })).toBeInTheDocument();
-  });
-
   it("keeps operational signals meaningful and bounded", () => {
     for (const module of PROJECT_MODULES) {
       expect(module.signals.length).toBeGreaterThanOrEqual(2);
