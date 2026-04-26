@@ -60,6 +60,76 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
         "Normalized evidence artifacts",
         "Policy-gated release verdict",
       ],
+
+      decisions: [
+        {
+          title: "CLI-first execution",
+          reason:
+            "Release checks need to run close to developer and CI workflows before a dashboard exists.",
+          benefit:
+            "Keeps Phase 0 fast, scriptable, portable, and easier to validate with tests.",
+        },
+        {
+          title: "Static adapter registry",
+          reason:
+            "Dynamic plugin loading would increase runtime uncertainty and security risk.",
+          benefit:
+            "Preserves deterministic adapter selection and safer execution boundaries.",
+        },
+        {
+          title: "Normalized evidence model",
+          reason:
+            "Different tools produce incompatible outputs that are difficult to compare directly.",
+          benefit:
+            "Creates one inspection surface for scoring, gating, and later reporting.",
+        },
+      ],
+      tradeOffs: [
+        {
+          title: "CLI before full dashboard",
+          gain:
+            "Faster validation loop and lower implementation complexity for the MVP.",
+          cost:
+            "Less visual onboarding for non-technical reviewers in the first release.",
+        },
+        {
+          title: "Four adapters only",
+          gain:
+            "Keeps scope focused around unit, UI, performance, and security signals.",
+          cost:
+            "Limits early ecosystem coverage until the core contract proves stable.",
+        },
+      ],
+      constraints: [
+        "Deterministic execution",
+        "No dynamic plugin loading",
+        "Local artifact-first evidence",
+        "Phase 0 scope control",
+      ],
+
+      lessons: [
+        {
+          title: "Determinism beats flexibility early",
+          insight:
+            "Release tooling becomes harder to trust when adapter behavior, ordering, or outputs are unpredictable.",
+          futureUse:
+            "Future BrikByteOS features should preserve stable contracts before expanding plugin flexibility.",
+        },
+        {
+          title: "Small CLIs can create strong confidence signals",
+          insight:
+            "A focused command-line workflow can expose release readiness before a full dashboard exists.",
+          futureUse:
+            "Future work can add UI layers without weakening the CLI-first evidence model.",
+        },
+        {
+          title: "Evidence matters more than claims",
+          insight:
+            "Release confidence is stronger when decisions are backed by artifacts, scores, and policy results.",
+          futureUse:
+            "Future modules should keep evidence capture visible, inspectable, and easy to verify.",
+        },
+      ],
     },
   },
   {
@@ -119,6 +189,45 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
         "System-module project cards",
         "Recruiter-focused navigation flow",
         "Tested responsive section structure",
+      ],
+
+      decisions: [
+        {
+          title: "System modules over cards",
+          reason:
+            "Generic portfolio cards hide engineering value and make projects harder to compare.",
+          benefit:
+            "Projects become scannable operational units with purpose, maturity, and outcomes visible.",
+        },
+        {
+          title: "Inline inspection mode",
+          reason:
+            "Visitors should inspect deeper details without losing page context.",
+          benefit:
+            "Keeps discovery fast while still allowing technical depth when needed.",
+        },
+      ],
+      tradeOffs: [
+        {
+          title: "Structured signals over screenshots",
+          gain:
+            "Improves recruiter scanning and keeps project value visible without visual clutter.",
+          cost:
+            "Less immediate visual showcase until screenshot evidence is added later.",
+        },
+        {
+          title: "Single-page flow",
+          gain:
+            "Preserves guided discovery from identity to proof to trust.",
+          cost:
+            "Requires careful content hierarchy to avoid long-page fatigue.",
+        },
+      ],
+      constraints: [
+        "Recruiter-first scan speed",
+        "Mobile readability",
+        "Consistent section structure",
+        "Avoiding generic portfolio patterns",
       ],
     },
   },

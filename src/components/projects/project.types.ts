@@ -50,12 +50,75 @@ export interface ProjectOutcomeIndicator {
   readonly label: string;
 }
 
+export interface ProjectEngineeringDecision {
+  readonly title: string;
+  readonly reason: string;
+  readonly benefit: string;
+}
+
+export interface ProjectTradeOff {
+  readonly title: string;
+  readonly gain: string;
+  readonly cost: string;
+}
+
+/**
+ * Practical engineering lesson learned from a project.
+ *
+ * Purpose:
+ * - Show reflection and growth.
+ * - Connect project experience to better future engineering decisions.
+ *
+ * Rules:
+ * - Keep lessons concrete.
+ * - Recommended: 2–3 lessons per project.
+ * - Avoid vague statements like "I learned a lot".
+ */
+export interface ProjectLesson {
+  readonly title: string;
+  readonly insight: string;
+  readonly futureUse: string;
+}
+
 export interface ProjectInspectionDetail {
   readonly overview: string;
   readonly architecture: string;
   readonly problemContext: string;
   readonly impact: string;
   readonly evidence?: readonly string[];
+
+  /**
+   * Key engineering decisions behind the project.
+   *
+   * Rules:
+   * - 2–4 decisions
+   * - must explain reason and benefit
+   */
+  readonly decisions: readonly ProjectEngineeringDecision[];
+
+  /**
+   * Important trade-offs considered during implementation.
+   *
+   * Rules:
+   * - 2–3 trade-offs
+   * - must show both gain and cost
+   */
+  readonly tradeOffs: readonly ProjectTradeOff[];
+
+  /**
+   * Practical constraints considered during design or implementation.
+   */
+  readonly constraints?: readonly string[];
+
+  /**
+   * Practical lessons learned from the project.
+   *
+   * Rules:
+   * - 2–3 lessons max.
+   * - Must show engineering reality.
+   * - Must connect to future work.
+   */
+  readonly lessons?: readonly ProjectLesson[];
 }
 
 export interface ProjectModule {

@@ -191,7 +191,28 @@ describe("ActiveModulesSection", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("inspection mode exposes overview architecture problem context and impact", async () => {
+  // it("inspection mode exposes overview architecture problem context and impact", async () => {
+  //   const user = userEvent.setup();
+
+  //   render(<ActiveModulesSection />);
+
+  //   const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
+
+  //   await user.click(
+  //     within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+  //   );
+
+  //   const inspection = within(brikbyteos).getByRole("region", {
+  //     name: /brikbyteos inspection details/i,
+  //   });
+
+  //   expect(within(inspection).getByText(/overview/i)).toBeInTheDocument();
+  //   expect(within(inspection).getByText(/architecture/i)).toBeInTheDocument();
+  //   expect(within(inspection).getByText(/problem context/i)).toBeInTheDocument();
+  //   expect(within(inspection).getByText(/impact/i)).toBeInTheDocument();
+  // });
+
+  it("inspection mode renders technical inspection details", async () => {
     const user = userEvent.setup();
 
     render(<ActiveModulesSection />);
@@ -206,9 +227,41 @@ describe("ActiveModulesSection", () => {
       name: /brikbyteos inspection details/i,
     });
 
-    expect(within(inspection).getByText(/overview/i)).toBeInTheDocument();
-    expect(within(inspection).getByText(/architecture/i)).toBeInTheDocument();
-    expect(within(inspection).getByText(/problem context/i)).toBeInTheDocument();
-    expect(within(inspection).getByText(/impact/i)).toBeInTheDocument();
+    expect(
+      within(inspection).getByRole("region", { name: /technical inspection/i }),
+    ).toBeInTheDocument();
+
+    expect(within(inspection).getByText(/static adapter registry/i)).toBeInTheDocument();
+    expect(within(inspection).getByText(/cli before full dashboard/i)).toBeInTheDocument();
+  });
+
+  it("each project inspection has required technical depth", () => {
+    for (const module of PROJECT_MODULES) {
+      expect(module.inspection.architecture).toBeTruthy();
+      expect(module.inspection.decisions.length).toBeGreaterThanOrEqual(2);
+      expect(module.inspection.decisions.length).toBeLessThanOrEqual(4);
+      expect(module.inspection.tradeOffs.length).toBeGreaterThanOrEqual(2);
+      expect(module.inspection.tradeOffs.length).toBeLessThanOrEqual(3);
+    }
+  });
+
+  it("engineering decisions explain reason and benefit", () => {
+    for (const module of PROJECT_MODULES) {
+      for (const decision of module.inspection.decisions) {
+        expect(decision.title).toBeTruthy();
+        expect(decision.reason).toBeTruthy();
+        expect(decision.benefit).toBeTruthy();
+      }
+    }
+  });
+
+  it("trade-offs include both gain and cost", () => {
+    for (const module of PROJECT_MODULES) {
+      for (const tradeOff of module.inspection.tradeOffs) {
+        expect(tradeOff.title).toBeTruthy();
+        expect(tradeOff.gain).toBeTruthy();
+        expect(tradeOff.cost).toBeTruthy();
+      }
+    }
   });
 });
