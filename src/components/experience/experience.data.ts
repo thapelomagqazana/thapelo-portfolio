@@ -31,6 +31,26 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
           "Strengthened collaboration between QA, developers, and stakeholders to improve requirement alignment.",
       },
     ],
+    toolMethods: [
+      {
+        label: "QA Methods",
+        items: ["Manual testing", "Test planning", "Defect reporting"],
+        purpose:
+          "Used to validate enterprise workflows and improve release confidence.",
+      },
+      {
+        label: "Test Analysis",
+        items: ["Requirement review", "Scenario design", "Result analysis"],
+        purpose:
+          "Used to connect business expectations with system behavior and test coverage.",
+      },
+      {
+        label: "Collaboration",
+        items: ["Developer feedback", "Stakeholder communication", "QA reporting"],
+        purpose:
+          "Used to align findings with product decisions and delivery priorities.",
+      },
+    ],
     tags: ["QUALITY", "RELIABILITY", "ENTERPRISE", "SYSTEMS"],
   },
   {
@@ -56,6 +76,26 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
           "Deployed with Docker and Nginx to support stable routing and delivery.",
       },
     ],
+    toolMethods: [
+      {
+        label: "Frontend Delivery",
+        items: ["React", "Bootstrap", "Responsive UI"],
+        purpose:
+          "Used to build a client-facing interface that made cargo tracking easier to view and present.",
+      },
+      {
+        label: "Map Visualization",
+        items: ["Leaflet", "Map markers", "Tracking views"],
+        purpose:
+          "Used to demonstrate cargo movement and location-based workflows visually.",
+      },
+      {
+        label: "Deployment",
+        items: ["Docker", "Nginx", "Client-side routing"],
+        purpose:
+          "Used to package and serve the application with stable delivery behavior.",
+      },
+    ],
     tags: ["FRONTEND", "SYSTEMS", "DEVOPS", "LOGISTICS"],
   },
   {
@@ -79,6 +119,26 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
       {
         statement:
           "Reported actionable findings to support product quality and user experience improvements.",
+      },
+    ],
+    toolMethods: [
+      {
+        label: "Testing Process",
+        items: ["Test scenarios", "Usability testing", "Defect analysis"],
+        purpose:
+          "Used to validate system behavior and uncover issues affecting quality.",
+      },
+      {
+        label: "System Review",
+        items: ["Requirement review", "Database impact analysis", "Design reviews"],
+        purpose:
+          "Used to connect requirements, implementation behavior, and product risks.",
+      },
+      {
+        label: "Reporting",
+        items: ["Test reports", "Bug documentation", "Client feedback"],
+        purpose:
+          "Used to communicate findings clearly to the design and development team.",
       },
     ],
     tags: ["TESTING", "QUALITY", "ENTERPRISE", "SYSTEMS"],

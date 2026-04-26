@@ -54,7 +54,7 @@ export function HomePage() {
           id="operational-history"
           sectionId="history"
           title={getSectionHeading("history")}
-          summary="Practical work history follows proof to reinforce relevance and show the environments where these capabilities have been applied."
+          summary="Operational history showing how testing, reliability, frontend delivery, and systems thinking are applied in real systems."
         />
 
         <CredentialStackSection

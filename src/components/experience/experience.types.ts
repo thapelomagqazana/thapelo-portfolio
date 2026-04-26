@@ -33,6 +33,39 @@ export interface ExperienceOutcome {
 
 export type ExperienceLogStatus = "ACTIVE" | "COMPLETED" | "CONTRACT";
 
+
+export interface ExperienceToolMethodGroup {
+  /**
+   * Capability area represented by the tools or methods.
+   *
+   * Examples:
+   * - QA Methods
+   * - Frontend Delivery
+   * - Deployment
+   * - Collaboration
+   */
+  readonly label: string;
+
+  /**
+   * Tools, methods, or practices used in the role.
+   *
+   * Rules:
+   * - 2–5 items recommended.
+   * - Must be relevant to the actual role.
+   * - Must not become a generic skill dump.
+   */
+  readonly items: readonly string[];
+
+  /**
+   * Short explanation of how this group supported the role.
+   *
+   * Purpose:
+   * - Connect tools/methods to actual work value.
+   * - Explain why the capability mattered.
+   */
+  readonly purpose: string;
+}
+
 export interface ExperienceLogEntry {
   readonly id: string;
 
@@ -87,4 +120,17 @@ export interface ExperienceLogEntry {
    * Optional system tags.
    */
   readonly tags?: readonly string[];
+
+   /**
+   * Tools and methods used in the role.
+   *
+   * Purpose:
+   * - Connect experience to practical capability.
+   * - Avoid random tool dumping.
+   *
+   * Rules:
+   * - 2–4 groups max per role.
+   * - Each group must include label, items, and purpose.
+   */
+  readonly toolMethods?: readonly ExperienceToolMethodGroup[];
 }

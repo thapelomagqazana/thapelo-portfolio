@@ -32,7 +32,11 @@ describe("TimelineLogs", () => {
   it("renders role, company, period, and location clearly", () => {
     render(<TimelineLogs entries={entries} />);
 
-    expect(screen.getByText("May 2025 — Present")).toBeInTheDocument();
+    expect(
+        screen.getByText((content) =>
+            content.includes("May 2025 — Present"),
+        ),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Test Analyst/i)).toBeInTheDocument();
     expect(screen.getByText(/Alula Technologies/i)).toBeInTheDocument();
     expect(
