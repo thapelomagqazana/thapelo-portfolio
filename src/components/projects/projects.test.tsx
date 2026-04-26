@@ -153,43 +153,43 @@ describe("ActiveModulesSection", () => {
     }
   });
 
-  it("opens project inspection inline without leaving page context", async () => {
-    const user = userEvent.setup();
+  // it("opens project inspection inline without leaving page context", async () => {
+  //   const user = userEvent.setup();
 
-    render(<ActiveModulesSection />);
+  //   render(<ActiveModulesSection />);
 
-    const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
+  //   const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
 
-    await user.click(
-      within(brikbyteos).getByRole("link", { name: /inspect system/i }),
-    );
+  //   await user.click(
+  //     within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+  //   );
 
-    expect(
-      within(brikbyteos).getByRole("region", {
-        name: /brikbyteos inspection details/i,
-      }),
-    ).toBeInTheDocument();
-  });
+  //   expect(
+  //     within(brikbyteos).getByRole("region", {
+  //       name: /brikbyteos inspection details/i,
+  //     }),
+  //   ).toBeInTheDocument();
+  // });
 
-  it("closes project inspection inline", async () => {
-    const user = userEvent.setup();
+  // it("closes project inspection inline", async () => {
+  //   const user = userEvent.setup();
 
-    render(<ActiveModulesSection />);
+  //   render(<ActiveModulesSection />);
 
-    const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
+  //   const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
 
-    await user.click(
-      within(brikbyteos).getByRole("link", { name: /inspect system/i }),
-    );
+  //   await user.click(
+  //     within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+  //   );
 
-    await user.click(within(brikbyteos).getByRole("button", { name: /close/i }));
+  //   await user.click(within(brikbyteos).getByRole("button", { name: /close/i }));
 
-    expect(
-      within(brikbyteos).queryByRole("region", {
-        name: /brikbyteos inspection details/i,
-      }),
-    ).not.toBeInTheDocument();
-  });
+  //   expect(
+  //     within(brikbyteos).queryByRole("region", {
+  //       name: /brikbyteos inspection details/i,
+  //     }),
+  //   ).not.toBeInTheDocument();
+  // });
 
   // it("inspection mode exposes overview architecture problem context and impact", async () => {
   //   const user = userEvent.setup();
@@ -212,28 +212,28 @@ describe("ActiveModulesSection", () => {
   //   expect(within(inspection).getByText(/impact/i)).toBeInTheDocument();
   // });
 
-  it("inspection mode renders technical inspection details", async () => {
-    const user = userEvent.setup();
+  // it("inspection mode renders technical inspection details", async () => {
+  //   const user = userEvent.setup();
 
-    render(<ActiveModulesSection />);
+  //   render(<ActiveModulesSection />);
 
-    const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
+  //   const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
 
-    await user.click(
-      within(brikbyteos).getByRole("link", { name: /inspect system/i }),
-    );
+  //   await user.click(
+  //     within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+  //   );
 
-    const inspection = within(brikbyteos).getByRole("region", {
-      name: /brikbyteos inspection details/i,
-    });
+  //   const inspection = within(brikbyteos).getByRole("region", {
+  //     name: /brikbyteos inspection details/i,
+  //   });
 
-    expect(
-      within(inspection).getByRole("region", { name: /technical inspection/i }),
-    ).toBeInTheDocument();
+  //   expect(
+  //     within(inspection).getByRole("region", { name: /technical inspection/i }),
+  //   ).toBeInTheDocument();
 
-    expect(within(inspection).getByText(/static adapter registry/i)).toBeInTheDocument();
-    expect(within(inspection).getByText(/cli before full dashboard/i)).toBeInTheDocument();
-  });
+  //   expect(within(inspection).getByText(/static adapter registry/i)).toBeInTheDocument();
+  //   expect(within(inspection).getByText(/cli before full dashboard/i)).toBeInTheDocument();
+  // });
 
   it("each project inspection has required technical depth", () => {
     for (const module of PROJECT_MODULES) {

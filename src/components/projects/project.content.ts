@@ -33,8 +33,8 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       "Risk scoring",
     ],
     actions: [
-      { label: "View BrikByteOS", href: "#brikbyteos", variant: "primary" },
-      { label: "Inspect System", href: "#brikbyteos", variant: "secondary" },
+      { label: "View BrikByteOS", href: "#brikbyteos", variant: "primary", kind: "link" },
+      { label: "Inspect System", href: "#brikbyteos", variant: "secondary", kind: "inspect" },
     ],
     problem:
       "Fragmented quality tools can create false confidence before software reaches production.",
@@ -130,6 +130,27 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
             "Future modules should keep evidence capture visible, inspectable, and easy to verify.",
         },
       ],
+
+      verificationLinks: [
+        {
+          label: "Code Repository",
+          type: "code",
+          href: "https://github.com/BrikByte-Studios/brikbyteos-cli",
+          description: "Inspect source structure, CLI commands, adapters, and tests.",
+        },
+        {
+          label: "Architecture Notes",
+          type: "architecture",
+          href: "#brikbyteos",
+          description: "Review system structure, decisions, and implementation trade-offs.",
+        },
+        {
+          label: "Release Notes",
+          type: "docs",
+          href: "https://github.com/BrikByte-Studios/brikbyteos-cli-releases",
+          description: "View public release artifacts and distribution notes.",
+        },
+      ],
     },
   },
   {
@@ -159,11 +180,13 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
         label: "View Module",
         href: "#portfolio-control-room",
         variant: "primary",
+        kind: "link",
       },
       {
         label: "Inspect UI",
         href: "#portfolio-control-room",
         variant: "secondary",
+        kind: "inspect",
       },
     ],
     problem:

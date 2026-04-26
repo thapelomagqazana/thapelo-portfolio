@@ -29,7 +29,7 @@ export function ProjectLessonsInspection({
   return (
     <section
       aria-label="Project lessons"
-      className="rounded-[var(--radius-panel-xl)] bg-bg-800/30 p-5 ring-1 ring-white/5"
+      className="rounded-[var(--radius-panel-xl)] bg-bg-800/20 p-5 ring-1 ring-white/5"
     >
       <header>
         <p className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-cyan">

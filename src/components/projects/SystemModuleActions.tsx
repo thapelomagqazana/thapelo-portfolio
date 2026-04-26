@@ -5,11 +5,10 @@ export interface SystemModuleActionsProps {
   readonly actions: readonly ProjectAction[];
 
   /**
-   * Optional inline inspection handler.
+   * Opens project inspection mode.
    *
    * Purpose:
-   * - Allows module actions to open inspection mode without navigation
-   * - Keeps route/page context intact
+   * - Allows inspection actions to open the modal without route navigation.
    */
   readonly onInspect?: () => void;
 }
@@ -18,9 +17,9 @@ export interface SystemModuleActionsProps {
  * System module action layer.
  *
  * Responsibilities:
- * - Provide clear next actions for each module
- * - Preserve primary/secondary action hierarchy
- * - Support inline inspection without route navigation
+ * - Provide clear next actions for each module.
+ * - Preserve primary/secondary action hierarchy.
+ * - Avoid fragile label-based behavior.
  */
 export function SystemModuleActions({
   actions,
@@ -29,13 +28,11 @@ export function SystemModuleActions({
   return (
     <nav aria-label="Module actions" className="flex flex-col gap-3 sm:flex-row">
       {actions.map((action) => {
-        const shouldOpenInspection =
-          action.label.toLowerCase().includes("inspect") ||
-          action.label.toLowerCase().includes("view");
+        const shouldOpenInspection = action.kind === "inspect";
 
         return (
           <Button
-            key={action.label}
+            key={`${action.label}-${action.href}`}
             href={action.href}
             variant={action.variant}
             onClick={

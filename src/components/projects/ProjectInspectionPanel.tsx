@@ -2,35 +2,33 @@ import type { ProjectInspectionDetail } from "./project.types";
 import { ProjectTechnicalInspection } from "./ProjectTechnicalInspection";
 import { SystemProblemImpactInspection } from "./SystemProblemImpactInspection";
 import { ProjectLessonsInspection } from "./ProjectLessonsInspection";
+import { ProjectVerificationLinks } from "./ProjectVerificationLinks";
 
 export interface ProjectInspectionPanelProps {
   readonly title: string;
+  readonly titleId?: string;
   readonly inspection: ProjectInspectionDetail;
   readonly onClose: () => void;
 }
 
 /**
- * Inline project inspection panel.
+ * Project inspection panel.
  *
  * Responsibilities:
- * - Reveal deeper project detail without route navigation.
- * - Preserve page context and scroll position.
- * - Present project depth in a premium, low-noise layout.
- *
- * Accessibility:
- * - Uses a named region for expanded inspection content.
- * - Provides an explicit close button.
- * - Avoids hover-only disclosure patterns.
+ * - Render structured project inspection content.
+ * - Keep the modal body organized, readable, and low-noise.
+ * - Avoid duplicating project-card content unnecessarily.
  */
 export function ProjectInspectionPanel({
   title,
+  titleId,
   inspection,
   onClose,
 }: ProjectInspectionPanelProps) {
   return (
     <section
       aria-label={`${title} inspection details`}
-      className="rounded-[var(--radius-panel-xl)] border border-accent-cyan/25 bg-bg-900/70 p-6 shadow-[0_0_48px_rgba(61,220,255,0.08)] sm:p-7"
+      className="rounded-[var(--radius-panel-xl)] bg-bg-900/75 p-6 sm:p-7"
     >
       <div className="flex items-start justify-between gap-5">
         <div>
@@ -38,7 +36,10 @@ export function ProjectInspectionPanel({
             Inspection Mode
           </p>
 
-          <h4 className="mt-2 text-xl font-semibold tracking-tight text-text-primary">
+          <h4
+            id={titleId}
+            className="mt-2 text-xl font-semibold tracking-tight text-text-primary"
+          >
             {title} Deep Inspection
           </h4>
 
@@ -74,6 +75,8 @@ export function ProjectInspectionPanel({
 
         <ProjectLessonsInspection lessons={inspection.lessons} />
 
+        <ProjectVerificationLinks links={inspection.verificationLinks} />
+
         {inspection.evidence?.length ? (
           <section aria-label="Inspection evidence">
             <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
@@ -104,14 +107,10 @@ interface InspectionBlockProps {
 
 /**
  * Labelled inspection summary block.
- *
- * Purpose:
- * - Provide high-level context before deeper inspection layers.
- * - Avoid duplicating architecture, problem, or impact content.
  */
 function InspectionBlock({ label, value }: InspectionBlockProps) {
   return (
-    <section className="rounded-[var(--radius-panel-lg)] bg-bg-850/55 p-5 ring-1 ring-white/5">
+    <section className="rounded-[var(--radius-panel-xl)] bg-bg-800/20 p-5 ring-1 ring-white/5">
       <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-muted">
         {label}
       </p>

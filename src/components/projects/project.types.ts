@@ -19,10 +19,22 @@ export interface ProjectSignal {
   readonly value: string;
 }
 
+export type ProjectActionKind = "link" | "inspect";
+
+
 export interface ProjectAction {
   readonly label: string;
   readonly href: `#${string}` | `https://${string}`;
   readonly variant: "primary" | "secondary";
+
+  /**
+   * Action behavior.
+   *
+   * Purpose:
+   * - Avoid guessing behavior from button labels.
+   * - Keep navigation actions and inspection actions explicit.
+   */
+  readonly kind?: ProjectActionKind;
 }
 
 /**
@@ -80,6 +92,22 @@ export interface ProjectLesson {
   readonly futureUse: string;
 }
 
+export type ProjectVerificationLinkType =
+  | "code"
+  | "demo"
+  | "screenshot"
+  | "writeup"
+  | "docs"
+  | "architecture";
+
+export interface ProjectVerificationLink {
+  readonly label: string;
+  readonly type: ProjectVerificationLinkType;
+  readonly href: `#${string}` | `https://${string}`;
+  readonly description?: string;
+}
+
+
 export interface ProjectInspectionDetail {
   readonly overview: string;
   readonly architecture: string;
@@ -119,6 +147,8 @@ export interface ProjectInspectionDetail {
    * - Must connect to future work.
    */
   readonly lessons?: readonly ProjectLesson[];
+
+  readonly verificationLinks?: readonly ProjectVerificationLink[];
 }
 
 export interface ProjectModule {
