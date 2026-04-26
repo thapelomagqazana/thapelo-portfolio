@@ -45,6 +45,22 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       { label: "Reduced readiness ambiguity" },
       { label: "Policy-based go/no-go checks" },
     ],
+
+    inspection: {
+      overview:
+        "BrikByteOS evaluates release readiness by collecting quality, security, performance, and policy signals into one inspection flow.",
+      architecture:
+        "CLI core → static adapters → normalized evidence → scoring → policy gate → inspectable run output.",
+      problemContext:
+        "Modern pipelines often pass while important quality, security, or performance risks remain fragmented across separate tools.",
+      impact:
+        "BrikByteOS turns fragmented signals into a clearer release decision so teams can reason about readiness before shipping.",
+      evidence: [
+        "Adapter-based execution model",
+        "Normalized evidence artifacts",
+        "Policy-gated release verdict",
+      ],
+    },
   },
   {
     id: "portfolio-control-room",
@@ -89,5 +105,21 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       { label: "Clearer capability signals" },
       { label: "Consistent module structure" },
     ],
+
+    inspection: {
+      overview:
+        "Portfolio Control Room presents identity, projects, and proof as structured operational signals instead of a generic portfolio layout.",
+      architecture:
+        "Page shell → navigation flow → hero system → mission profile → active modules → trust and contact sections.",
+      problemContext:
+        "Traditional portfolios often bury relevant evidence behind long text, inconsistent cards, and weak project hierarchy.",
+      impact:
+        "The interface makes career value easier to scan by exposing purpose, maturity, outcomes, and capabilities upfront.",
+      evidence: [
+        "System-module project cards",
+        "Recruiter-focused navigation flow",
+        "Tested responsive section structure",
+      ],
+    },
   },
 ];

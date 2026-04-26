@@ -50,6 +50,14 @@ export interface ProjectOutcomeIndicator {
   readonly label: string;
 }
 
+export interface ProjectInspectionDetail {
+  readonly overview: string;
+  readonly architecture: string;
+  readonly problemContext: string;
+  readonly impact: string;
+  readonly evidence?: readonly string[];
+}
+
 export interface ProjectModule {
   readonly id: string;
   readonly title: string;
@@ -96,4 +104,13 @@ export interface ProjectModule {
   readonly outcomeIndicators?: readonly ProjectOutcomeIndicator[];
   readonly capabilities: readonly string[];
   readonly actions: readonly ProjectAction[];
+
+  /**
+   * Optional inline inspection content.
+   *
+   * Purpose:
+   * - Let visitors inspect deeper project detail without leaving page context
+   * - Keep deeper information structured and scannable
+   */
+  readonly inspection: ProjectInspectionDetail;
 }

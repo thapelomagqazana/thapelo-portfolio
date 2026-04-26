@@ -152,4 +152,63 @@ describe("ActiveModulesSection", () => {
       ).toBeInTheDocument();
     }
   });
+
+  it("opens project inspection inline without leaving page context", async () => {
+    const user = userEvent.setup();
+
+    render(<ActiveModulesSection />);
+
+    const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
+
+    await user.click(
+      within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+    );
+
+    expect(
+      within(brikbyteos).getByRole("region", {
+        name: /brikbyteos inspection details/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("closes project inspection inline", async () => {
+    const user = userEvent.setup();
+
+    render(<ActiveModulesSection />);
+
+    const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
+
+    await user.click(
+      within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+    );
+
+    await user.click(within(brikbyteos).getByRole("button", { name: /close/i }));
+
+    expect(
+      within(brikbyteos).queryByRole("region", {
+        name: /brikbyteos inspection details/i,
+      }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("inspection mode exposes overview architecture problem context and impact", async () => {
+    const user = userEvent.setup();
+
+    render(<ActiveModulesSection />);
+
+    const brikbyteos = screen.getByRole("article", { name: /brikbyteos/i });
+
+    await user.click(
+      within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+    );
+
+    const inspection = within(brikbyteos).getByRole("region", {
+      name: /brikbyteos inspection details/i,
+    });
+
+    expect(within(inspection).getByText(/overview/i)).toBeInTheDocument();
+    expect(within(inspection).getByText(/architecture/i)).toBeInTheDocument();
+    expect(within(inspection).getByText(/problem context/i)).toBeInTheDocument();
+    expect(within(inspection).getByText(/impact/i)).toBeInTheDocument();
+  });
 });

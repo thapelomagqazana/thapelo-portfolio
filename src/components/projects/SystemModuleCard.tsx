@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ProjectModule } from "./project.types";
 import { classNames } from "../../lib/classNames";
 import { SystemModuleHeader } from "./SystemModuleHeader";
@@ -5,6 +6,7 @@ import { SystemProblemOutcome } from "./SystemProblemOutcome";
 import { SystemCapabilityList } from "./SystemCapabilityList";
 import { SystemModuleActions } from "./SystemModuleActions";
 import { ProjectCategoryChips } from "./ProjectCategoryChips";
+import { ProjectInspectionPanel } from "./ProjectInspectionPanel";
 
 export interface SystemModuleCardProps {
   readonly module: ProjectModule;
@@ -23,6 +25,7 @@ function flattenTechStack(module: ProjectModule): string {
  * - Avoid duplicate cards, noisy boxes, and uneven spacing
  */
 export function SystemModuleCard({ module }: SystemModuleCardProps) {
+  const [isInspecting, setIsInspecting] = useState(false);
   const isFlagship = module.variant === "flagship";
   const headingId = `${module.id}-title`;
 
@@ -70,7 +73,18 @@ export function SystemModuleCard({ module }: SystemModuleCardProps) {
 
       <SystemCapabilityList capabilities={module.capabilities} />
 
-      <SystemModuleActions actions={module.actions} />
+      <SystemModuleActions 
+        actions={module.actions}
+        onInspect={() => setIsInspecting((current) => !current)}
+      />
+
+      {isInspecting ? (
+        <ProjectInspectionPanel
+          title={module.title}
+          inspection={module.inspection}
+          onClose={() => setIsInspecting(false)}
+        />
+      ) : null}
     </article>
   );
 }
