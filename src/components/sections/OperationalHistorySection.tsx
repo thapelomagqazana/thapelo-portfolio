@@ -1,66 +1,69 @@
-import type { PortfolioSectionProps } from "./section.types";
+import type { HTMLAttributes } from "react";
+
+import { EXPERIENCE_LOGS } from "../experience/experience.data";
+import { TimelineLogs } from "../experience/TimelineLogs";
+import { classNames } from "../../lib/classNames";
+
+export interface OperationalHistorySectionProps
+  extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+  readonly sectionId?: string;
+  readonly title?: string;
+  readonly summary?: string;
+}
 
 /**
- * Operational history section for the portfolio.
+ * Operational history section.
  *
  * Responsibilities:
- * - Reinforce credibility after proof has been established
- * - Show practical exposure across testing, delivery, and engineering contexts
- * - Keep experience scannable instead of verbose
+ * - Present work history as structured operational logs.
+ * - Reinforce credibility after project proof has been established.
+ * - Preserve fast scanning for recruiters and engineering managers.
+ * - Support configurable section metadata from page composition.
  *
- * UX role:
- * - Answers: "Can I trust this?" through practical history
+ * Accessibility:
+ * - Uses a semantic section with a stable labelled heading.
+ * - Keeps timeline entries inside a predictable log structure.
  */
 export function OperationalHistorySection({
-  id,
-  sectionId,
-  title,
-  summary,
-}: PortfolioSectionProps) {
+  id = "operational-history",
+  sectionId = "history",
+  title = "Experience presented as operational history.",
+  summary = "Timeline entries show role progression, delivery context, and outcome signals across testing, reliability, frontend delivery, and systems thinking.",
+  className,
+  ...rest
+}: OperationalHistorySectionProps) {
+  const headingId = `${id}-title`;
+
   return (
     <section
+      {...rest}
       id={id}
       data-section-id={sectionId}
-      className="px-6 py-20 sm:px-8 lg:px-10"
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={headingId}
+      className={classNames("px-6 py-20 sm:px-8 lg:px-10", className)}
     >
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-2xl">
-          <p className="type-label text-accent-cyan">Trust Layer</p>
+        <div className="max-w-3xl">
+          <p className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent-cyan">
+            Operational History
+          </p>
 
-          <h2 id={`${id}-heading`} className="type-h2 mt-3">
+          <h2
+            id={headingId}
+            className="mt-6 text-4xl font-semibold tracking-[-0.035em] text-text-primary sm:text-5xl"
+          >
             {title}
           </h2>
 
-          <p className="mt-4 text-text-secondary">
-            {summary}
-          </p>
+          {summary ? (
+            <p className="mt-5 max-w-[64ch] text-base leading-7 text-text-secondary">
+              {summary}
+            </p>
+          ) : null}
         </div>
 
-        <div className="mt-8 space-y-4">
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Current Role</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              Test Analyst · Alula Technologies
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Contributes to planning, execution, and reporting across critical
-              systems, helping teams validate quality, requirements alignment,
-              and operational confidence.
-            </p>
-          </article>
-
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Web Delivery</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              Web Developer · C. Steinweg Bridge Ltd
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Built a marketing-focused cargo tracking experience using React,
-              maps, Docker, and deployment-oriented thinking to support
-              performance and engagement.
-            </p>
-          </article>
+        <div className="mt-8">
+          <TimelineLogs entries={EXPERIENCE_LOGS} />
         </div>
       </div>
     </section>
