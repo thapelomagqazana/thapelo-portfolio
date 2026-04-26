@@ -1,75 +1,68 @@
-import type { PortfolioSectionProps } from "./section.types";
+import type { HTMLAttributes } from "react";
+
+import { classNames } from "../../lib/classNames";
+import { CREDENTIALS } from "../credentials/credential.data";
+import { CredentialTimeline } from "../credentials/CredentialTimeline";
+
+export interface CredentialStackSectionProps
+  extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+  readonly sectionId?: string;
+  readonly title?: string;
+  readonly summary?: string;
+}
 
 /**
- * Credential stack section for the portfolio.
+ * Credential stack section.
  *
  * Responsibilities:
- * - Reinforce educational and professional credibility
- * - Keep trust signals visible and compact
- * - Support recruiter scanning without forcing deep reading
+ * - Present degrees, programs, and certifications as one trust system.
+ * - Keep technical credibility visible without certificate clutter.
+ * - Match the visual rhythm of the portfolio's operational sections.
  *
- * UX role:
- * - Answers: "What signals reinforce confidence in this profile?"
+ * Accessibility:
+ * - Uses a semantic section with a stable labelled heading.
+ * - Keeps credential records in an ordered timeline.
  */
 export function CredentialStackSection({
-  id,
-  sectionId,
-  title,
-  summary,
-}: PortfolioSectionProps) {
+  id = "credential-stack",
+  sectionId = "credentials",
+  title = "Credentials that reinforce technical credibility.",
+  summary = "Structured credential records showing academic background, cloud awareness, technical foundation, and continuous learning trajectory.",
+  className,
+  ...rest
+}: CredentialStackSectionProps) {
+  const headingId = `${id}-title`;
+
   return (
     <section
+      {...rest}
       id={id}
       data-section-id={sectionId}
-      className="px-6 py-20 sm:px-8 lg:px-10"
-      aria-labelledby={`${id}-heading`}
+      aria-labelledby={headingId}
+      className={classNames("px-6 py-20 sm:px-8 lg:px-10", className)}
     >
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-2xl">
-          <p className="type-label text-accent-cyan">Credibility Layer</p>
+        <div className="max-w-3xl">
+          <p className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent-cyan">
+            Credential Stack
+          </p>
 
-          <h2 id={`${id}-heading`} className="type-h2 mt-3">
+          <h2
+            id={headingId}
+            className="mt-6 text-4xl font-semibold tracking-[-0.035em] text-text-primary sm:text-5xl"
+          >
             {title}
           </h2>
 
-          <p className="mt-4 text-text-secondary">
-            {summary}
-          </p>
+          {summary ? (
+            <p className="mt-5 max-w-[64ch] text-base leading-7 text-text-secondary">
+              {summary}
+            </p>
+          ) : null}
         </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Education</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              UNISA
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              BSc in Computer Science and Mathematics, building stronger depth
-              in systems, algorithms, and applied technical foundations.
-            </p>
-          </article>
-
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Training</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              WeThinkCode
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Practical software development training grounded in real problem-solving
-              and working-system delivery.
-            </p>
-          </article>
-
-          <article className="rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-5 shadow-[var(--shadow-panel-elevated)]">
-            <p className="type-label">Foundation</p>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">
-              Wits
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Earlier academic background that contributes structured thinking,
-              discipline, and systems-oriented problem framing.
-            </p>
-          </article>
+        <div className="mt-8">
+          <CredentialTimeline credentials={CREDENTIALS} />
         </div>
       </div>
     </section>

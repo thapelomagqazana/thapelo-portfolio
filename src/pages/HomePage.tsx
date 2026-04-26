@@ -61,7 +61,7 @@ export function HomePage() {
           id="credential-stack"
           sectionId="credentials"
           title={getSectionHeading("credentials")}
-          summary="Education and training reinforce credibility after capability and practical exposure are already visible."
+          summary="Structured credential records reinforcing academic background, technical foundation, and learning trajectory."
         />
 
         <OpenTransmissionSection
