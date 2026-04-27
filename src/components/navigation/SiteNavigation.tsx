@@ -6,6 +6,7 @@ import { MobileNavTrigger } from "./MobileNavTrigger";
 import { PRIMARY_SITE_NAV_ITEMS } from "./navigation.content";
 import type { NavigationLabelStyle } from "./navigation.types";
 import { SiteNavLink } from "./SiteNavLink";
+import { QuickContactLink } from "../contact/QuickContactLink";
 
 /**
  * Sticky primary site navigation.
@@ -68,6 +69,10 @@ export function SiteNavigation() {
               />
             ))}
           </nav>
+
+          <div className="hidden lg:block">
+            <QuickContactLink />
+          </div>
 
           <MobileNavTrigger
             isOpen={isMobileOpen}

@@ -6,6 +6,8 @@ import { TerminalPreview } from "./TerminalPreview";
 import { HeroSystemHeader } from "./HeroSystemHeader";
 import { useHeroSystemStatus } from "./useHeroSystemStatus";
 import { HeroSystemMotion } from "./HeroSystemMotion";
+import { CONTACT_ACTIONS } from "../contact/contact.content";
+import { ContactActions } from "../contact/ContactActions";
 
 /**
  * Hero section for the landing page.
@@ -54,6 +56,13 @@ export function HeroSystem() {
 
             <div className="mt-8">
               <HeroSystemActions actions={HERO_CONTENT.actions} />
+            </div>
+            <div className="mt-8">
+              <ContactActions
+                actions={CONTACT_ACTIONS}
+                variant="hero"
+                showIcons
+              />
             </div>
           </div>
         </HeroSystemMotion>

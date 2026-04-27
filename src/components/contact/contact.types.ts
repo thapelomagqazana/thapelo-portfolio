@@ -27,6 +27,13 @@ export interface ContactAction {
    * Accessible action label.
    */
   readonly ariaLabel: string;
+
+  /**
+   * Optional icon identifier.
+   *
+   * Must map to a known icon component.
+   */
+  readonly icon?: "email" | "linkedin" | "github" | "resume";
 }
 
 export type AvailabilityStatus =
@@ -72,4 +79,22 @@ export interface OpportunityFit {
    * Short clarification for relevant outreach.
    */
   readonly note: string;
+}
+
+export type ContactSubmissionState =
+  | "IDLE"
+  | "SUBMITTING"
+  | "SUCCESS"
+  | "ERROR";
+
+export interface ContactSubmissionFeedback {
+  /**
+   * Current form submission state.
+   */
+  readonly state: ContactSubmissionState;
+
+  /**
+   * User-facing feedback message.
+   */
+  readonly message: string;
 }

@@ -14,6 +14,7 @@ export const CONTACT_ACTIONS: readonly ContactAction[] = [
     type: "EMAIL",
     priority: "PRIMARY",
     ariaLabel: "Email Thapelo Magqazana",
+    icon: "email",
   },
   {
     label: "LinkedIn",
@@ -21,6 +22,7 @@ export const CONTACT_ACTIONS: readonly ContactAction[] = [
     type: "LINKEDIN",
     priority: "SECONDARY",
     ariaLabel: "Open Thapelo Magqazana LinkedIn profile",
+    icon: "linkedin",
   },
   {
     label: "GitHub",
@@ -28,6 +30,7 @@ export const CONTACT_ACTIONS: readonly ContactAction[] = [
     type: "GITHUB",
     priority: "SECONDARY",
     ariaLabel: "Open Thapelo Magqazana GitHub profile",
+    icon: "github",
   },
   {
     label: "Resume",
@@ -35,6 +38,7 @@ export const CONTACT_ACTIONS: readonly ContactAction[] = [
     type: "RESUME",
     priority: "SECONDARY",
     ariaLabel: "Open Thapelo Magqazana resume",
+    icon: "resume",
   },
 ];
 

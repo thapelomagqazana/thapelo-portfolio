@@ -4,6 +4,7 @@ import { classNames } from "../../lib/classNames";
 import { OPPORTUNITY_FIT, CONTACT_ACTIONS } from "../contact/contact.content";
 import { ContactActions } from "../contact/ContactActions";
 import { OpportunityFitPanel } from "../contact/OpportunityFitPanel";
+import { ContactForm } from "../contact/ContactForm";
 
 export interface OpenTransmissionSectionProps
   extends Omit<HTMLAttributes<HTMLElement>, "children"> {
@@ -80,7 +81,15 @@ export function OpenTransmissionSection({
             <OpportunityFitPanel fit={OPPORTUNITY_FIT} />
           </div>
 
-          <ContactActions actions={CONTACT_ACTIONS} />
+          <div className="mt-8">
+            <ContactActions
+              actions={CONTACT_ACTIONS}
+              variant="full"
+              showIcons
+            />
+          </div>
+
+          <ContactForm />
 
           <div className="mt-6 rounded-[var(--radius-panel-lg)] bg-bg-800/20 p-4 ring-1 ring-white/5">
             <p className="text-sm leading-6 text-text-muted">
