@@ -6,6 +6,7 @@ import { ActiveModulesSection } from "../components/sections/ActiveModulesSectio
 import { OperationalHistorySection } from "../components/sections/OperationalHistorySection";
 import { CredentialStackSection } from "../components/sections/CredentialStackSection";
 import { OpenTransmissionSection } from "../components/sections/OpenTransmissionSection";
+import { SkillsSection } from "../components/sections/SkillsSection";
 import { AboutMissionProfile } from "../components/about/AboutMissionProfile";
 
 /**
@@ -62,6 +63,13 @@ export function HomePage() {
           sectionId="credentials"
           title={getSectionHeading("credentials")}
           summary="Structured credential records reinforcing academic background, technical foundation, and learning trajectory."
+        />
+
+        <SkillsSection
+          id="skills"
+          sectionId="skills"
+          title="Capabilities grouped for fast evaluation."
+          summary="Structured capability panels showing frontend engineering, quality engineering, systems thinking, DevOps foundations, and tooling workflow."
         />
 
         <OpenTransmissionSection
