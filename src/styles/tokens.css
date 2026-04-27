@@ -471,3 +471,43 @@ html {
     animation: none;
   }
 }
+
+/**
+ * Terminal mode transition primitives.
+ *
+ * Purpose:
+ * - Make Terminal Mode feel like an intentional system layer.
+ * - Keep motion short, restrained, and readable.
+ */
+
+.terminal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease-out;
+}
+
+.terminal-overlay[data-state="open"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.terminal-shell {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  transition:
+    opacity 180ms ease-out,
+    transform 220ms ease-out;
+}
+
+.terminal-overlay[data-state="open"] .terminal-shell {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-overlay,
+  .terminal-shell {
+    transition: none !important;
+    transform: none !important;
+  }
+}

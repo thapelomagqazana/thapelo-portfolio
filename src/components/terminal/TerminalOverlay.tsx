@@ -1,13 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { PortfolioUIMode } from "../../theme/theme.types";
 import { TERMINAL_COMMANDS } from "./terminal.content";
 import { TerminalCommandList } from "./TerminalCommandList";
+import { MODE_TRANSITION_CONFIG } from "./terminal.constants";
 
 export interface TerminalOverlayProps {
   readonly isOpen: boolean;
   readonly onClose: () => void;
   readonly onModeChange: (mode: PortfolioUIMode) => void;
+
+  /**
+   * Element that triggered Terminal Mode.
+   *
+   * Purpose:
+   * - Restore focus after closing.
+   */
+  readonly restoreFocusTo?: HTMLElement | null;
 }
 
 /**
@@ -24,19 +33,56 @@ export interface TerminalOverlayProps {
  * - Focus moves to the terminal shell on open.
  * - Content remains readable text.
  */
+/**
+ * Terminal exploration overlay.
+ *
+ * Responsibilities:
+ * - Open Terminal Mode with restrained fade/scale motion.
+ * - Keep UI Mode available underneath.
+ * - Restore focus after close.
+ * - Respect reduced-motion preferences through CSS.
+ *
+ * Accessibility:
+ * - Uses dialog semantics.
+ * - Escape closes overlay.
+ * - Focus moves into terminal shell on open.
+ */
 export function TerminalOverlay({
   isOpen,
   onClose,
   onModeChange,
+  restoreFocusTo,
 }: TerminalOverlayProps) {
   const shellRef = useRef<HTMLDivElement | null>(null);
+  const [shouldRender, setShouldRender] = useState(isOpen);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (!isOpen) {
-      return;
+    if (isOpen) {
+      setShouldRender(true);
+
+      const frame = window.requestAnimationFrame(() => {
+        setIsVisible(true);
+        shellRef.current?.focus();
+      });
+
+      return () => window.cancelAnimationFrame(frame);
     }
 
-    shellRef.current?.focus();
+    setIsVisible(false);
+
+    const timeout = window.setTimeout(() => {
+      setShouldRender(false);
+      restoreFocusTo?.focus();
+    }, MODE_TRANSITION_CONFIG.shellMs);
+
+    return () => window.clearTimeout(timeout);
+  }, [isOpen, restoreFocusTo]);
+
+  useEffect(() => {
+    if (!shouldRender) {
+      return;
+    }
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -49,9 +95,9 @@ export function TerminalOverlay({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [shouldRender]);
 
-  if (!isOpen) {
+  if (!shouldRender) {
     return null;
   }
 
@@ -65,9 +111,10 @@ export function TerminalOverlay({
 
     if (target instanceof HTMLElement) {
       handleExit();
+
       window.setTimeout(() => {
         target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 0);
+      }, MODE_TRANSITION_CONFIG.shellMs);
     }
   }
 
@@ -76,12 +123,13 @@ export function TerminalOverlay({
       role="dialog"
       aria-modal="true"
       aria-label="Terminal portfolio mode"
-      className="fixed inset-0 z-50 bg-bg-950/80 p-4 backdrop-blur-md sm:p-8"
+      data-state={isVisible ? "open" : "closed"}
+      className="terminal-overlay fixed inset-0 z-50 bg-bg-950/80 p-4 backdrop-blur-md sm:p-8"
     >
       <div
         ref={shellRef}
         tabIndex={-1}
-        className="mx-auto flex max-h-[calc(100vh-4rem)] max-w-5xl flex-col overflow-hidden rounded-[var(--radius-panel-xl)] border border-accent-cyan/25 bg-bg-900/95 shadow-[0_0_60px_rgba(61,220,255,0.12)] focus-visible:outline-none"
+        className="terminal-shell mx-auto flex max-h-[calc(100vh-4rem)] max-w-5xl flex-col overflow-hidden rounded-[var(--radius-panel-xl)] border border-accent-cyan/25 bg-bg-900/95 shadow-[0_0_60px_rgba(61,220,255,0.12)] focus-visible:outline-none"
       >
         <header className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4">
           <div>

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useRef } from "react";
 
 import { ModeToggle } from "../mode/ModeToggle";
 import { TerminalOverlay } from "../terminal/TerminalOverlay";
@@ -14,18 +15,21 @@ export interface AppShellProps {
  * Responsibilities:
  * - Own global UI mode state.
  * - Apply theme and mode attributes.
- * - Keep normal UI mode stable while Terminal mode is layered as an overlay.
+ * - Keep Terminal Mode as an overlay, not a page replacement.
+ * - Restore focus to the mode toggle after closing Terminal Mode.
  */
 export function AppShell({ children }: AppShellProps) {
   const { preference, mode, setMode } = useTheme();
+  const terminalToggleRef = useRef<HTMLButtonElement | null>(null);
 
   return (
-    <div
-      data-theme={preference.theme}
-      data-ui-mode={mode.toLowerCase()}
-    >
+    <div data-theme={preference.theme} data-ui-mode={mode.toLowerCase()}>
       <div className="fixed bottom-4 right-4 z-40">
-        <ModeToggle mode={mode} onChange={setMode} />
+        <ModeToggle
+          ref={terminalToggleRef}
+          mode={mode}
+          onChange={setMode}
+        />
       </div>
 
       {children}
@@ -34,6 +38,7 @@ export function AppShell({ children }: AppShellProps) {
         isOpen={mode === "TERMINAL"}
         onClose={() => setMode("UI")}
         onModeChange={setMode}
+        restoreFocusTo={terminalToggleRef.current}
       />
     </div>
   );

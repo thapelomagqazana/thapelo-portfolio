@@ -25,3 +25,15 @@ export interface TerminalCommand {
    */
   readonly href?: `#${string}`;
 }
+
+export type ModeTransitionState =
+  | "IDLE"
+  | "ENTERING_TERMINAL"
+  | "TERMINAL_ACTIVE"
+  | "EXITING_TERMINAL";
+
+export interface ModeTransitionConfig {
+  readonly overlayMs: number;
+  readonly shellMs: number;
+  readonly reducedMotion: boolean;
+}
