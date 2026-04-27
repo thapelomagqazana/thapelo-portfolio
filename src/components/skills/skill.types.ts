@@ -1,37 +1,114 @@
 /**
- * Grouped capability model for skills.
+ * Canonical skill category.
  *
  * Purpose:
- * - Present skills as meaningful capability areas.
- * - Avoid generic tag-cloud skill dumping.
+ * - Keep skill groups aligned to engineering-manager evaluation.
  */
-export interface SkillCapabilityGroup {
+export type SkillCategory =
+  | "QUALITY_ENGINEERING"
+  | "FRONTEND_ENGINEERING"
+  | "SYSTEMS_THINKING"
+  | "DEVOPS_FOUNDATIONS"
+  | "TOOLING_WORKFLOW";
+
+/**
+ * Evidence source type for a skill capability.
+ *
+ * Purpose:
+ * - Make skill proof explicit.
+ * - Avoid unsupported skill claims.
+ */
+export type SkillEvidenceType =
+  | "PROJECT"
+  | "WORK_EXPERIENCE"
+  | "CREDENTIAL"
+  | "OPEN_SOURCE"
+  | "LEARNING";
+
+export interface SkillEvidenceSignal {
   /**
-   * Capability area represented by the skills.
+   * Type of evidence supporting the capability.
+   */
+  readonly type: SkillEvidenceType;
+
+  /**
+   * Human-readable evidence source.
+   */
+  readonly source: string;
+
+  /**
+   * Short explanation of how this source proves the skill.
    *
-   * Examples:
-   * - Frontend Engineering
-   * - Quality Engineering
-   * - Systems Thinking
-   * - DevOps Foundations
+   * Rules:
+   * - 1 sentence max.
+   * - Must be concrete.
+   */
+  readonly proof: string;
+
+  /**
+   * Optional internal anchor or public URL.
+   */
+  readonly href?: `#${string}` | `https://${string}`;
+}
+
+export interface SkillCapabilityPanel {
+  readonly category: SkillCategory;
+  readonly title: string;
+  readonly summary: string;
+  readonly items: readonly string[];
+
+  /**
+   * Evidence proving this capability.
+   *
+   * Rules:
+   * - 1–3 signals max.
+   * - Must connect to real project, work, credential, or learning context.
+   */
+  readonly evidence: readonly SkillEvidenceSignal[];
+}
+
+export type DifferentiatorEmphasis = "PRIMARY" | "SECONDARY";
+
+export interface DifferentiatorSignal {
+  /**
+   * Core differentiator visitors should remember.
+   *
+   * Example:
+   * "Release Confidence"
    */
   readonly label: string;
 
   /**
-   * Skills, tools, or practices within this capability.
-   *
-   * Rules:
-   * - 2–6 items recommended.
-   * - Must be relevant to actual work.
-   */
-  readonly items: readonly string[];
-
-  /**
-   * Optional explanation of why this capability matters.
+   * Short positioning line.
    *
    * Rules:
    * - 1 sentence max.
-   * - Must connect to real-world application.
+   * - Must communicate market value.
    */
-  readonly context?: string;
+  readonly summary: string;
+
+  /**
+   * Capabilities supporting the differentiator.
+   *
+   * Rules:
+   * - 2–5 items recommended.
+   * - Must be concrete.
+   */
+  readonly capabilities: readonly string[];
+
+  /**
+   * Evidence that supports this differentiator.
+   *
+   * Rules:
+   * - Must connect to real project, work, or credential evidence.
+   */
+  readonly evidence: string;
+
+  /**
+   * Visual priority.
+   *
+   * Rules:
+   * - Only one PRIMARY differentiator should exist.
+   */
+  readonly emphasis: DifferentiatorEmphasis;
 }

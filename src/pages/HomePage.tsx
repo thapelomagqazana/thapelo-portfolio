@@ -68,7 +68,7 @@ export function HomePage() {
         <SkillsSection
           id="skills"
           sectionId="skills"
-          title="Capabilities grouped for fast evaluation."
+          title={getSectionHeading("skills")}
           summary="Structured capability panels showing frontend engineering, quality engineering, systems thinking, DevOps foundations, and tooling workflow."
         />
 

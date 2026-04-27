@@ -1,8 +1,9 @@
 import type { HTMLAttributes } from "react";
 
 import { classNames } from "../../lib/classNames";
-import { SKILL_CAPABILITIES } from "../skills/skill.content";
+import { SKILL_CAPABILITY_PANELS, DIFFERENTIATOR_SIGNALS } from "../skills/skill.content";
 import { SkillCapabilityGrid } from "../skills/SkillCapabilityGrid";
+import { DifferentiatorStrip } from "../skills/DifferentiatorStrip";
 
 export interface SkillsSectionProps
   extends Omit<HTMLAttributes<HTMLElement>, "children"> {
@@ -15,19 +16,18 @@ export interface SkillsSectionProps
  * Skills section.
  *
  * Responsibilities:
- * - Present skills as structured capability groups.
+ * - Present skills as evidence-backed capability panels.
  * - Preserve recruiter scan speed.
- * - Match the portfolio's Control Room / Mission Control visual language.
+ * - Avoid unsupported skill lists.
  *
  * Accessibility:
- * - Uses a semantic section with a stable labelled heading.
- * - Keeps capabilities inside a predictable list/grid.
+ * - Uses a semantic section with stable labelled heading.
  */
 export function SkillsSection({
   id = "skills",
   sectionId = "skills",
-  title = "Capabilities grouped for fast evaluation.",
-  summary = "Skills are grouped into practical capability areas so recruiters and engineering managers can quickly understand where I create value.",
+  title = "Evidence-backed capabilities.",
+  summary = "Each capability panel connects skills to real project, work, or credential evidence so the strengths are trustworthy and easy to evaluate.",
   className,
   ...rest
 }: SkillsSectionProps) {
@@ -44,7 +44,7 @@ export function SkillsSection({
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <p className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent-cyan">
-            Capability Panels
+            Capability Evidence
           </p>
 
           <h2
@@ -61,8 +61,12 @@ export function SkillsSection({
           ) : null}
         </div>
 
-        <div className="mt-8">
-          <SkillCapabilityGrid groups={SKILL_CAPABILITIES} />
+        <div className="mt-10">
+          <DifferentiatorStrip signals={DIFFERENTIATOR_SIGNALS} />
+        </div>
+
+        <div className="mt-12">
+          <SkillCapabilityGrid panels={SKILL_CAPABILITY_PANELS} />
         </div>
       </div>
     </section>

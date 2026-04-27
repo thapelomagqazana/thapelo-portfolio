@@ -29,7 +29,7 @@ export function AboutMissionProfile({
       {...rest}
       id="mission-profile"
       aria-labelledby="about-mission-profile-title"
-      className={classNames("px-6 py-20 sm:px-8 lg:px-10", className)}
+      className={classNames("px-6 py-24 sm:px-8 lg:px-10", className)}
     >
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">

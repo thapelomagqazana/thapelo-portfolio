@@ -18,8 +18,15 @@ function resolveSectionElementId(sectionId: SiteSectionId): string {
       return "operational-history";
     case "credentials":
       return "credential-stack";
+    case "skills":
+      return "skills";
     case "contact":
       return "open-transmission";
+    default: {
+      // Exhaustive check (future-proof)
+      const _exhaustive: never = sectionId;
+      throw new Error(`Unhandled section id: ${_exhaustive}`);
+    }
   }
 }
 

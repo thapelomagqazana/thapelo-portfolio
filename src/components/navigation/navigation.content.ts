@@ -50,6 +50,14 @@ export const PRIMARY_SITE_NAV_ITEMS: readonly SiteNavigationItem[] = [
     sectionHeading: "Credential Stack",
   },
   {
+    id: "skills",
+    shortLabel: "Skills",
+    fullLabel: "Capabilities",
+    ariaLabel: "Navigate to capabilities section",
+    href: "#skills",
+    sectionHeading: "Capabilities",
+  },
+  {
     id: "contact",
     shortLabel: "Contact",
     fullLabel: "Open Transmission",

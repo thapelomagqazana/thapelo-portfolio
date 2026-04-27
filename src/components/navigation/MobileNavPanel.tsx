@@ -69,11 +69,20 @@ export function MobileNavPanel({
       ].join(" ")}
     >
       <div className="mb-6 flex items-center justify-between gap-3">
-        <div>
-          <p className="type-label text-accent-cyan">System Interface</p>
-          <p className="mt-1 text-xs text-text-muted">
-            Guided portfolio navigation
-          </p>
+        <div className="flex min-w-0 items-center gap-3">
+          <div
+            aria-hidden="true"
+            className="grid size-9 shrink-0 place-items-center rounded-full bg-accent-cyan/10 font-mono text-xs font-semibold text-accent-cyan ring-1 ring-accent-cyan/25"
+          >
+            TM
+          </div>
+
+          <div className="min-w-0">
+            <p className="type-label text-accent-cyan">Thapelo Magqazana</p>
+            <p className="mt-1 truncate text-xs text-text-muted">
+              Release confidence · QA · Systems
+            </p>
+          </div>
         </div>
 
         <button

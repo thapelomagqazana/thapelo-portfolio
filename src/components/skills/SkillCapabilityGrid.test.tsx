@@ -4,33 +4,46 @@ import { describe, expect, it } from "vitest";
 import { SkillCapabilityGrid } from "./SkillCapabilityGrid";
 
 describe("SkillCapabilityGrid", () => {
-  it("renders capability groups instead of a generic tag cloud", () => {
+  it("renders skill panels with evidence", () => {
     render(
       <SkillCapabilityGrid
-        groups={[
+        panels={[
           {
-            label: "Quality Engineering",
-            items: ["Test Analysis", "Defect Reporting", "Manual Testing"],
-            context:
-              "Used to validate system behavior and improve release confidence.",
+            category: "QUALITY_ENGINEERING",
+            title: "Quality Engineering",
+            summary: "Validating system behavior.",
+            items: ["Test Analysis", "Defect Reporting"],
+            evidence: [
+              {
+                type: "WORK_EXPERIENCE",
+                source: "Test Analyst @ Alula Technologies",
+                proof:
+                  "Applied structured QA processes across enterprise systems.",
+                href: "#operational-history",
+              },
+            ],
           },
         ]}
       />,
     );
 
     expect(screen.getByText("Quality Engineering")).toBeInTheDocument();
-    expect(
-      screen.getByText("Test Analysis • Defect Reporting • Manual Testing"),
-    ).toBeInTheDocument();
-    expect(screen.getByText(/validate system behavior/i)).toBeInTheDocument();
+    expect(screen.getByText("Test Analysis • Defect Reporting")).toBeInTheDocument();
+    expect(screen.getByText("Evidence")).toBeInTheDocument();
+    expect(screen.getByText("Test Analyst @ Alula Technologies")).toBeInTheDocument();
   });
 
-  it("does not render incomplete groups", () => {
+  it("does not render panels without evidence", () => {
     const { container } = render(
       <SkillCapabilityGrid
-        groups={[
-          { label: "", items: ["React", "TypeScript"] },
-          { label: "Too Small", items: ["React"] },
+        panels={[
+          {
+            category: "FRONTEND_ENGINEERING",
+            title: "Frontend Engineering",
+            summary: "Building interfaces.",
+            items: ["React", "TypeScript"],
+            evidence: [],
+          },
         ]}
       />,
     );
@@ -38,22 +51,63 @@ describe("SkillCapabilityGrid", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("renders a maximum of five capability groups", () => {
+  it("uses safe external link attributes", () => {
     render(
       <SkillCapabilityGrid
-        groups={[
-          { label: "One", items: ["A", "B"] },
-          { label: "Two", items: ["A", "B"] },
-          { label: "Three", items: ["A", "B"] },
-          { label: "Four", items: ["A", "B"] },
-          { label: "Five", items: ["A", "B"] },
-          { label: "Six", items: ["A", "B"] },
+        panels={[
+          {
+            category: "DEVOPS_FOUNDATIONS",
+            title: "DevOps Foundations",
+            summary: "Deployment basics.",
+            items: ["Docker", "Nginx"],
+            evidence: [
+              {
+                type: "PROJECT",
+                source: "External Project",
+                proof: "Shows deployment workflow.",
+                href: "https://example.com",
+              },
+            ],
+          },
         ]}
       />,
     );
 
-    expect(screen.getByText("One")).toBeInTheDocument();
-    expect(screen.getByText("Five")).toBeInTheDocument();
-    expect(screen.queryByText("Six")).not.toBeInTheDocument();
+    const link = screen.getByRole("link", {
+      name: /external project.*new tab/i,
+    });
+
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("keeps internal evidence anchors same-page", () => {
+    render(
+      <SkillCapabilityGrid
+        panels={[
+          {
+            category: "FRONTEND_ENGINEERING",
+            title: "Frontend Engineering",
+            summary: "Building interfaces.",
+            items: ["React", "TypeScript"],
+            evidence: [
+              {
+                type: "PROJECT",
+                source: "Portfolio Control Room",
+                proof: "Shows structured component work.",
+                href: "#portfolio-control-room",
+              },
+            ],
+          },
+        ]}
+      />,
+    );
+
+    const link = screen.getByRole("link", {
+      name: /portfolio control room.*evidence section/i,
+    });
+
+    expect(link).not.toHaveAttribute("target");
+    expect(link).not.toHaveAttribute("rel");
   });
 });

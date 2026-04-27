@@ -10,6 +10,7 @@ export type SiteSectionId =
   | "modules"
   | "history"
   | "credentials"
+  | "skills"
   | "contact";
 
 /**
