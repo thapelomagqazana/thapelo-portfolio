@@ -1,0 +1,27 @@
+/**
+ * Semantic UI utilities
+ *
+ * Purpose:
+ * - Prevent Tailwind clutter
+ * - Keep UI consistent
+ */
+
+.panel {
+  border-radius: var(--radius-panel-xl);
+  border: 1px solid var(--color-border-subtle);
+  background: rgba(13, 23, 34, 0.7);
+  box-shadow: var(--shadow-panel-elevated);
+}
+
+.type-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.type-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
