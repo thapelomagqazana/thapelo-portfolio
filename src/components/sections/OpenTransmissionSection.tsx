@@ -1,63 +1,87 @@
-import type { PortfolioSectionProps } from "./section.types";
+import type { HTMLAttributes } from "react";
+
+import { classNames } from "../../lib/classNames";
+import { CONTACT_ACTIONS } from "../contact/contact.content";
+import { ContactActions } from "../contact/ContactActions";
+
+export interface OpenTransmissionSectionProps
+  extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+  readonly sectionId?: string;
+  readonly title?: string;
+  readonly summary?: string;
+}
 
 /**
- * Contact / action section for the portfolio.
+ * Contact / conversion section.
  *
  * Responsibilities:
- * - Give recruiters a clear next step after identity, proof, and trust
- * - Frame the contact moment as the natural conclusion of the page flow
- * - Keep the call to action concise and professionally direct
+ * - Convert portfolio interest into clear next action.
+ * - Provide direct, credible, low-friction contact paths.
+ * - Keep outreach aligned with the release-confidence positioning.
  *
  * UX role:
- * - Answers: "What should I do next if this profile is relevant?"
+ * - Answers: "How do I contact him now?"
  */
 export function OpenTransmissionSection({
-  id,
-  sectionId,
-  title,
-  summary,
-}: PortfolioSectionProps) {
+  id = "open-transmission",
+  sectionId = "contact",
+  title = "Open Transmission",
+  summary = "Once identity, proof, and trust are established, this is the next step.",
+  className,
+  ...rest
+}: OpenTransmissionSectionProps) {
+  const headingId = `${id}-heading`;
+
   return (
     <section
+      {...rest}
       id={id}
       data-section-id={sectionId}
-      className="px-6 py-20 sm:px-8 lg:px-10"
-      aria-labelledby={`${id}-heading`}
+      className={classNames("px-6 py-20 sm:px-8 lg:px-10", className)}
+      aria-labelledby={headingId}
     >
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-2xl">
-          <p className="type-label text-accent-cyan">Action Layer</p>
+        <div className="max-w-3xl">
+          <p className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent-cyan">
+            Open Transmission
+          </p>
 
-          <h2 id={`${id}-heading`} className="type-h2 mt-3">
+          <h2
+            id={headingId}
+            className="mt-6 text-4xl font-semibold tracking-[-0.035em] text-text-primary sm:text-5xl"
+          >
             {title}
           </h2>
 
-          <p className="mt-4 text-text-secondary">
-            {summary}
-          </p>
+          {summary ? (
+            <p className="mt-5 max-w-[64ch] text-base leading-7 text-text-secondary">
+              {summary}
+            </p>
+          ) : null}
         </div>
 
-        <div className="mt-8 rounded-[var(--radius-panel-xl)] border border-border-subtle bg-bg-850/80 p-6 shadow-[var(--shadow-panel-elevated)]">
-          <p className="text-sm leading-6 text-text-secondary">
-            If you are looking for someone with software delivery exposure,
-            QA discipline, systems thinking, and a strong release-confidence mindset,
-            this is the right point to continue the conversation.
+        <div className="mt-8 rounded-[var(--radius-panel-xl)] border border-accent-cyan/20 bg-bg-900/40 p-6 shadow-[0_0_48px_rgba(61,220,255,0.07)]">
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-cyan">
+            Transmission Ready
           </p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="mailto:thapelo@example.com"
-              className="inline-flex min-h-11 items-center justify-center rounded-[var(--radius-panel-md)] border border-border-active bg-bg-800/80 px-5 py-3 text-sm font-semibold text-text-primary transition-[color,background-color,border-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:bg-bg-800"
-            >
-              Contact
-            </a>
+          <h3 className="mt-3 text-xl font-semibold text-text-primary">
+            Let’s build systems that improve release confidence.
+          </h3>
 
-            <a
-              href="#"
-              className="inline-flex min-h-11 items-center justify-center rounded-[var(--radius-panel-md)] border border-border-subtle px-5 py-3 text-sm font-semibold text-text-secondary transition-[color,background-color,border-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:text-text-primary hover:bg-bg-850/70"
-            >
-              View Resume
-            </a>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-text-secondary">
+            If the system signals align and you are building production-ready
+            software, QA systems, release tooling, or frontend systems, use the
+            fastest channel below.
+          </p>
+
+          <ContactActions actions={CONTACT_ACTIONS} />
+
+          <div className="mt-6 rounded-[var(--radius-panel-lg)] bg-bg-800/20 p-4 ring-1 ring-white/5">
+            <p className="text-sm leading-6 text-text-muted">
+              Best fit: quality engineering, release confidence, frontend delivery,
+              developer tooling, and systems-focused product work.
+            </p>
           </div>
         </div>
       </div>

@@ -35,7 +35,7 @@ export const CREDENTIALS: readonly CredentialEntry[] = [
     type: "CERTIFICATION",
     description:
       "Validates foundational understanding of cloud concepts, Azure services, pricing, and security principles.",
-    verificationHref: "https://learn.microsoft.com/credentials/your-id",
+    verificationHref: "https://learn.microsoft.com/en-us/users/thapelomagqazana-7919/credentials/609db8f154ce1e51",
   },
 
   {
