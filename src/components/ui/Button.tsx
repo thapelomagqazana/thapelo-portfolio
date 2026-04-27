@@ -40,10 +40,9 @@ function isAnchorButtonProps(props: ButtonProps): props is AnchorButtonProps {
  * Canonical action button for the portfolio system UI.
  *
  * Responsibilities:
- * - Render a consistent CTA primitive for hero and future sections
+ * - Render a consistent CTA primitive
  * - Support both anchor and native button modes
- * - Preserve accessible focus states and predictable interaction behavior
- * - Provide subtle hover motion that does not feel noisy
+ * - Preserve accessibility and predictable interaction behavior
  */
 export function Button(props: ButtonProps) {
   const baseClasses =
@@ -53,19 +52,20 @@ export function Button(props: ButtonProps) {
     props.variant === "primary"
       ? "bg-linear-to-r from-accent-cyan via-accent-blue to-accent-violet text-bg-900 shadow-[0_0_0_1px_rgba(61,220,255,0.18),0_0_24px_rgba(61,220,255,0.12)] hover:-translate-y-0.5 active:translate-y-0"
       : props.variant === "secondary"
-        ? "border border-border-strong bg-bg-850/70 text-text-primary shadow-[var(--shadow-panel-quiet)] hover:-translate-y-0.5 hover:border-border-active hover:bg-bg-800/80 active:translate-y-0"
-        : "border border-transparent bg-transparent text-text-secondary hover:-translate-y-0.5 hover:text-text-primary active:translate-y-0";
+      ? "border border-border-strong bg-bg-850/70 text-text-primary shadow-[var(--shadow-panel-quiet)] hover:-translate-y-0.5 hover:border-border-active hover:bg-bg-800/80 active:translate-y-0"
+      : "border border-transparent bg-transparent text-text-secondary hover:-translate-y-0.5 hover:text-text-primary active:translate-y-0";
 
   const classes = classNames(baseClasses, variantClasses, props.className);
 
+  /**
+   * Anchor variant
+   */
   if (isAnchorButtonProps(props)) {
-    const {
-      children,
-      variant: _variant,
-      className: _className,
-      href,
-      ...anchorProps
-    } = props;
+    const { children, variant, className, href, ...anchorProps } = props;
+
+    // mark intentionally unused (prevents eslint noise)
+    void variant;
+    void className;
 
     return (
       <a {...anchorProps} href={href} className={classes}>
@@ -74,13 +74,14 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  const {
-    children,
-    variant: _variant,
-    className: _className,
-    type,
-    ...buttonProps
-  } = props;
+  /**
+   * Native button variant
+   */
+  const { children, variant, className, type, ...buttonProps } = props;
+
+  // mark intentionally unused
+  void variant;
+  void className;
 
   return (
     <button {...buttonProps} className={classes} type={type ?? "button"}>

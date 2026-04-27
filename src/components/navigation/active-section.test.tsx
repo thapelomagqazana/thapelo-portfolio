@@ -6,24 +6,11 @@ import { SiteNavigation } from "./SiteNavigation";
  * Mock IntersectionObserver for deterministic active-section tests.
  */
 class MockIntersectionObserver {
-  private callback: IntersectionObserverCallback;
+  constructor(_: IntersectionObserverCallback) {}
 
-  constructor(callback: IntersectionObserverCallback) {
-    this.callback = callback;
-  }
-
-  observe() {
-    // no-op for basic render tests
-  }
-
-  unobserve() {
-    // no-op
-  }
-
-  disconnect() {
-    // no-op
-  }
-
+  observe() {}
+  unobserve() {}
+  disconnect() {}
   takeRecords() {
     return [];
   }

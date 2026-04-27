@@ -95,4 +95,33 @@ export default tseslint.config(
       "no-debugger": "warn",
     },
   },
+
+  /**
+   * Node-based repository scripts.
+   *
+   * Purpose:
+   * - Allow build/verification scripts to use Node globals.
+   * - Keep browser and Node environments separate.
+   */
+  {
+    files: ["scripts/**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: "module",
+      globals: globals.node,
+    },
+    rules: {
+      "no-console": "off",
+      "no-debugger": "warn",
+    },
+  },
+  
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
+    },
+  },
 );

@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { PortfolioUIMode } from "../../theme/theme.types";
+import { MODE_TRANSITION_CONFIG } from "./terminal.constants";
 import { TERMINAL_COMMANDS } from "./terminal.content";
 import { TerminalCommandList } from "./TerminalCommandList";
-import { MODE_TRANSITION_CONFIG } from "./terminal.constants";
 
 export interface TerminalOverlayProps {
   readonly isOpen: boolean;
@@ -16,23 +16,9 @@ export interface TerminalOverlayProps {
    * Purpose:
    * - Restore focus after closing.
    */
-  readonly restoreFocusTo?: HTMLElement | null;
+  readonly restoreFocusRef?: React.RefObject<HTMLElement | null>;
 }
 
-/**
- * Terminal exploration overlay.
- *
- * Responsibilities:
- * - Provide optional terminal-style portfolio exploration.
- * - Keep UI Mode as the primary recruiter experience.
- * - Preserve contact and navigation access.
- * - Make exit obvious at all times.
- *
- * Accessibility:
- * - Escape closes overlay.
- * - Focus moves to the terminal shell on open.
- * - Content remains readable text.
- */
 /**
  * Terminal exploration overlay.
  *
@@ -51,17 +37,21 @@ export function TerminalOverlay({
   isOpen,
   onClose,
   onModeChange,
-  restoreFocusTo,
+  restoreFocusRef,
 }: TerminalOverlayProps) {
   const shellRef = useRef<HTMLDivElement | null>(null);
   const [shouldRender, setShouldRender] = useState(isOpen);
   const [isVisible, setIsVisible] = useState(false);
 
+  const handleExit = useCallback(() => {
+    onModeChange("UI");
+    onClose();
+  }, [onClose, onModeChange]);
+
   useEffect(() => {
     if (isOpen) {
-      setShouldRender(true);
-
       const frame = window.requestAnimationFrame(() => {
+        setShouldRender(true);
         setIsVisible(true);
         shellRef.current?.focus();
       });
@@ -69,15 +59,20 @@ export function TerminalOverlay({
       return () => window.cancelAnimationFrame(frame);
     }
 
-    setIsVisible(false);
+    const frame = window.requestAnimationFrame(() => {
+      setIsVisible(false);
+    });
 
     const timeout = window.setTimeout(() => {
       setShouldRender(false);
-      restoreFocusTo?.focus();
+      restoreFocusRef?.current?.focus();
     }, MODE_TRANSITION_CONFIG.shellMs);
 
-    return () => window.clearTimeout(timeout);
-  }, [isOpen, restoreFocusTo]);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timeout);
+    };
+  }, [isOpen, restoreFocusRef]);
 
   useEffect(() => {
     if (!shouldRender) {
@@ -95,27 +90,25 @@ export function TerminalOverlay({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [shouldRender]);
+  }, [shouldRender, handleExit]);
+
+  const handleNavigate = useCallback(
+    (href: `#${string}`) => {
+      const target = document.querySelector(href);
+
+      if (target instanceof HTMLElement) {
+        handleExit();
+
+        window.setTimeout(() => {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, MODE_TRANSITION_CONFIG.shellMs);
+      }
+    },
+    [handleExit],
+  );
 
   if (!shouldRender) {
     return null;
-  }
-
-  function handleExit() {
-    onModeChange("UI");
-    onClose();
-  }
-
-  function handleNavigate(href: `#${string}`) {
-    const target = document.querySelector(href);
-
-    if (target instanceof HTMLElement) {
-      handleExit();
-
-      window.setTimeout(() => {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, MODE_TRANSITION_CONFIG.shellMs);
-    }
   }
 
   return (

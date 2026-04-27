@@ -36,7 +36,7 @@ export function MobileNavPanel({
 }: MobileNavPanelProps) {
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  useFocusTrap(panelRef.current, isOpen);
+  useFocusTrap(panelRef, isOpen);
 
   useEffect(() => {
     if (!isOpen) {

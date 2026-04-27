@@ -8,8 +8,8 @@ import { AboutCapabilityPanel } from "./AboutCapabilityPanel";
 /**
  * Props for the AboutMissionProfile component.
  */
-export interface AboutMissionProfileProps
-  extends Omit<HTMLAttributes<HTMLElement>, "children"> {}
+export type AboutMissionProfileProps =
+  Omit<HTMLAttributes<HTMLElement>, "children">;
 
 /**
  * About / Mission Profile section.

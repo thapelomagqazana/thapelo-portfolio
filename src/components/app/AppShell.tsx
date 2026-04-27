@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { useRef } from "react";
 
+import { useTheme } from "../../theme/useTheme";
 import { ModeToggle } from "../mode/ModeToggle";
 import { TerminalOverlay } from "../terminal/TerminalOverlay";
-import { useTheme } from "../../theme/useTheme";
 
 export interface AppShellProps {
   readonly children: ReactNode;
@@ -25,11 +25,7 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div data-theme={preference.theme} data-ui-mode={mode.toLowerCase()}>
       <div className="fixed bottom-4 right-4 z-40">
-        <ModeToggle
-          ref={terminalToggleRef}
-          mode={mode}
-          onChange={setMode}
-        />
+        <ModeToggle ref={terminalToggleRef} mode={mode} onChange={setMode} />
       </div>
 
       {children}
@@ -38,7 +34,7 @@ export function AppShell({ children }: AppShellProps) {
         isOpen={mode === "TERMINAL"}
         onClose={() => setMode("UI")}
         onModeChange={setMode}
-        restoreFocusTo={terminalToggleRef.current}
+        restoreFocusRef={terminalToggleRef}
       />
     </div>
   );

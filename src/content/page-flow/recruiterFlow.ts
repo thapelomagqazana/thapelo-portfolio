@@ -26,6 +26,7 @@ export const RECRUITER_GUIDED_FLOW: readonly SiteSectionId[] = [
  */
 export const RECRUITER_SECTION_QUESTIONS: Readonly<Record<SiteSectionId, string>> = {
   system: "Who is this candidate and what makes him different?",
+  skills: "What skills does this candidate have?",
   modules: "What has he built and how does he think?",
   history: "What practical experience supports the proof?",
   credentials: "What signals reinforce trust and credibility?",

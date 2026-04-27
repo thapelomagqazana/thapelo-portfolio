@@ -12,7 +12,7 @@ import { RECRUITER_GUIDED_FLOW } from "../../content/page-flow/recruiterFlow";
  * - Avoid depending on real browser intersection behavior in unit tests
  */
 class MockIntersectionObserver {
-  constructor(_: IntersectionObserverCallback) {}
+  constructor(_callback: IntersectionObserverCallback) {}
 
   observe() {
     // no-op

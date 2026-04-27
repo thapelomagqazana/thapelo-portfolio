@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import { Bug, Layers, Radar, ShieldCheck } from "lucide-react";
 
 import type { DifferentiatorSignal } from "./skill.types";
@@ -74,7 +75,7 @@ interface DifferentiatorCardProps {
  */
 function DifferentiatorCard({ signal }: DifferentiatorCardProps) {
   const isPrimary = signal.emphasis === "PRIMARY";
-  const Icon = getDifferentiatorIcon(signal.label);
+  const icon = getDifferentiatorIcon(signal.label);
 
   return (
     <article
@@ -94,7 +95,9 @@ function DifferentiatorCard({ signal }: DifferentiatorCardProps) {
               : "grid size-9 shrink-0 place-items-center rounded-[var(--radius-panel-md)] bg-bg-900/35 text-accent-cyan/80 ring-1 ring-white/10"
           }
         >
-          <Icon className={isPrimary ? "size-5" : "size-4"} />
+          {createElement(icon, {
+            className: isPrimary ? "size-5" : "size-4",
+          })}
         </span>
 
         <div>
