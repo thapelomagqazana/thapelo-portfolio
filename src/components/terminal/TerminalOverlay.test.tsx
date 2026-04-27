@@ -30,8 +30,13 @@ describe("TerminalOverlay", () => {
     expect(
         screen.getByRole("heading", { name: /available commands/i })
     ).toBeInTheDocument();
-    expect(screen.getByText(/modules/i)).toBeInTheDocument();
-    expect(screen.getByText(/contact/i)).toBeInTheDocument();
+    expect(
+        screen.getByRole("button", { name: /modules/i })
+    ).toBeInTheDocument();
+
+    expect(
+        screen.getByRole("button", { name: /contact/i })
+    ).toBeInTheDocument();
   });
 
   it("closes on escape", () => {

@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 
 import type { PortfolioUIMode } from "../../theme/theme.types";
+import { TERMINAL_COMMANDS } from "./terminal.content";
+import { TerminalCommandList } from "./TerminalCommandList";
 
 export interface TerminalOverlayProps {
   readonly isOpen: boolean;
@@ -13,8 +15,9 @@ export interface TerminalOverlayProps {
  *
  * Responsibilities:
  * - Provide optional terminal-style portfolio exploration.
- * - Avoid replacing or breaking the normal UI page.
- * - Keep exit obvious and always available.
+ * - Keep UI Mode as the primary recruiter experience.
+ * - Preserve contact and navigation access.
+ * - Make exit obvious at all times.
  *
  * Accessibility:
  * - Escape closes overlay.
@@ -37,7 +40,7 @@ export function TerminalOverlay({
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        onClose();
+        handleExit();
       }
     }
 
@@ -46,7 +49,7 @@ export function TerminalOverlay({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) {
     return null;
@@ -55,6 +58,17 @@ export function TerminalOverlay({
   function handleExit() {
     onModeChange("UI");
     onClose();
+  }
+
+  function handleNavigate(href: `#${string}`) {
+    const target = document.querySelector(href);
+
+    if (target instanceof HTMLElement) {
+      handleExit();
+      window.setTimeout(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 0);
+    }
   }
 
   return (
@@ -75,7 +89,7 @@ export function TerminalOverlay({
               Terminal Mode
             </p>
             <p className="mt-1 text-xs text-text-muted">
-              Optional portfolio exploration shell
+              Optional exploration layer. UI mode remains available underneath.
             </p>
           </div>
 
@@ -84,43 +98,29 @@ export function TerminalOverlay({
             onClick={handleExit}
             className="rounded-[var(--radius-panel-md)] bg-bg-800/60 px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.08em] text-text-secondary ring-1 ring-white/10 transition hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
           >
-            Exit
+            Exit Terminal
           </button>
         </header>
 
         <div className="overflow-y-auto p-5 font-mono text-sm leading-7 text-text-secondary">
-          <p className="text-accent-green">
-            portfolio@control-room:~$ help
-          </p>
+          <p className="text-accent-green">portfolio@control-room:~$ help</p>
 
-          <h4 className="mt-4 text-text-primary font-semibold">
-            Available commands
-          </h4>
-
-          <ul className="mt-3 grid gap-2 text-text-secondary sm:grid-cols-2">
-            <li>help — show available commands</li>
-            <li>modules — inspect active modules</li>
-            <li>history — show operational history</li>
-            <li>credentials — show credential stack</li>
-            <li>skills — show capability panels</li>
-            <li>contact — open transmission section</li>
-            <li>clear — clear terminal output</li>
-            <li>exit — return to UI mode</li>
-          </ul>
+          <TerminalCommandList
+            commands={TERMINAL_COMMANDS}
+            onNavigate={handleNavigate}
+          />
 
           <div className="mt-6 rounded-[var(--radius-panel-lg)] bg-bg-800/25 p-4 ring-1 ring-white/5">
             <p className="text-accent-cyan">
               Terminal mode is intentionally lightweight.
             </p>
             <p className="mt-2 text-text-muted">
-              The full recruiter-first portfolio remains available underneath.
-              This layer is an alternate exploration interface, not a replacement.
+              It mirrors real portfolio sections and keeps recruiter-critical
+              content in UI mode. You can exit anytime.
             </p>
           </div>
 
-          <p className="mt-6 text-accent-green">
-            portfolio@control-room:~$ _
-          </p>
+          <p className="mt-6 text-accent-green">portfolio@control-room:~$ _</p>
         </div>
       </div>
     </div>
