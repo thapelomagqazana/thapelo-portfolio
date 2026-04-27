@@ -1,4 +1,4 @@
-import type { ContactAction } from "./contact.types";
+import type { ContactAction, OpportunityFit } from "./contact.types";
 
 /**
  * Canonical contact actions.
@@ -37,3 +37,18 @@ export const CONTACT_ACTIONS: readonly ContactAction[] = [
     ariaLabel: "Open Thapelo Magqazana resume",
   },
 ];
+
+export const OPPORTUNITY_FIT: OpportunityFit = {
+  availability: "SELECTIVE",
+  opportunityTypes: ["CONTRACT", "COLLABORATION", "FOUNDING_BUILD", "OPEN_SOURCE"],
+  bestFitAreas: [
+    "QA systems",
+    "Release intelligence",
+    "Frontend systems",
+    "Developer tooling",
+    "Reliability-focused products",
+  ],
+  workMode: "Remote / hybrid preferred",
+  note:
+    "Best aligned with opportunities involving quality engineering, release confidence, systems thinking, and product-focused technical delivery.",
+};

@@ -1,8 +1,9 @@
 import type { HTMLAttributes } from "react";
 
 import { classNames } from "../../lib/classNames";
-import { CONTACT_ACTIONS } from "../contact/contact.content";
+import { OPPORTUNITY_FIT, CONTACT_ACTIONS } from "../contact/contact.content";
 import { ContactActions } from "../contact/ContactActions";
+import { OpportunityFitPanel } from "../contact/OpportunityFitPanel";
 
 export interface OpenTransmissionSectionProps
   extends Omit<HTMLAttributes<HTMLElement>, "children"> {
@@ -74,6 +75,10 @@ export function OpenTransmissionSection({
             software, QA systems, release tooling, or frontend systems, use the
             fastest channel below.
           </p>
+
+          <div className="mt-6">
+            <OpportunityFitPanel fit={OPPORTUNITY_FIT} />
+          </div>
 
           <ContactActions actions={CONTACT_ACTIONS} />
 
