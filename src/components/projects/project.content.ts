@@ -133,18 +133,6 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
 
       verificationLinks: [
         {
-          label: "Code Repository",
-          type: "code",
-          href: "https://github.com/BrikByte-Studios/brikbyteos-cli",
-          description: "Inspect source structure, CLI commands, adapters, and tests.",
-        },
-        {
-          label: "Architecture Notes",
-          type: "architecture",
-          href: "#brikbyteos",
-          description: "Review system structure, decisions, and implementation trade-offs.",
-        },
-        {
           label: "Release Notes",
           type: "docs",
           href: "https://github.com/BrikByte-Studios/brikbyteos-cli-releases",
