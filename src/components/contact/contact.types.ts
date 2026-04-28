@@ -87,6 +87,26 @@ export type ContactSubmissionState =
   | "SUCCESS"
   | "ERROR";
 
+/**
+ * Validated contact payload sent to the configured provider endpoint.
+ *
+ * Security:
+ * - Contains only visitor-provided public data.
+ * - Must never include private keys, SMTP credentials, or backend secrets.
+ */
+export interface ContactSubmissionPayload {
+  readonly name: string;
+  readonly email: string;
+  readonly message: string;
+}
+
+/**
+ * Result returned by the submission service.
+ */
+export interface ContactSubmissionResult {
+  readonly ok: boolean;
+}
+
 export interface ContactSubmissionFeedback {
   /**
    * Current form submission state.

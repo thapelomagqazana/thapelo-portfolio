@@ -1,6 +1,15 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-import type { ContactSubmissionFeedback } from "./contact.types";
+import { getContactConfig } from "./contact.config";
+import { submitContactMessage } from "./contact.service";
+import type {
+  ContactSubmissionFeedback,
+  ContactSubmissionPayload,
+} from "./contact.types";
+import {
+  buildFallbackMailtoUrl,
+  validateContactPayload,
+} from "./contact.validation";
 
 const INITIAL_FEEDBACK: ContactSubmissionFeedback = {
   state: "IDLE",
@@ -9,32 +18,40 @@ const INITIAL_FEEDBACK: ContactSubmissionFeedback = {
 
 export interface ContactFormProps {
   /**
-   * Submission handler.
+   * Optional submission handler override.
    *
    * Purpose:
-   * - Allows tests to control success and failure.
-   * - Allows future integration with Formspree, Netlify Forms, or a custom API.
+   * - Allows tests to force success/failure.
+   * - Allows future replacement with Formspree, Netlify Forms, custom API, or server actions.
    */
-  readonly onSubmitMessage?: () => Promise<void>;
+  readonly onSubmitMessage?: (
+    payload: ContactSubmissionPayload,
+  ) => Promise<void>;
 }
 
 /**
- * Lightweight contact form.
+ * Production contact form for the Portfolio Control Room System.
  *
  * Responsibilities:
- * - Collect a short visitor message.
- * - Prevent double-submission while sending.
- * - Provide immediate accessible success/error feedback.
+ * - Collect visitor name, email, and short message.
+ * - Validate required fields before submission.
+ * - Reject invalid email format.
+ * - Prevent double-submit while sending.
+ * - Submit to a configured managed endpoint.
+ * - Provide accessible success/error feedback.
+ * - Always expose a fallback email path.
  *
- * Accessibility:
- * - Uses labelled fields.
- * - Uses role="status" for non-error feedback.
- * - Uses role="alert" for error feedback.
+ * Security:
+ * - Does not include SMTP credentials.
+ * - Does not include private API keys.
+ * - Does not include backend secrets.
  */
 export function ContactForm({ onSubmitMessage }: ContactFormProps) {
   const [feedback, setFeedback] =
     useState<ContactSubmissionFeedback>(INITIAL_FEEDBACK);
 
+  const config = useMemo(() => getContactConfig(), []);
+  const fallbackUrl = buildFallbackMailtoUrl(config.fallbackEmail);
   const isSubmitting = feedback.state === "SUBMITTING";
 
   async function handleSubmit(
@@ -47,7 +64,46 @@ export function ContactForm({ onSubmitMessage }: ContactFormProps) {
     }
 
     const form = event.currentTarget;
-    const submitMessage = onSubmitMessage ?? simulateSubmit;
+    const formData = new FormData(form);
+
+    /**
+     * Honeypot spam protection.
+     *
+     * Real users should never complete this hidden field.
+     * If it contains a value, silently pretend success to avoid giving bots feedback.
+     */
+    const honeypot = String(formData.get("company") ?? "").trim();
+
+    if (honeypot) {
+      setFeedback({
+        state: "SUCCESS",
+        message: "Message sent successfully. I’ll respond as soon as possible.",
+      });
+
+      form.reset();
+      return;
+    }
+
+    const payload: ContactSubmissionPayload = {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      message: String(formData.get("message") ?? ""),
+    };
+
+    const validation = validateContactPayload(payload);
+
+    if (!validation.valid) {
+      setFeedback({
+        state: "ERROR",
+        message: validation.message ?? "Please check the form and try again.",
+      });
+      return;
+    }
+
+    const submitMessage =
+      onSubmitMessage ??
+      ((validPayload: ContactSubmissionPayload) =>
+        submitContactMessage(config.endpoint, validPayload).then(() => undefined));
 
     setFeedback({
       state: "SUBMITTING",
@@ -55,7 +111,7 @@ export function ContactForm({ onSubmitMessage }: ContactFormProps) {
     });
 
     try {
-      await submitMessage();
+      await submitMessage(payload);
 
       setFeedback({
         state: "SUCCESS",
@@ -67,7 +123,7 @@ export function ContactForm({ onSubmitMessage }: ContactFormProps) {
       setFeedback({
         state: "ERROR",
         message:
-          "Message could not be sent. Please try again or email me directly.",
+          "Message could not be sent. Please use the fallback email option below.",
       });
     }
   }
@@ -75,6 +131,7 @@ export function ContactForm({ onSubmitMessage }: ContactFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className="mt-6 rounded-[var(--radius-panel-xl)] bg-bg-800/20 p-5 ring-1 ring-white/5"
     >
       <p className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-cyan">
@@ -82,9 +139,9 @@ export function ContactForm({ onSubmitMessage }: ContactFormProps) {
       </p>
 
       <div className="mt-4 grid gap-4">
-        <FormField id="contact-name" label="Name" type="text" required />
+        <FormField id="contact-name" name="name" label="Name" type="text" />
 
-        <FormField id="contact-email" label="Email" type="email" required />
+        <FormField id="contact-email" name="email" label="Email" type="email" />
 
         <div>
           <label
@@ -99,36 +156,63 @@ export function ContactForm({ onSubmitMessage }: ContactFormProps) {
             name="message"
             required
             rows={4}
+            minLength={10}
+            maxLength={1500}
             placeholder="Tell me what you are building or hiring for..."
             className="mt-2 w-full resize-none rounded-[var(--radius-panel-md)] border border-border-subtle bg-bg-900/50 px-4 py-3 text-sm text-text-primary outline-none transition focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/30"
           />
         </div>
+
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
+        />
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
+        aria-disabled={isSubmitting}
         className="mt-5 inline-flex min-h-11 items-center justify-center rounded-[var(--radius-panel-md)] border border-accent-cyan/40 bg-accent-cyan/10 px-5 py-3 text-sm font-semibold text-accent-cyan transition hover:-translate-y-0.5 hover:bg-accent-cyan/15 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan"
       >
         {isSubmitting ? "Sending..." : "Send Message"}
       </button>
 
       <SubmissionFeedback feedback={feedback} />
+
+      <p className="mt-4 text-sm leading-6 text-text-muted">
+        Fallback path:{" "}
+        <a
+          href={fallbackUrl}
+          className="font-semibold text-accent-cyan underline-offset-4 hover:underline"
+        >
+          email me directly
+        </a>
+      </p>
     </form>
   );
 }
 
 interface FormFieldProps {
   readonly id: string;
+  readonly name: string;
   readonly label: string;
   readonly type: "text" | "email";
-  readonly required?: boolean;
 }
 
 /**
  * Reusable labelled input field.
+ *
+ * Purpose:
+ * - Centralizes styling.
+ * - Preserves accessible label/input relationships.
+ * - Keeps the main form easier to scan.
  */
-function FormField({ id, label, type, required = false }: FormFieldProps) {
+function FormField({ id, name, label, type }: FormFieldProps) {
   return (
     <div>
       <label
@@ -140,9 +224,9 @@ function FormField({ id, label, type, required = false }: FormFieldProps) {
 
       <input
         id={id}
-        name={id}
+        name={name}
         type={type}
-        required={required}
+        required
         className="mt-2 w-full rounded-[var(--radius-panel-md)] border border-border-subtle bg-bg-900/50 px-4 py-3 text-sm text-text-primary outline-none transition focus:border-accent-cyan focus:ring-2 focus:ring-accent-cyan/30"
       />
     </div>
@@ -157,9 +241,9 @@ interface SubmissionFeedbackProps {
  * Accessible submission feedback.
  *
  * Purpose:
- * - Confirm success immediately.
- * - Communicate failure with recovery guidance.
- * - Announce submitting/success/error states to assistive technology.
+ * - Announces success/error/submitting states.
+ * - Uses role="alert" for errors.
+ * - Uses role="status" for non-error updates.
  */
 function SubmissionFeedback({ feedback }: SubmissionFeedbackProps) {
   if (feedback.state === "IDLE") {
@@ -181,17 +265,4 @@ function SubmissionFeedback({ feedback }: SubmissionFeedbackProps) {
       {feedback.message}
     </p>
   );
-}
-
-/**
- * Temporary submit simulator.
- *
- * Replace with:
- * - Formspree
- * - Netlify Forms
- * - custom API endpoint
- * - server action
- */
-async function simulateSubmit(): Promise<void> {
-  await new Promise((resolve) => window.setTimeout(resolve, 700));
 }
