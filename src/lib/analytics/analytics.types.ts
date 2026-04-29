@@ -5,7 +5,8 @@ export type AnalyticsEventName =
   | "portfolio_resume_clicked"
   | "portfolio_github_clicked"
   | "portfolio_linkedin_clicked"
-  | "portfolio_terminal_mode_used";
+  | "portfolio_terminal_mode_used"
+  | "portfolio_project_inspection_opened";
 
 export interface AnalyticsEventPayload {
   readonly sectionId?: string;

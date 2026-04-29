@@ -1,5 +1,6 @@
 import type { ContactAction } from "./contact.types";
 import { ContactIcon } from "./ContactIcon";
+import { trackPortfolioConversion } from "../../lib/analytics/analytics.events";
 
 export type ContactActionsVariant = "hero" | "compact" | "full";
 export interface ContactActionsProps {
@@ -73,6 +74,40 @@ function ContactActionLink({ action, variant, showIcon }: ContactActionLinkProps
   const isExternal = action.href.startsWith("https://");
   const isPrimary = action.priority === "PRIMARY";
 
+  function handleClick() {
+    if (action.type === "EMAIL") {
+      trackPortfolioConversion("portfolio_contact_clicked", {
+        actionLabel: action.label,
+        destination: action.href,
+        source: "contact_actions",
+      });
+    }
+
+    if (action.type === "RESUME") {
+      trackPortfolioConversion("portfolio_resume_clicked", {
+        actionLabel: action.label,
+        destination: action.href,
+        source: "contact_actions",
+      });
+    }
+
+    if (action.type === "GITHUB") {
+      trackPortfolioConversion("portfolio_github_clicked", {
+        actionLabel: action.label,
+        destination: action.href,
+        source: "contact_actions",
+      });
+    }
+
+    if (action.type === "LINKEDIN") {
+      trackPortfolioConversion("portfolio_linkedin_clicked", {
+        actionLabel: action.label,
+        destination: action.href,
+        source: "contact_actions",
+      });
+    }
+  }
+
   return (
     <a
       href={action.href}
@@ -82,6 +117,7 @@ function ContactActionLink({ action, variant, showIcon }: ContactActionLinkProps
         isExternal ? `${action.ariaLabel}. Opens in a new tab.` : action.ariaLabel
       }
       className={getActionClassName(isPrimary, variant)}
+      onClick={handleClick}
     >
       {showIcon && action.icon ? (
         <span aria-hidden="true" className="mr-2 inline-flex">

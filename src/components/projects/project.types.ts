@@ -19,14 +19,17 @@ export interface ProjectSignal {
   readonly value: string;
 }
 
-export type ProjectActionKind = "link" | "inspect";
-
+export type ProjectActionKind =
+  | "inspect"
+  | "link"
+  | "source"
+  | "demo"
+  | "docs";
 
 export interface ProjectAction {
   readonly label: string;
   readonly href: `#${string}` | `https://${string}`;
   readonly variant: "primary" | "secondary";
-
   /**
    * Action behavior.
    *

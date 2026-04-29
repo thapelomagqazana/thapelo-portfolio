@@ -1,5 +1,7 @@
+import type { MouseEventHandler } from "react";
 import type { ProjectAction } from "./project.types";
 import { Button } from "../ui/Button";
+import { analyticsClient } from "../../lib/analytics/analytics.client";
 
 export interface SystemModuleActionsProps {
   readonly actions: readonly ProjectAction[];
@@ -25,6 +27,22 @@ export function SystemModuleActions({
   actions,
   onInspect,
 }: SystemModuleActionsProps) {
+  function createInspectClickHandler(
+    action: ProjectAction,
+  ): MouseEventHandler<HTMLAnchorElement> {
+    return (event) => {
+      event.preventDefault();
+
+      analyticsClient.track("portfolio_project_inspection_opened", {
+        actionLabel: action.label,
+        destination: action.href,
+        source: "project_module_actions",
+      });
+
+      onInspect?.();
+    };
+  }
+
   return (
     <nav aria-label="Module actions" className="flex flex-col gap-3 sm:flex-row">
       {actions.map((action) => {
@@ -37,10 +55,7 @@ export function SystemModuleActions({
             variant={action.variant}
             onClick={
               shouldOpenInspection && onInspect
-                ? (event) => {
-                    event.preventDefault();
-                    onInspect();
-                  }
+                ? createInspectClickHandler(action)
                 : undefined
             }
           >
