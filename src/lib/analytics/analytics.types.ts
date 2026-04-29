@@ -8,12 +8,15 @@ export type AnalyticsEventName =
   | "portfolio_terminal_mode_used"
   | "portfolio_project_inspection_opened";
 
-export interface AnalyticsEventPayload {
+export type AnalyticsEventPayload = Record<
+  string,
+  string | number | boolean | null | undefined
+> & {
   readonly sectionId?: string;
   readonly actionLabel?: string;
   readonly destination?: string;
   readonly source?: string;
-}
+};
 
 export interface AnalyticsClient {
   readonly track: (

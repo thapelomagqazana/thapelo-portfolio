@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
-import { AnalyticsProvider } from "./components/analytics/AnalyticsProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 import "./styles/globals.css";
 
@@ -30,8 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       {/* Global analytics lifecycle (non-blocking, production-only) */}
-      <AnalyticsProvider />
-
+      <Analytics />
       {/* Application root */}
       <App />
     </BrowserRouter>

@@ -13,10 +13,12 @@
     "format:check": "prettier . --check",
     "test": "vitest",
     "test:run": "vitest run",
-    "verify:build": "npm run typecheck && npm run lint && npm run test:run && npm run build && node scripts/verify-production-build.mjs"
+    "verify:build": "npm run typecheck && npm run lint && npm run test:run && npm run build && node scripts/verify-production-build.mjs",
+    "perf:prod": "node scripts/performance/monitor-production.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
+    "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.11.0",
     "motion": "^12.38.0",
     "react": "^19.2.5",
@@ -41,6 +43,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
     "jsdom": "^29.0.2",
+    "lighthouse": "^12.8.2",
     "prettier": "3.8.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.0",

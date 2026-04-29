@@ -58,3 +58,7 @@ coverage/
 *.temp
 
 *.tar.gz
+
+reports/
+lighthouse.*/
+C:\Users\Dell\AppData\Local\lighthouse.*/
