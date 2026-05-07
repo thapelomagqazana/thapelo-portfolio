@@ -9,7 +9,8 @@ export type SkillCategory =
   | "FRONTEND_ENGINEERING"
   | "SYSTEMS_THINKING"
   | "DEVOPS_FOUNDATIONS"
-  | "TOOLING_WORKFLOW";
+  | "TOOLING_WORKFLOW"
+  | "DATA";
 
 /**
  * Evidence source type for a skill capability.

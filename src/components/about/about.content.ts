@@ -88,28 +88,30 @@ import type { AboutMissionProfileContent } from "./about.types";
  */
 export const ABOUT_MISSION_PROFILE_CONTENT: AboutMissionProfileContent = {
   kicker: "Mission Profile",
-  title: "From construction to software, with systems thinking intact.",
+
+  title: "From construction systems to software reliability engineering.",
+
   storyModules: [
     {
       title: "Origin",
       body:
-        "My background began in construction studies, where delivering complex projects required precise planning, coordination, sequencing, and disciplined execution under real-world constraints.",
+        "I started in construction studies, where failure is not theoretical. Delivering complex projects required precision in planning, sequencing, coordination, and execution under real-world constraints. Every decision had downstream impact, and reliability was non-negotiable.",
     },
     {
       title: "Transition",
       body:
-        "I transitioned into software development and testing, carrying that discipline into engineering. Construction trained me to think in systems, dependencies, sequencing, and failure impact—principles I now apply to software quality, reliability, and release confidence.",
+        "I transitioned into software development and testing, bringing that same systems mindset into engineering. While many systems pass pipelines, they still fail in production. I became focused on understanding why—studying dependencies, failure paths, and the gap between ‘working’ and ‘reliable’.",
     },
     {
       title: "Current Value",
       body:
-        "Today, I focus on building confidence in software delivery by improving quality, validating systems, and reducing release risk so teams can ship dependable, production-ready systems with clarity.",
+        "Today, I build systems that improve release confidence. My work focuses on validating software before it reaches production, reducing uncertainty, and helping teams move from pipeline success to true system reliability. This thinking drives the development of BrikByteOS and StackCraft—tools designed to make software trustworthy at scale.",
     },
   ],
 
   valueSignals: [
-    { label: "Release Confidence", value: "High" },
-    { label: "Reliability Focus", value: "Strong" },
+    { label: "Release Confidence", value: "Engineered" },
+    { label: "Reliability Focus", value: "Production-first" },
     { label: "Systems Thinking", value: "End-to-end" },
   ],
 
@@ -117,22 +119,29 @@ export const ABOUT_MISSION_PROFILE_CONTENT: AboutMissionProfileContent = {
     {
       title: "Systems Thinking",
       items: [
-        { label: "End-to-end awareness" },
-        { label: "Dependency reasoning" },
+        { label: "End-to-end system awareness" },
+        { label: "Dependency & failure-path reasoning" },
       ],
     },
     {
       title: "Software Quality",
       items: [
-        { label: "Test design" },
-        { label: "Regression focus" },
+        { label: "Structured test design" },
+        { label: "Regression and edge-case focus" },
       ],
     },
     {
       title: "Reliability / Release",
       items: [
-        { label: "Release validation" },
-        { label: "Failure awareness" },
+        { label: "Release validation systems" },
+        { label: "Risk reduction before production" },
+      ],
+    },
+    {
+      title: "Technical Execution",
+      items: [
+        { label: "Full-stack development" },
+        { label: "DevOps & deployment workflows" },
       ],
     },
   ],

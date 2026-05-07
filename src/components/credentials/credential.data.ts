@@ -23,9 +23,8 @@ export const CREDENTIALS: readonly CredentialEntry[] = [
     type: "DEGREE",
     location: "Distance Learning",
     description:
-      "Deepening foundations in algorithms, systems, AI, and mathematical computing.",
+      "Building rigorous foundations in computer science, mathematics, algorithms, systems, AI, and analytical problem solving while working full-time.",
   },
-
   {
     id: "microsoft-az-900",
     title: "Microsoft Azure Fundamentals (AZ-900)",
@@ -34,10 +33,10 @@ export const CREDENTIALS: readonly CredentialEntry[] = [
     status: "CERTIFIED",
     type: "CERTIFICATION",
     description:
-      "Validates foundational understanding of cloud concepts, Azure services, pricing, and security principles.",
-    verificationHref: "https://learn.microsoft.com/en-us/users/thapelomagqazana-7919/credentials/609db8f154ce1e51",
+      "Validates foundational knowledge of cloud concepts, Azure services, cloud pricing, governance, security, and shared responsibility models.",
+    verificationHref:
+      "https://learn.microsoft.com/en-us/users/thapelomagqazana-7919/credentials/609db8f154ce1e51",
   },
-
   {
     id: "mict-seta-systems-development",
     title: "NQF 5: Information Technology — Systems Development",
@@ -47,9 +46,8 @@ export const CREDENTIALS: readonly CredentialEntry[] = [
     type: "CERTIFICATION",
     credentialId: "IS/LA/ETQA/427059",
     description:
-      "Validates foundational software development, programming, testing processes, and systems development capability.",
+      "Formal certification in systems development, programming fundamentals, software testing processes, and practical IT delivery.",
   },
-
   {
     id: "wethinkcode-systems-development",
     title: "Systems Development Program",
@@ -58,9 +56,8 @@ export const CREDENTIALS: readonly CredentialEntry[] = [
     status: "COMPLETED",
     type: "PROGRAM",
     description:
-      "Project-based software engineering training focused on programming, testing, collaboration, and practical delivery.",
+      "Project-based software engineering training focused on programming, problem solving, testing, collaboration, and real-world delivery discipline.",
   },
-
   {
     id: "wits-construction-studies",
     title: "BSc Construction Studies",
@@ -69,6 +66,6 @@ export const CREDENTIALS: readonly CredentialEntry[] = [
     status: "COMPLETED",
     type: "DEGREE",
     description:
-      "Built a foundation in project management, systems thinking, and structured problem solving.",
+      "Developed strong foundations in project coordination, sequencing, risk awareness, systems thinking, and structured execution under real-world constraints.",
   },
 ];

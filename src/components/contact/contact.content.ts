@@ -9,50 +9,59 @@ import type { ContactAction, OpportunityFit } from "./contact.types";
  */
 export const CONTACT_ACTIONS: readonly ContactAction[] = [
   {
-    label: "Email Me",
+    label: "Start a Conversation",
     href: "mailto:tapsmcgzee8@gmail.com",
     type: "EMAIL",
     priority: "PRIMARY",
-    ariaLabel: "Email Thapelo Magqazana",
+    ariaLabel: "Email Thapelo Magqazana to discuss opportunities or collaboration",
     icon: "email",
   },
   {
-    label: "LinkedIn",
+    label: "LinkedIn Profile",
     href: "https://www.linkedin.com/in/thapelo-magqazana-90632a174/",
     type: "LINKEDIN",
     priority: "SECONDARY",
-    ariaLabel: "Open Thapelo Magqazana LinkedIn profile",
+    ariaLabel: "View Thapelo Magqazana LinkedIn profile",
     icon: "linkedin",
   },
   {
-    label: "GitHub",
+    label: "GitHub Systems",
     href: "https://github.com/thapelomagqazana",
     type: "GITHUB",
     priority: "SECONDARY",
-    ariaLabel: "Open Thapelo Magqazana GitHub profile",
+    ariaLabel: "View Thapelo Magqazana GitHub projects and systems",
     icon: "github",
   },
   {
-    label: "Resume",
+    label: "View Resume",
     href: "/resume.pdf",
     type: "RESUME",
     priority: "SECONDARY",
-    ariaLabel: "Open Thapelo Magqazana resume",
+    ariaLabel: "View Thapelo Magqazana resume",
     icon: "resume",
   },
 ];
 
 export const OPPORTUNITY_FIT: OpportunityFit = {
   availability: "SELECTIVE",
-  opportunityTypes: ["CONTRACT", "COLLABORATION", "FOUNDING_BUILD", "OPEN_SOURCE"],
-  bestFitAreas: [
-    "QA systems",
-    "Release intelligence",
-    "Frontend systems",
-    "Developer tooling",
-    "Reliability-focused products",
+
+  opportunityTypes: [
+    "CONTRACT",
+    "COLLABORATION",
+    "FOUNDING_BUILD",
+    "OPEN_SOURCE",
   ],
-  workMode: "Remote / hybrid preferred",
+
+  bestFitAreas: [
+    "Release intelligence systems",
+    "Quality & reliability engineering",
+    "Developer tooling & platforms",
+    "Frontend system interfaces",
+    "Production-ready software delivery",
+  ],
+
+  workMode: "Remote-first · Hybrid (Johannesburg/Pretoria)",
+
   note:
-    "Best aligned with opportunities involving quality engineering, release confidence, systems thinking, and product-focused technical delivery.",
+    "Best aligned with teams building systems where release confidence, reliability, and engineering discipline are critical. Particularly interested in QA-heavy environments, developer tooling, and products that require strong validation, risk awareness, and production-ready delivery.",
 };

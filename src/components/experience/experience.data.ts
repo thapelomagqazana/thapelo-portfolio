@@ -12,43 +12,43 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
     id: "alula-test-analyst",
     role: "Test Analyst",
     company: "Alula Technologies",
-    period: "May 2025 — Present",
+    period: "May 2025 — Apr 2026",
     location: "Pretoria, South Africa · Hybrid",
     status: "ACTIVE",
     summary:
-      "Executed QA strategies across enterprise systems to strengthen release readiness and reliability.",
+      "Strengthening enterprise release confidence through structured test analysis, manual QA execution, defect visibility, and stakeholder-aligned validation.",
     outcomes: [
       {
         statement:
-          "Identified system failures before production to improve release confidence.",
+          "Validated business-critical workflows against requirements to reduce release ambiguity before production.",
       },
       {
         statement:
-          "Improved defect visibility across QA workflows through structured reporting.",
+          "Improved defect visibility through clear reporting, evidence capture, and structured QA feedback loops.",
       },
       {
         statement:
-          "Strengthened collaboration between QA, developers, and stakeholders to improve requirement alignment.",
+          "Supported stronger requirement alignment between QA, developers, product owners, and business stakeholders.",
       },
     ],
     toolMethods: [
       {
-        label: "QA Methods",
-        items: ["Manual testing", "Test planning", "Defect reporting"],
+        label: "QA Execution",
+        items: ["Manual testing", "Test planning", "Regression focus"],
         purpose:
-          "Used to validate enterprise workflows and improve release confidence.",
+          "Used to validate enterprise workflows and identify issues before release.",
       },
       {
         label: "Test Analysis",
         items: ["Requirement review", "Scenario design", "Result analysis"],
         purpose:
-          "Used to connect business expectations with system behavior and test coverage.",
+          "Used to translate business expectations into practical validation coverage.",
       },
       {
-        label: "Collaboration",
-        items: ["Developer feedback", "Stakeholder communication", "QA reporting"],
+        label: "Release Feedback",
+        items: ["Defect reports", "Developer feedback", "Stakeholder updates"],
         purpose:
-          "Used to align findings with product decisions and delivery priorities.",
+          "Used to turn test findings into actionable delivery and release decisions.",
       },
     ],
     tags: ["QUALITY", "RELIABILITY", "ENTERPRISE", "SYSTEMS"],
@@ -61,19 +61,19 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
     location: "Johannesburg, South Africa · On-site",
     status: "CONTRACT",
     summary:
-      "Built and deployed a client-facing cargo tracking interface for real-time logistics visibility.",
+      "Built and deployed a responsive cargo-tracking interface that turned logistics data into a client-facing visibility experience.",
     outcomes: [
       {
         statement:
-          "Delivered a responsive React tracking interface to improve cargo visibility.",
+          "Delivered a React-based tracking interface to improve visibility across cargo movement workflows.",
       },
       {
         statement:
-          "Integrated Leaflet map views to make cargo movement easier to demonstrate.",
+          "Integrated Leaflet map interactions to make location-based cargo activity easier to demonstrate and understand.",
       },
       {
         statement:
-          "Deployed with Docker and Nginx to support stable routing and delivery.",
+          "Packaged and served the application with Docker and Nginx to support stable deployment and client-side routing.",
       },
     ],
     toolMethods: [
@@ -81,19 +81,19 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
         label: "Frontend Delivery",
         items: ["React", "Bootstrap", "Responsive UI"],
         purpose:
-          "Used to build a client-facing interface that made cargo tracking easier to view and present.",
+          "Used to build a usable client-facing interface for cargo visibility.",
       },
       {
-        label: "Map Visualization",
+        label: "Geospatial UI",
         items: ["Leaflet", "Map markers", "Tracking views"],
         purpose:
-          "Used to demonstrate cargo movement and location-based workflows visually.",
+          "Used to translate logistics movement into interactive visual workflows.",
       },
       {
         label: "Deployment",
         items: ["Docker", "Nginx", "Client-side routing"],
         purpose:
-          "Used to package and serve the application with stable delivery behavior.",
+          "Used to package, serve, and stabilize the application delivery path.",
       },
     ],
     tags: ["FRONTEND", "SYSTEMS", "DEVOPS", "LOGISTICS"],
@@ -106,19 +106,19 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
     location: "Johannesburg, South Africa · On-site",
     status: "COMPLETED",
     summary:
-      "Validated enterprise software workflows through structured testing, defect analysis, and stakeholder feedback.",
+      "Validated enterprise software workflows by connecting requirements, usability, database behavior, defects, and stakeholder feedback.",
     outcomes: [
       {
         statement:
-          "Translated requirements into test scenarios to improve validation coverage.",
+          "Converted requirements into test scenarios to improve validation coverage and reduce missed workflow issues.",
       },
       {
         statement:
-          "Analyzed defects, database impacts, and usability issues to improve system reliability.",
+          "Analyzed defects, usability concerns, and database impacts to strengthen system reliability.",
       },
       {
         statement:
-          "Reported actionable findings to support product quality and user experience improvements.",
+          "Produced actionable QA reports that supported better product decisions and development feedback.",
       },
     ],
     toolMethods: [
@@ -126,19 +126,19 @@ export const EXPERIENCE_LOGS: readonly ExperienceLogEntry[] = [
         label: "Testing Process",
         items: ["Test scenarios", "Usability testing", "Defect analysis"],
         purpose:
-          "Used to validate system behavior and uncover issues affecting quality.",
+          "Used to validate system behavior and expose issues affecting quality.",
       },
       {
         label: "System Review",
         items: ["Requirement review", "Database impact analysis", "Design reviews"],
         purpose:
-          "Used to connect requirements, implementation behavior, and product risks.",
+          "Used to connect expected behavior, implementation risk, and product impact.",
       },
       {
-        label: "Reporting",
+        label: "Quality Reporting",
         items: ["Test reports", "Bug documentation", "Client feedback"],
         purpose:
-          "Used to communicate findings clearly to the design and development team.",
+          "Used to communicate findings clearly to design, development, and business stakeholders.",
       },
     ],
     tags: ["TESTING", "QUALITY", "ENTERPRISE", "SYSTEMS"],
