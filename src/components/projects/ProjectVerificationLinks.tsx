@@ -143,6 +143,7 @@ function getVerificationTypeLabel(type: ProjectVerificationLinkType): string {
     writeup: "Writeup",
     docs: "Docs",
     architecture: "Architecture",
+    artifact: "Artifact",
   };
 
   return labels[type];
