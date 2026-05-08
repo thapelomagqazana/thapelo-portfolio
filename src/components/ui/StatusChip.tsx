@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from "react";
 import { classNames } from "../../lib/classNames";
+import { SystemSignalPulse } from "../system/SystemSignalPulse";
 
 /**
  * Supported status tones for system-facing badges and chips.
@@ -119,13 +120,7 @@ export function StatusChip({
       )}
     >
       {showIndicator ? (
-        <span
-          aria-hidden="true"
-          className={classNames(
-            "hero-status-pulse inline-block h-2 w-2 rounded-full",
-            indicatorClasses,
-          )}
-        />
+        <SystemSignalPulse indicatorClassName={indicatorClasses} />
       ) : null}
 
       {label}

@@ -8,6 +8,7 @@ import { useHeroSystemStatus } from "./useHeroSystemStatus";
 import { HeroSystemMotion } from "./HeroSystemMotion";
 import { CONTACT_ACTIONS } from "../contact/contact.content";
 import { ContactActions } from "../contact/ContactActions";
+import { HeroScanLayer } from "./HeroScanLayer";
 
 /**
  * Hero section for the landing page.
@@ -34,8 +35,10 @@ export function HeroSystem() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative overflow-hidden px-6 py-16 sm:px-8 lg:px-10 lg:py-24"
+      className="relative isolate overflow-hidden px-6 py-16 sm:px-8 lg:px-10 lg:py-24"
     >
+      <HeroScanLayer />
+
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-start">
         <HeroSystemMotion>
           <div>
