@@ -15,7 +15,7 @@ describe("thematic navigation labeling", () => {
     expect(within(nav).getByText(/^system$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^modules$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^history$/i)).toBeInTheDocument();
-    expect(within(nav).getByText(/^credentials$/i)).toBeInTheDocument();
+    expect(within(nav).getByText(/^proof$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^contact$/i)).toBeInTheDocument();
   });
 
@@ -27,13 +27,13 @@ describe("thematic navigation labeling", () => {
 
   it("resolves balanced labels predictably", () => {
     expect(getNavigationLabel(PRIMARY_SITE_NAV_ITEMS[1], "balanced")).toBe("Modules");
-    expect(getNavigationLabel(PRIMARY_SITE_NAV_ITEMS[1], "enhanced")).toBe("Active Modules");
+    expect(getNavigationLabel(PRIMARY_SITE_NAV_ITEMS[1], "enhanced")).toBe("Product Systems");
   });
 
   it("keeps section headings aligned with navigation destinations", () => {
-    expect(getSectionHeading("modules")).toBe("Active Modules");
-    expect(getSectionHeading("history")).toBe("Operational History");
+    expect(getSectionHeading("modules")).toBe("Product Systems");
+    expect(getSectionHeading("history")).toBe("Delivery Record");
     expect(getSectionHeading("credentials")).toBe("Credential Stack");
-    expect(getSectionHeading("contact")).toBe("Open Transmission");
+    expect(getSectionHeading("contact")).toBe("Start Transmission");
   });
 });

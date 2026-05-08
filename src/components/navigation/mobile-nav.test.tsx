@@ -49,7 +49,7 @@ describe("SiteNavigation mobile navigation", () => {
     expect(within(mobileNav).getByText(/^system$/i)).toBeInTheDocument();
     expect(within(mobileNav).getByText(/^modules$/i)).toBeInTheDocument();
     expect(within(mobileNav).getByText(/^history$/i)).toBeInTheDocument();
-    expect(within(mobileNav).getByText(/^credentials$/i)).toBeInTheDocument();
+    expect(within(mobileNav).getByText(/^proof$/i)).toBeInTheDocument();
     expect(within(mobileNav).getByText(/^contact$/i)).toBeInTheDocument();
   });
 

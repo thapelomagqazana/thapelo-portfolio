@@ -23,7 +23,7 @@ describe("SiteNavigation", () => {
     expect(within(nav).getByText(/^system$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^modules$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^history$/i)).toBeInTheDocument();
-    expect(within(nav).getByText(/^credentials$/i)).toBeInTheDocument();
+    expect(within(nav).getByText(/^proof$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^contact$/i)).toBeInTheDocument();
   });
 
@@ -69,7 +69,7 @@ describe("SiteNavigation", () => {
     expect(within(mobileNav).getByText(/^system$/i)).toBeInTheDocument();
     expect(within(mobileNav).getByText(/^modules$/i)).toBeInTheDocument();
     expect(within(mobileNav).getByText(/^history$/i)).toBeInTheDocument();
-    expect(within(mobileNav).getByText(/^credentials$/i)).toBeInTheDocument();
+    expect(within(mobileNav).getByText(/^proof$/i)).toBeInTheDocument();
     expect(within(mobileNav).getByText(/^contact$/i)).toBeInTheDocument();
   });
 

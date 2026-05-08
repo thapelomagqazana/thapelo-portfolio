@@ -62,7 +62,7 @@ describe("smooth section transitions", () => {
 
     fireEvent.click(
       within(nav).getByRole("link", {
-        name: /navigate to active modules section/i,
+        name: /navigate to product systems section/i,
       }),
     );
 

@@ -41,7 +41,7 @@ describe("active section highlighting", () => {
     expect(within(nav).getByText(/^system$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^modules$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^history$/i)).toBeInTheDocument();
-    expect(within(nav).getByText(/^credentials$/i)).toBeInTheDocument();
+    expect(within(nav).getByText(/^proof$/i)).toBeInTheDocument();
     expect(within(nav).getByText(/^contact$/i)).toBeInTheDocument();
   });
 

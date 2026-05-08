@@ -79,11 +79,11 @@ describe("recruiter guided assessment flow", () => {
     render(<HomePage />);
 
     expect(
-      screen.getByRole("heading", { name: /active modules/i }),
+      screen.getByRole("heading", { name: /product systems/i }),
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("heading", { name: /operational history/i }),
+      screen.getByRole("heading", { name: /delivery record/i }),
     ).toBeInTheDocument();
 
     expect(
@@ -91,7 +91,7 @@ describe("recruiter guided assessment flow", () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("heading", { name: /open transmission/i }),
+      screen.getByRole("heading", { name: /start transmission/i }),
     ).toBeInTheDocument();
   });
 });

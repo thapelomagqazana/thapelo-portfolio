@@ -16,7 +16,7 @@ describe("HeroSystem", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: /i build systems that decide whether software is safe to release/i,
+        name: /i design systems that determine whether software is safe to ship/i,
       }),
     ).toBeInTheDocument();
   });
@@ -26,7 +26,7 @@ describe("HeroSystem", () => {
 
     expect(
       screen.getByText(
-        /software engineer focused on release confidence, software quality, and production-ready delivery/i,
+        /release-focused software engineer specializing in reliability, quality validation, and production readiness/i,
       ),
     ).toBeInTheDocument();
   });
@@ -108,12 +108,15 @@ describe("HeroSystem", () => {
   it("renders the terminal preview command", () => {
     render(<HeroSystem />);
 
-    expect(screen.getByText(/bb run --portfolio/i)).toBeInTheDocument();
-    expect(screen.getByText(/systems thinking detected/i)).toBeInTheDocument();
+    expect(screen.getByText(/systems thinking:\s*detected/i)).toBeInTheDocument();
+
+    expect(screen.getByText(/quality discipline:\s*high/i)).toBeInTheDocument();
+
+    expect(screen.getByText(/reliability signal:\s*strong/i)).toBeInTheDocument();
+
     expect(
-      screen.getByText(/release reliability signal:\s*high/i),
+      screen.getByText(/candidate classification:\s*high-confidence fit/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/candidate:\s*strategic fit/i)).toBeInTheDocument();
   });
 
 
@@ -267,7 +270,7 @@ describe("HeroSystem", () => {
     });
 
     expect(within(securityMetric).getAllByText(/^pass$/i)).toHaveLength(2);
-    expect(within(performanceMetric).getAllByText(/^warning$/i)).toHaveLength(2);
+    expect(within(performanceMetric).getAllByText(/^degraded$/i)).toHaveLength(2);
     expect(within(verdictMetric).getAllByText(/^approved$/i)).toHaveLength(2);
   });
 
@@ -354,7 +357,7 @@ describe("HeroSystem", () => {
 
     expect(within(testsMetric).getAllByText(/^pass$/i)).toHaveLength(2);
     expect(within(securityMetric).getAllByText(/^pass$/i)).toHaveLength(2);
-    expect(within(performanceMetric).getAllByText(/^warning$/i)).toHaveLength(2);
+    expect(within(performanceMetric).getAllByText(/^degraded$/i)).toHaveLength(2);
     expect(
       within(releaseConfidenceMetric).getAllByText(/^92%$/i),
     ).toHaveLength(2);
@@ -422,7 +425,7 @@ describe("HeroSystem", () => {
     expect(within(securityMetric).getAllByText(/^pass$/i).length).toBeGreaterThan(0);
 
     expect(within(performanceMetric).getByText(/^performance$/i)).toBeInTheDocument();
-    expect(within(performanceMetric).getAllByText(/^warning$/i).length).toBeGreaterThan(0);
+    expect(within(performanceMetric).getAllByText(/^degraded$/i).length).toBeGreaterThan(0);
 
     expect(within(verdictMetric).getByText(/^verdict$/i)).toBeInTheDocument();
     expect(within(verdictMetric).getAllByText(/^approved$/i).length).toBeGreaterThan(0);
@@ -436,7 +439,7 @@ describe("HeroSystem", () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByLabelText(/performance status: warning/i),
+      screen.getByLabelText(/performance status: degraded/i),
     ).toBeInTheDocument();
 
     expect(
@@ -458,7 +461,7 @@ describe("HeroSystem", () => {
       within(dashboard).getAllByText(/^pass$/i).length,
     ).toBeGreaterThan(0);
     expect(
-      within(dashboard).getAllByText(/^warning$/i).length,
+      within(dashboard).getAllByText(/^degraded$/i).length,
     ).toBeGreaterThan(0);
     expect(
       within(dashboard).getAllByText(/^approved$/i).length,

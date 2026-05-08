@@ -101,7 +101,8 @@ export type ProjectVerificationLinkType =
   | "screenshot"
   | "writeup"
   | "docs"
-  | "architecture";
+  | "architecture"
+  | "artifact";
 
 export interface ProjectVerificationLink {
   readonly label: string;

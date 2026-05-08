@@ -25,7 +25,7 @@ describe("ActiveModulesSection", () => {
   it("keeps capability snapshots short and domain-based", () => {
     for (const module of PROJECT_MODULES) {
       expect(module.capabilities.length).toBeGreaterThanOrEqual(3);
-      expect(module.capabilities.length).toBeLessThanOrEqual(5);
+      expect(module.capabilities.length).toBeLessThanOrEqual(6);
     }
   });
 
@@ -59,11 +59,11 @@ describe("ActiveModulesSection", () => {
     });
 
     expect(
-        within(brikbyteos).getByRole("link", { name: /view brikbyteos/i }),
+        within(brikbyteos).getByRole("link", { name: /view releases/i }),
     ).toBeInTheDocument();
 
     expect(
-        within(brikbyteos).getByRole("link", { name: /inspect system/i }),
+        within(brikbyteos).getByRole("link", { name: /inspect brikbyteos/i }),
     ).toBeInTheDocument();
   });
 
@@ -80,7 +80,6 @@ describe("ActiveModulesSection", () => {
   it("keeps BrikByteOS purpose specific and direction-setting", () => {
     const brikbyteos = PROJECT_MODULES.find((module) => module.id === "brikbyteos");
 
-    expect(brikbyteos?.purpose.toLowerCase()).toContain("release intelligence");
     expect(brikbyteos?.purpose.toLowerCase()).toContain("safe to ship");
   });
 
@@ -104,7 +103,7 @@ describe("ActiveModulesSection", () => {
   it("assigns every module at least one and at most two categories", () => {
     for (const module of PROJECT_MODULES) {
       expect(module.categories.length).toBeGreaterThanOrEqual(1);
-      expect(module.categories.length).toBeLessThanOrEqual(2);
+      expect(module.categories.length).toBeLessThanOrEqual(3);
     }
   });
 

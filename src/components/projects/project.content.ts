@@ -142,7 +142,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       verificationLinks: [
         {
           label: "Release Artifacts",
-          type: "docs",
+          type: "artifact",
           href: "https://github.com/BrikByte-Studios/brikbyteos-cli-releases",
           description: "Public release artifacts and distribution notes.",
         },
@@ -193,7 +193,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       },
       {
         label: "View Generator",
-        href: "#stackcraft",
+        href: "https://www.npmjs.com/package/stackcraft-core",
         variant: "secondary",
         kind: "link",
       },
@@ -275,10 +275,11 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       ],
       verificationLinks: [
         {
-          label: "StackCraft Module",
-          type: "architecture",
-          href: "#stackcraft",
-          description: "Inspect the generation model and system structure.",
+          label: "StackCraft Core (NPM)",
+          type: "artifact",
+          href: "https://www.npmjs.com/package/stackcraft-core",
+          description:
+            "Published CLI package demonstrating deterministic system generation, template architecture, and production-ready project scaffolding.",
         },
       ],
     },
@@ -326,7 +327,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
       },
       {
         label: "View App",
-        href: "#calorisee",
+        href: "https://www.linkedin.com/posts/thapelo-magqazana-90632a174_ai-yolov5-react-activity-7281180073297137665-wgoY?utm_source=share&utm_medium=member_desktop&rcm=ACoAAClWzpYBtcdQYcwGwPv5tbozYNKa5ySactc",
         variant: "secondary",
         kind: "demo",
       },
@@ -410,7 +411,7 @@ export const PROJECT_MODULES: readonly ProjectModule[] = [
         {
           label: "CaloriSee Module",
           type: "demo",
-          href: "#calorisee",
+          href: "https://www.linkedin.com/posts/thapelo-magqazana-90632a174_ai-yolov5-react-activity-7281180073297137665-wgoY?utm_source=share&utm_medium=member_desktop&rcm=ACoAAClWzpYBtcdQYcwGwPv5tbozYNKa5ySactc",
           description: "Inspect the AI food tracking product workflow.",
         },
       ],

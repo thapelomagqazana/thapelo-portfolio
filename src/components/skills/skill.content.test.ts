@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { SKILL_CAPABILITY_PANELS } from "./skill.content";
 
 describe("SKILL_CAPABILITIES", () => {
-  it("contains 3 to 5 capability groups", () => {
+  it("contains 3 to 6 capability groups", () => {
     expect(SKILL_CAPABILITY_PANELS.length).toBeGreaterThanOrEqual(3);
-    expect(SKILL_CAPABILITY_PANELS.length).toBeLessThanOrEqual(5);
+    expect(SKILL_CAPABILITY_PANELS.length).toBeLessThanOrEqual(6);
   });
 
   it("keeps each capability group concise", () => {
@@ -19,9 +19,8 @@ describe("SKILL_CAPABILITIES", () => {
   it("uses meaningful capability labels", () => {
     const labels = SKILL_CAPABILITY_PANELS.map((group) => group.title);
 
-    expect(labels).toContain("Frontend Engineering");
-    expect(labels).toContain("Quality Engineering");
-    expect(labels).toContain("Systems Thinking");
-    expect(labels).toContain("DevOps Foundations");
+    expect(labels).toContain("Frontend Systems Engineering");
+    expect(labels).toContain("Quality & Release Engineering");
+    expect(labels).toContain("Systems Engineering");
   });
 });

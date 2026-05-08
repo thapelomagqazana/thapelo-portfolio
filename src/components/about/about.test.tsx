@@ -14,7 +14,7 @@ describe("AboutMissionProfile", () => {
     expect(
       screen.getByRole("heading", {
         level: 2,
-        name: /from construction to software, with systems thinking intact/i,
+        name: /from construction systems to software reliability engineering/i,
       }),
     ).toBeInTheDocument();
   });
@@ -23,7 +23,7 @@ describe("AboutMissionProfile", () => {
     render(<AboutMissionProfile />);
 
     expect(
-      screen.getByText(/my background began in construction studies/i),
+      screen.getByText(/i started in construction studies/i),
     ).toBeInTheDocument();
   });
 
@@ -33,7 +33,7 @@ describe("AboutMissionProfile", () => {
     expect(
       screen.getByRole("heading", {
         level: 2,
-        name: /From construction to software, with systems thinking intact./i,
+        name: /from construction systems to software reliability engineering/i,
       }),
     ).toBeInTheDocument();
   });
